@@ -1,4 +1,4 @@
-package com.array;
+package com.array.exam;
 
 public class Exam03 {
 
