@@ -47,7 +47,7 @@ public class FriendInfoHandler {
 //			friends[numOfFriend] = hFriend;
 //			numOfFriend++;
 			// 중복되는 코드를 메소드로 생성
-		} else /*if (choice == 2) */{ // 1 아니면 항상 2이므로 else로 처리가능
+		} else if (choice == 2) { // 1 아니면 항상 2이므로 else로 처리가능
 			System.out.print("전공을 입력해주세요 > ");
 			String major = s.nextLine();
 			
@@ -58,6 +58,20 @@ public class FriendInfoHandler {
 //			friends[numOfFriend] = uFriend;
 //			numOfFriend++;
 			// 중복되는 코드를 메소드로 생성
+		} else if (choice == 3) {
+			System.out.print("전공을 입력해주세요 > ");
+			String major = s.nextLine();
+			System.out.print("이메일 주소를 입력해주세요 > ");
+			String email = s.nextLine();
+			System.out.println("학년을 입력해주세요 > ");
+			String year = s.nextLine();
+			addFriendInfo(new PhoneUnivInfor(name, phoneNumber, address, major, email, year));
+		} else if (choice == 4) {
+			System.out.print("이메일 주소를 입력해주세요 > ");
+			String email = s.nextLine();
+			System.out.println("회사명을 입력해주세요 > ");
+			String company = s.nextLine();
+			addFriendInfo(new PhoneCompanyInfor(name, phoneNumber, address, company));
 		}
 		
 	}
@@ -97,15 +111,26 @@ public class FriendInfoHandler {
 		System.out.println("----------------------");
 	}
 	
-	// 데이터 삭제
-//	public void deleteData() {
-//		Scanner s = new Scanner(System.in);
-//		System.out.print("지우려는 친구의 이름을 입력하세요 > ");
-//		String name = s.nextLine();
-//		for(int i = 0; i < numOfFriend; i++) {
-//			if(friends[numOfFriend].name == name) {
-//				
-//			}
-//		}
-//	}
+//	 데이터 삭제
+	public void deleteData() {
+		Scanner s = new Scanner(System.in);
+		System.out.print("지우려는 친구의 이름을 입력하세요 > ");
+		String name = s.nextLine();
+		Friend temp; // 지우려는 배열의 값을 대입할 변수
+
+		for(int i = 0; i <= numOfFriend; i++) { // 배열의 갯수만큼 반복
+			try {
+				if(friends[i].name.equals(name)) { // 입력한 값과 배열의 값이 같은 경우
+					temp = friends[i];				// 해당 배열을 변수에 temp에 대입
+						for(int j = i; j <= numOfFriend; j++) { // 배열의 갯수만큼 반복
+							friends[j] = friends[j+1];			// 배열 i에 i+1의 배열을 대입
+						}					
+					} 
+			} catch (NullPointerException e) {
+				System.out.println("삭제되었습니다.");
+				i = 0; // 동일한 값의 존재한다면 일괄삭제를 위해 삭제 후 다시 0부터 반복
+				--numOfFriend; // null 예외 발생은 값이 지워졌다는 뜻이므로 배열의 갯수 -1
+			} 
+		}
+	}
 }
