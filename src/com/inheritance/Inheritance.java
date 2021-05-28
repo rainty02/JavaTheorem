@@ -1,8 +1,8 @@
 package com.inheritance;
 
-public class Inheritance {
+public class Inheritance {}
 
-}
+
 //		상속
 //		기존에 정의된 클래스에 변수와 메소드와 변수를 추가하여
 //		새로운 클래스를 정의하는 것
@@ -29,7 +29,8 @@ public class Inheritance {
 		class child2 extends Parent {}
 		class GrandChild extends child {}
 
-//		하위클래스의 생성자 내에서 상위클래스의 생성자호출을 통해서
+//		*상위 클래스의 생성자가 있는지  우선 확인
+//		하위클래스의 생성자 내에서 상위클래스의 생성자호출을 통해
 //		상위 클래스의 인스턴스 멤버를 초기화해야함
 //		하위 클래스의 생성자는 상위 클래스의 생성자 호출을 통해서
 //		상위 클래스의 인스턴스 변수를 초기화함
@@ -56,7 +57,7 @@ public class Inheritance {
 					System.out.println("조상클래스");
 			}
 				void Print2() {
-					System.out.println("오버라이딩하세요");
+					System.out.println("오버라이딩 변경 전");
 				}
 				void Print3() {}
 		}
@@ -73,7 +74,7 @@ public class Inheritance {
 				// 조상 클래스의 Print 메소드를 super로 불러옴
 				}
 			void Print2() {
-				System.out.println("오버라이딩 완료");
+				System.out.println("오버라이딩 변경 후");
 				// Print, Print2는 조상클래스 메소드 오버라이딩
 				// 선언부는 조상클래스와 동일하지만 구현부는 원하는대로 변경해서 사용
 			}
@@ -101,4 +102,50 @@ public class Inheritance {
 //		작은 단위의 클래스를 먼저 만들고 이들을 조합해 하나의 커다란 클래스를 만듬
 //		대표성을 갖지 않고 하나로 묶지 않고 필요할 때 가져와 쓸 때
 		
-	
+//		*다형성 (상속관계에서만 가능)
+//		하나의 참조변수로 여러 타입의 객체를 참조할 수 있는 것
+//		조상타입의 참조변수로 자손타입의 객체를 다룰 수 있는 것이 다형성이다
+		class Father {}
+		class Son extends Father {}
+		class Daughter extends Father {
+			public static void main(String[] args) {
+				Father father = new Son();
+				Father father2 = new Daughter();
+				//조상 = 자손 - 형변환 생략가능 (명시적 형변환 가능 - 오류를 줄이기 위함)
+				//상위 클래스의 메소드만 사용가능
+				//*하위 클래스의 메소드 사용불가 (오버라이딩은 정의부는 같고 구현부의 재정의이므로 사용가능)
+				
+				Son son = (Son)new Father();
+				//*자손 = 조상 - 명시적 형변환 필요				
+				
+//				Son son2 = new Daughter();
+//				Son son2 = (Son)new Daughter();
+				//자손끼리 형변환은 불가 (명시적 형변환도 불가. 상위타입이나 같은 참조형타입 가능)
+		
+//		연산자 - 참조형변수명 instanceof 인스턴스타입
+//		참조변수 형변환 여부 판별
+//		참조변수가 참조하는 인스턴스의 실제 타입으로 체크하는데 사용
+//		이항연산자이며 피연산자는 참조형 변수와 타입, 연산결과는 true, false.
+		if(son instanceof Father) {
+			System.out.println("son은 Father 인스턴스타입입니다");
+		}
+
+//		매개변수의 다형성
+//		참조형 매개변수는 메서드 호출시, 자신과 같은 타입 또는 자손타입의 인스턴스를 넘겨줄 수 있음
+//		매개변수의 타입마다 새로운 메서드를 생성하지 않고
+//		상속관계에 있는 조상과 자손타입을 사용할 수 있으므로 하나의 메소드를 효율적으로 사용할 수 있음
+			}
+		}
+		
+//		*객체배열
+//		여러 종류의 객체를 하나의 배열로 다루기
+//		조상타입의 배열에 자손들의 객체를 담을 수 있음
+		
+//		모든 클래스는 Object클래스를 상속하므로
+//		Object타입의 메소드와 형변환을 할 수 있음		
+//		toString, equals, hashCode 등 총 11개의 메소드
+		
+		
+		
+		
+		
