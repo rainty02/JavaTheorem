@@ -115,31 +115,26 @@ public class FriendInfoHandler {
 	// 데이터 삭제
 	public void deleteData() {
 		Scanner s = new Scanner(System.in);
-		System.out.print("지우려는 이름을 입력하세요 > ");
+		System.out.print("삭제하려는 이름을 입력하세요 > ");
 		String name = s.nextLine();
 
 		for (int i = 0; i < numOfFriend; i++) { // 배열의 갯수만큼 반복
 			if (friends[i].name.equals(name)) { // 입력한 값과 배열의 값이 같은 경우
-				System.out.println(i + "번 배열을 찾았습니다.");
+				System.out.println(i + "번 데이터을 찾았습니다.");
 				friends[i].showData();
+				System.out.print("삭제하려면 1, 계속 찾으려면 2를 입력하세요 > ");
+				int del = s.nextInt();
+				if(del == 1) {
+					Friend temp; // 지우려는 배열의 값을 대입할 변수
+					temp = friends[i]; // 해당 배열을 변수에 temp에 대입
+					for (int j = i; j <= numOfFriend; j++) { // 배열의 갯수만큼 반복
+						friends[j] = friends[j + 1]; // 배열 i에 i+1의 배열을 대입
+					}
+					System.out.println("삭제되었습니다.");
+					--numOfFriend; // 마지막 배열의 값이 null이므로 -1		
+				}
 			}
 		}
-
-		while (true) {
-			System.out.print("지우려는 배열의 값을 입력하세요 > ");
-			int arrNum = s.nextInt();
-			Friend temp; // 지우려는 배열의 값을 대입할 변수
-			temp = friends[arrNum]; // 해당 배열을 변수에 temp에 대입
-			for (int j = arrNum; j <= numOfFriend; j++) { // 배열의 갯수만큼 반복
-				friends[j] = friends[j + 1]; // 배열 i에 i+1의 배열을 대입
-			}
-			System.out.println("삭제되었습니다.");
-			--numOfFriend; // null 예외 발생은 값이 지워졌다는 뜻이므로 배열의 갯수 -1
-			System.out.print("이전 메뉴로 돌아가려면 1, 계속 하시려면 2를 입력하세요 >");
-			int menu = s.nextInt();
-			if (menu == 1) {
-				return;
-			}
-		}
+		System.out.println("일치하는 값이 없어 이전 메뉴로 돌아갑니다.");
 	}
 }
