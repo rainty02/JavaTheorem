@@ -122,7 +122,7 @@ public class FriendInfoHandler {
 			if (friends[i].name.equals(name)) { // 입력한 값과 배열의 값이 같은 경우
 				System.out.println(i + "번 데이터을 찾았습니다.");
 				friends[i].showData();
-				System.out.print("삭제하려면 1, 계속 찾으려면 2를 입력하세요 > ");
+				System.out.print("해당 데이터를 삭제하려면 1, 수정하려면 2, 계속 찾으려면 3를 입력하세요 > ");
 				int del = s.nextInt();
 				if(del == 1) {
 					Friend temp; // 지우려는 배열의 값을 대입할 변수
@@ -132,6 +132,24 @@ public class FriendInfoHandler {
 					}
 					System.out.println("삭제되었습니다.");
 					--numOfFriend; // 마지막 배열의 값이 null이므로 -1		
+				}
+				if(del ==2) {
+					System.out.println("1. 고교 친구 정보 입력");
+					System.out.println("2. 대학 친구 정보 입력");
+					System.out.println("3. 대학 전화번호부 정보 입력");
+					System.out.println("4. 직장 동료 정보 입력");
+					System.out.print("메뉴를 선택하시오 > ");
+					int choice = s.nextInt();
+					addFriend(choice);
+					
+					Friend temp; // 지우려는 배열의 값을 대입할 변수
+					temp = friends[i]; // 해당 배열을 변수에 temp에 대입
+					for (int j = i; j <= numOfFriend; j++) { // 배열의 갯수만큼 반복
+						friends[j] = friends[j + 1]; // 배열 i에 i+1의 배열을 대입
+					}
+					System.out.println("데이터가 변경되었습니다.");
+					--numOfFriend; // 마지막 배열의 값이 null이므로 -1	
+			
 				}
 			}
 		}
