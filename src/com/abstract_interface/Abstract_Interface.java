@@ -48,7 +48,7 @@ public class Abstract_Interface {
 			@Override
 			public int method2(int a, int b) {return 0;}
 			// 오버라이딩을 해줘야하거나 클래스를 추상클래스로 변경해야함
-		 }
+		 } 
 	
 	
 	
