@@ -133,7 +133,7 @@ public class FriendInfoHandler {
 					System.out.println("삭제되었습니다.");
 					--numOfFriend; // 마지막 배열의 값이 null이므로 -1		
 				}
-				if(del ==2) {
+				if(del == 2) {
 					System.out.println("1. 고교 친구 정보 입력");
 					System.out.println("2. 대학 친구 정보 입력");
 					System.out.println("3. 대학 전화번호부 정보 입력");
