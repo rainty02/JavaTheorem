@@ -1,7 +1,7 @@
 package com.abstractt.practice;
 
 // 상속을 목적으로 하는 추상클래스
-public abstract class Friend {
+public abstract class Friend implements ShowData {
 	
 	// 이름, 전화번호, 주소
 	String name;
@@ -22,5 +22,5 @@ public abstract class Friend {
 	
 	// 오버라이딩 메소드
 //	public void showBasicInfo() {}
-	public abstract void showBasicInfo();
+//	public abstract void showBasicInfo();
 }
