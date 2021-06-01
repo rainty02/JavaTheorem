@@ -11,11 +11,17 @@ public class MapFootballPlayer {
 		fbMap.put(2, new MapFootball("이", "밀란", 22));
 		fbMap.put(3, new MapFootball("박", "맨유", 28));
 		
-		System.out.println(fbMap.get(1));
-		System.out.println(fbMap.get(2));
-		System.out.println(fbMap.get(3));
+//		System.out.println(fbMap.get(1));
+//		System.out.println(fbMap.get(2));
+//		System.out.println(fbMap.get(3));
+		
+		Set<Integer> keySet = fbMap.keySet();
+		// * keySet 기억
+		Iterator<Integer> itr = keySet.iterator();
+		while(itr.hasNext()) {
+			System.out.println(fbMap.get(itr.next()));
+		}
 	}
-
 }
 
 class MapFootball {

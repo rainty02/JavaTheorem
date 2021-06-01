@@ -54,12 +54,16 @@ class TreeSetFootball implements Comparable<TreeSetFootball>{
 	public int compareTo(TreeSetFootball o) {
 		//팀, 이름, 번호 순
 		int result = this.team.compareTo(o.team);
+		// 팀이 같으면 0
 		if (result == 0) {
 			result = this.name.compareTo(o.name);
+			// 이름이 같다면 0
 			if(result == 0) {
 				if(this.age > o.age) {
+					// 나이가 크다면 1
 					result = 1;
-				} else {
+				} else if(this.age < o.age){
+					// 나이가 작다면 -1
 					result = -1;
 				}
 			}		 	

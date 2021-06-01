@@ -6,7 +6,7 @@ public class SetFootballPlayer {
 	
 	public static void main(String[] args) {
 
-		// set 인스턴스 생성
+		// Set 인스턴스 생성
 		Set<SetFootball> fbSet = new HashSet<SetFootball>();
 
 		// 데이터 저장
@@ -26,7 +26,7 @@ public class SetFootballPlayer {
 
 class SetFootball {
 	
-	// setfootball 멤버
+	// SetFootball 멤버
 	String name;
 	int number;
 	String team;
