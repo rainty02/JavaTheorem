@@ -78,6 +78,7 @@ public class Collection {
 //		key값으로 식별하여 value값을 확인
 //		key값은 중복X, value값은 중복O
 //		값 저장시 put(k, v), 가져올때 get(k) 값이 없으면 null
+//		* .keySet()로 키값을 Set 인스턴스로 생성해 iterator 사용 가능
 	
 //		컬렉션 클래스를 이용한 정수의 저장
 //		ArrayList<int> arr = new ArrayList<int>();
