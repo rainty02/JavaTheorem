@@ -73,24 +73,26 @@ class CopyThread extends Thread {
 			InputStream in = new FileInputStream(this.origin);
 			OutputStream out = new FileOutputStream(this.copy);
 
+			BufferedInputStream fin = new BufferedInputStream(in);
+			BufferedOutputStream fout = new BufferedOutputStream(out);
+					
+			// 카피한 데이터의 크기
 			int copyByte = 0;
-			byte[] buf = new byte[1024];
-			int readLen	= 0;
-
+			// 파일에서 읽어올 바이트 데이터
+			int bData = -1;
+			
 			while(true) {
-				readLen  = in.read(buf); 
+				bData  = fin.read();
 				
 				// 파일의 모든 데이터를 읽으면 -1 반환하며 반복탈출
-				if(readLen==-1) {
+				if(bData==-1) {
 					break;
 				}
+				
 				// 데이터 저장
-				out.write(buf, 0, readLen);
-				copyByte += readLen;
+				fout.write(bData);
+				copyByte++;
 			}
-			// 스트림 종료
-			in.close();
-			out.close();
 			
 			// ②파일이 복사가 완료되면 완료 메시지를 콘솔에 출력합시다.
 			System.out.println("복사 완료 ("+copyByte+"byte)");
