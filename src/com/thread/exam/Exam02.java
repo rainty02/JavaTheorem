@@ -25,6 +25,8 @@ public class Exam02 {
 		String copyPath;
 		String copyName;
 		Scanner sc = new Scanner(System.in);
+		
+		// 원본파일의 경로를 받아 해당 경로의 파일이 있는지 확인
 		System.out.print("원본 파일의 이름과 경로를 입력해주세요 > ");
 		origin = sc.nextLine();
 		File originPath = new File(origin);
@@ -33,6 +35,8 @@ public class Exam02 {
 			System.out.println("파일이 존재하지 않습니다.");
 			System.out.println("경로를 확인해주세요.");
 		}
+		
+		// 복사될 파일의 경로를 확인 후 디렉토리 생성
 		System.out.print("복사될 파일의 경로를 입력해주세요 > ");
 		copyPath = sc.nextLine();
 		File copy = new File(copyPath);
@@ -41,14 +45,15 @@ public class Exam02 {
 			copy.mkdir();
 			System.out.println("디렉토리를 생성했습니다.");
 		}
+		
+		// 복사될 파일의  이름을 받아 경로 입력
 		System.out.print("복사될 파일의 이름를 입력해주세요 > ");
 		copyName = copyPath + "\\" + "\\" + sc.nextLine();
 		System.out.println(copyName);
 		
+		// 데이터의 복사는 스레드로 처리하는 프로그램을 만들어 봅시다.
 		CopyThread ct = new CopyThread(origin, copyName);
-		ct.start();
-
-		
+		ct.start();	
 	}
 }
 
@@ -62,9 +67,9 @@ class CopyThread extends Thread {
 		this.copy = copy;
 	}
 
-	// 데이터의 복사는 스레드로 처리하는 프로그램을 만들어 봅시다.
 	public void run() {
 		try {
+			// 원본과 복사할 파일의 경로 입력
 			InputStream in = new FileInputStream(this.origin);
 			OutputStream out = new FileOutputStream(this.copy);
 
@@ -73,9 +78,9 @@ class CopyThread extends Thread {
 			int readLen	= 0;
 
 			while(true) {
-				readLen  = in.read(buf); // 완료시점 -> -1 반환
+				readLen  = in.read(buf); 
 				
-				// 탈출 조건 : 파일의 모든 데이터를 읽은 경우
+				// 파일의 모든 데이터를 읽으면 -1 반환하며 반복탈출
 				if(readLen==-1) {
 					break;
 				}
@@ -83,7 +88,7 @@ class CopyThread extends Thread {
 				out.write(buf, 0, readLen);
 				copyByte += readLen;
 			}
-
+			// 스트림 종료
 			in.close();
 			out.close();
 			
