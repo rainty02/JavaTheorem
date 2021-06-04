@@ -55,10 +55,34 @@ public class Networking {}
  * 
  * 
  * 		TCP/IP 4계층
- * 		1. 네트워크계층
- * 			OSI의 물리계층과 데이터 링크계층의 혼합
- * 			특정 네트워크 인터페이스가 물리적인 연결을 통해
- * 			로컬 네트워크 및 외부로 IP 데이터그램을 보내는 방법 정의
+ * 		1. 네트워크 인터페이스 계층
+ * 			네트워크 인터페이스가 물리적인 연결을 통해 로컬 네트워크 및 외부 IP 데이터그램을 전공하는 방법을 제공
+ * 			TCP/IP 패킷을 네트워크 매체로 전달하는 것과 네트워크 매체에서 패킷을 받아들이는 과정을 담당
+ * 		2. 인터넷계층
+ * 			어드레싱, 패키징, 라우팅 기능을 제공
+ * 			논리적 주소인 IP를 이용한 노드간 전송과 라우팅 기능을 처리
+ *			네트워크상 최종 목적지까지 정확하게 연결되도록 연결성 제공
+ *
+ *		3. 전송계층 (tranport)
+ *			데이터의 송수신을 담당
+ *			애플리케이션 계층의 세션과 데이터그램 통신서비스 제공
+ *			핵심 프로토콜로 TCP/UDP가 있음
+ *			TCP - 1:1 연결지향, 신뢰할 수 있는 통신서비스 제공, 손상된 패킷을 복구하는 역할
+ *			UDP - 1:1, 1:n의 비연결지향, 신뢰할 수 없는 통신서비스 제공, TCP 연결 확립에 의한 부하를 피할 때 사용
+ *
+ *		4. 응용프로그램 (Application)
+ *			다른 계층의 서비스에 접근할 수 있게 하는 애플리케이션을 제공하는 계층
+ *			애플리케이션들이 데이터를 교환하기 위해 사용하는 프로토콜들을 정의하고 있음
+ *			- HTTP (HyperText transfer Protocol)
+ *			www의 web 페이지 파일을 전송하는데 사용
+ * 			- FTP (File transfer Protocol)
+ * 			상호 파일 전송을 위해 사용
+ * 			- SMTP (Simple Mail transfer Protocol)
+ * 			메일 메시지와 그에 추가된 첨부파일을 전송하는데 사용
+ * 			- Telnet (Terminal emulation protocol)
+ *			네트워크 호스트에 원격 저속하는 위해 사용
+ *			- DNS (Domain Name System)
+ *			호스트 이름을 IP 주소로 변환하기 위해 사용 * 
  * 
  * 
  * 		InetAddress 클래스
@@ -67,10 +91,24 @@ public class Networking {}
  * 		인스턴스 생성법
  * 		생성자 없음, static 메서드를 사용하여 인스턴스를 생성
  * 		public static InetAddress getByName String Host throws UnknownHostException
- * 			호스트의 이름 또는 주소를 InetAddress로 전환
+ * 		호스트의 이름 또는 주소를 InetAddress로 전환
  * 		
  * 
+ * 		URL(uniform resource locator)
+ * 		인터넷 상의 자원에 대한 주소
+ * 		프로토콜의 종류, 도메인 이름, 포트, 경로명, 파일이름, 쿼리스트링
+ * 		프로토콜 - http
+ * 				://
+ * 		도메인 이름 - www.naver.com
+ * 				:
+ * 		포트 - 80
+ * 				/
+ * 		경로/파일 - sun.html
+ * 				?
+ * 		파라미터(쿼리) - page=bool_list
+ * 		anchor - #new
  * 
+ *
  * 		URI
  * 		URI(uniform resource identifier)
  * 		인터넷에 있는 어떤 자원에 접근하기 위한 유일한 주소 또는 키
