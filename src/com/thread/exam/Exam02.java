@@ -11,7 +11,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Scanner;
 
-import jdk.internal.org.xml.sax.InputSource;
 
 public class Exam02 {
 
