@@ -75,7 +75,6 @@ public class Array {
 		}
 		for(int i : ball) {
 			System.out.println(i);
-		}
-		
+		}	
 	}
 }
