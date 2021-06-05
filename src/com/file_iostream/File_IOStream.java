@@ -3,8 +3,7 @@ package com.file_iostream;
 public class File_IOStream {
 
 }
-/*
- * 			 
+/*		 
  * 		입출력 대상이 달라지면 입출력 방식이 달라지는 것이 보통이지만
  * 		자바에서는 입출력 대상에 상관없이 동일하도록 별로의 I/O 모델을 정의하고 있음
  * 		
@@ -75,15 +74,17 @@ public class File_IOStream {
  *		File reFile = new File(reDir, "my.bin); 이동 경로 선택
  *		myfile.renameTo(reFile); 파일이동
  *
- *
- *
- *
- *
- *
- *
- *
+
  *
  * 
  */
+
+
+
+
+
+
+
+
 
 
