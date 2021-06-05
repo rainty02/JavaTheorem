@@ -147,6 +147,13 @@ public class Inheritance {}
 //		모든 클래스는 Object클래스를 상속하므로
 //		Object타입의 메소드와 형변환을 할 수 있음		
 //		toString, equals, hashCode 등 총 11개의 메소드
+
+
+		
+		
+		
+		
+		
 		
 		
 		
