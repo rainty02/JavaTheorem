@@ -129,7 +129,7 @@ from emp
 order by sal desc, ename
 ;
 
-
+select * from ;
 
 
 

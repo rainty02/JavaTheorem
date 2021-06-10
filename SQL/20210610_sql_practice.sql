@@ -119,6 +119,7 @@ where ename like '%A%' and ename like '%E%'
 select ename, job, sal
 from emp
 where job in('CLERK','SALESMAN') and sal not in(950, 1300, 1600)
+--where (job = 'CLERK' or job = 'SALESMAN') and sal not in(1600, 950, 1300)
 ;
 
 -- 15. 커미션이 $500 이상인
