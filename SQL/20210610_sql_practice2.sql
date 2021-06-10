@@ -36,7 +36,9 @@ from book
 
 -- (2) 마당서점에도서를출고하는출판사의총개수
 select count(distinct publisher)
+--select publisher, count(publisher)
 from book
+--group by publisher
 ;
 
 -- (3) 모든고객의이름, 주소
