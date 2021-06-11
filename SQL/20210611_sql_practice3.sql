@@ -6,8 +6,9 @@ from emp
 -- 17. SUBSTR 함수를 사용하여 4월에 입사한 사원을 출력하시오.
 select hiredate, ename as "4월 입사명단"
 from emp
-where substr(hiredate, 4, 2) = '04'
+where substr(hiredate, 4, 2) = '04' -- 4
 ;
+-- 숫자, 문자의 연산시에는 숫자 우선으로 자동 형변환
 
 -- 18. MOD 함수를 사용하여 사원번호가 짝수인 사람만 출력하시오.
 select empno, ename as "사원번호 짝수"
@@ -16,9 +17,9 @@ where mod(empno, 2) = 0
 ;
 
 -- 19. 입사일을 년도는 2자리(YY), 월은 숫자(MM)로 표시하고 요일은 약어 (DY)로 지정하여 출력하시오.
-select ename, to_char(hiredate, 'YY.MM DY') as hiredate
+select ename, hiredate, to_char(hiredate, 'YY.MM MON DY') as rhiredate
 from emp
-order by hiredate desc
+order by hiredate
 ;
 
 -- 20. 올해 몇 칠이 지났는지 출력하시오.
@@ -28,7 +29,7 @@ from dual;
 --수정
 
 -- 21. 사원들의 상관 사번을 출력하되 상관이 없는 사원에 대해서는 NULL 값 대신 0으로 출력하시오.
-select nvl(mgr, 0) as "상관사번"
+select nvl(mgr, 0) as "상관사번" -- 컬럼의 타입에 따라 설정값 주의할 것
 from emp
 ;
 
@@ -61,15 +62,16 @@ group by job
 ;
 
 -- 26. 관리자 수를 출력하시오.
-select mgr, count(mgr)
+select mgr, count(distinct mgr)
 from emp
+where mgr is not null
 group by mgr
 ;
 --수정
 select count(distinct mgr)
 from emp
 ;
-
+select count(distinct mgr) from emp;
 
 -- 27. 급여 최고액, 급여 최저액의 차액을 출력하시오.
 select max(sal) - min(sal)
@@ -100,16 +102,24 @@ order by deptno
 select deptno,
        decode(deptno, '10', 'ACCOUNTING',
                       '20', 'RESEARCH',
-                      '30', 'SALES') as detpname,
+                      '30', 'SALES',
+                      '40', 'OPERATOR') as detpname,
        decode(deptno, '10', 'NEWYORK',
                       '20', 'DALLAS',
-                      '30', 'CHICAGO') as loc,
+                      '30', 'CHICAGO',
+                      '40', 'SEOUL') as loc,
        count(*),
        round(avg(sal))       
 from emp
 group by deptno
 order by deptno
 ;
+
+-- 조인 이용
+
+
+-- 서브쿼리 이용
+
 
 -- 31. 업무를 표시한 다음 해당 업무에 대해 부서 번호별 급여 및 부서 10, 20, 30의 급여 총액을 각각 출력하시오.
 -- 별칭은 각 job, dno, 부서 10, 부서 20, 부서 30, 총액으로 지정하시오. 
@@ -122,5 +132,4 @@ from emp
 group by job, deptno
 order by deptno, job
 ;
-
 
