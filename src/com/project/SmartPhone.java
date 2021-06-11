@@ -22,6 +22,11 @@ public class SmartPhone {
 		int arrNum = Integer.parseInt(sc.nextLine());
 		System.out.print("수정하려면 1, 삭제하려면 2을 입력하세요 > ");
 		int menuNum = Integer.parseInt(sc.nextLine());
+		if(arrNum > contactArr.length) {
+			System.out.println("해당 배열이 존재하지 않습니다.");
+			System.out.println("처음으로 돌아갑니다.");
+			return;
+		}
 		switch(menuNum) {
 		case 1:
 			String name, tel, email, addr, birth, group;
@@ -40,6 +45,9 @@ public class SmartPhone {
 			break;
 		case 2:
 			Contact delArr;
+			if(1 == contactArr.length || arrNum == contactArr.length) {
+				contactArr[arrNum] = null;
+			}
 			for(int i=arrNum; i<contactArr.length; i++) {
 				delArr = contactArr[i];
 				contactArr[i] = contactArr[i+1];
