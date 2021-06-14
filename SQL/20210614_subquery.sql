@@ -1,0 +1,130 @@
+-- 2021.06.14
+-- SUBQUERY
+
+-- 서브쿼리는 하나의 SELECT문 안의 포함된 또 다른 SELECT문
+-- 메인쿼리 (서브쿼리)
+-- 서브쿼리는 메인 쿼리가 실행되기 이전에 한번만 실행
+-- 성능저하 이슈
+
+-- SELECLT (SCALAR SUBQUERY) 스칼라 부속질의
+-- FROM (INLINE VIEW) 결과를 뷰형태로 반환
+-- WHERE DEPTNO = ( SELECLT
+                 -- FROM
+                 -- WHERE DEPTNO ) 중첩질의
+                 
+-- 스칼라 부속질의
+-- 단일행, 단일열 값을 반환해야함(UPDATE SET절 사용가능)
+-- 비, 상관관계 가능
+SELECT O.CUSTID, (SELECT C.NAME FROM CUSTOMER C WHERE C.CUSTID = O.CUSTID) AS NAME
+FROM ORDERS O
+;
+SELECT ORDERS.CUSTID, CUSTOMER.NAME
+FROM ORDERS, CUSTOMER
+WHERE ORDERS.CUSTID = CUSTOMER.CUSTID
+;
+
+-- EMP 테이블만 사용해서 사원이름, 부서이름 출력
+SELECT E.ENAME, (SELECT D.DNAME FROM DEPT D WHERE E.DEPTNO = D.DEPTNO) AS DNAME
+FROM EMP E
+;
+SELECT ENAME, DNAME
+FROM EMP, DEPT
+WHERE EMP.DEPTNO = DEPT.DEPTNO
+;
+
+-- 마당서점의 고객별 판매액 출력
+SELECT C.CUSTID, C.NAME, SUM(O.SALEPRICE) AS "판매액"
+FROM ORDERS O, CUSTOMER C
+WHERE O.CUSTID = C.CUSTID
+GROUP BY C.CUSTID, C.NAME
+;
+-- 서브쿼리
+SELECT CUSTID, (SELECT NAME FROM CUSTOMER WHERE CUSTOMER.CUSTID = ORDERS.CUSTID) AS NAME,
+       SUM(ORDERS.SALEPRICE) AS "구매액"
+FROM ORDERS
+GROUP BY CUSTID
+;
+
+-- 인라인 뷰
+-- FROM절에서 사용되는 부속질의
+-- 반환값은 다중행, 다중열이어도 됨
+
+-- 고객번호가 2이하인 고객의 판매액 출력
+SELECT C.NAME, SUM(SALEPRICE) AS "구매액"
+FROM (SELECT * FROM CUSTOMER WHERE CUSTID <=2) C, ORDERS O
+WHERE C.CUSTID = O.CUSTID
+GROUP BY O.CUSTID, C.NAME
+;
+
+-- JOIN
+SELECT C.NAME, SUM(SALEPRICE)
+FROM ORDERS O, CUSTOMER C
+WHERE O.CUSTID = C.CUSTID
+GROUP BY C.CUSTID, C.NAME
+;
+
+-- 중첩질의
+-- WHERE절에 사용되는 부속질의
+-- 비교(=,>,<) : 단일행, 단일열, 상관관계가능
+-- 집합(IN, NOT IN) : 다중행, 다중열, 상관관계가능
+-- 한정(ALL, SOME(ANY)) : 다중행, 단일열, 상관관계가능
+-- 존재(EXISTS, NOT EXISTS) : 다중행, 단일열, 상관관계필수
+
+-- 평균급여보다 더 많은 급여를 받는 사원 출력
+SELECT ENAME, SAL
+FROM EMP
+WHERE SAL > (SELECT AVG(SAL) FROM EMP)
+ORDER BY SAL
+;
+
+-- 평균 주문금액 이하의 주문에 대해서 주문번호와 금액 출력
+SELECT ORDERID, SALEPRICE
+FROM ORDERS
+WHERE SALEPRICE <= (SELECT AVG(SALEPRICE) FROM ORDERS)
+;
+-- 각 고객의 평균 주문금액보다
+-- 큰 금액의 주문 내역에 대해서
+-- 주문번호, 고객번호, 금액 출력
+SELECT O1.ORDERID, O1.CUSTID, O1.SALEPRICE
+FROM ORDERS O1
+WHERE SALEPRICE > (SELECT AVG(SALEPRICE) FROM ORDERS O2 WHERE O1.CUSTID=O2.CUSTID)
+;
+SELECT AVG(SALEPRICE) FROM ORDERS WHERE CUSTID=O.CUSTID;
+
+-- 다중행 연산자 IN, NOT IN
+-- 결과가 2개이상 구해지는 쿼리문을 기술할 경우 다중행 연산자 사용
+-- 3000이상 받는 사원이
+-- 소속된 부서와 동일한 부서에서 근무하는 사원 출력
+SELECT ENAME, deptno
+FROM EMP
+WHERE DEPTNO IN(SELECT DISTINCT DEPTNO FROM EMP WHERE SAL >= 3000)
+;
+
+-- 대한민국에 거주하는 고객에게 판매한 도서의 총 판매액 출력
+SELECT SUM(SALEPRICE)
+FROM ORDERS
+WHERE CUSTID IN (SELECT CUSTID FROM CUSTOMER WHERE ADDRESS LIKE '%대한민국%')
+;
+
+-- 한정 ALL, SOME(ANY)
+-- ALL은 AND연산, SOME(ANY)는 OR연산
+-- 칼럼 비교연산자 ALL|SOME|ANY(부속질의)
+-- 3번 고객이 주문한 도서의 최고금액
+
+-- 보다 더 비싼 도서를 구입한 주문의 주문번호와 금액 출력
+SELECT ORDERID, SALEPRICE
+FROM ORDERS
+WHERE SALEPRICE > ALL(SELECT SALEPRICE FROM ORDERS WHERE CUSTID = 3)
+--WHERE SALEPRICE > (SELECT MAX(SALEPRICE) FROM ORDERS WHERE CUSTID = 3)
+;
+SELECT MAX(SALEPRICE) FROM ORDERS WHERE CUSTID = 3;
+
+-- EXISTS, NOT EXISTS
+-- 데이터의 존재 유무를 확인하는 연산자
+-- 상관관계 필수
+
+-- EXISTS 연산자로 대한민국에 거주하는 고객에게 판매한 도서의 총 판매액 출력
+SELECT SUM(SALEPRICE)
+FROM ORDERS O
+WHERE EXISTS (SELECT * FROM CUSTOMER C WHERE O.CUSTID = C.CUSTID AND C.ADDRESS LIKE '%대한민국%')
+;
