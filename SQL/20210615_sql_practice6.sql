@@ -60,6 +60,14 @@ SELECT MAX(B.PRICE - O.SALEPRICE)
 FROM ORDERS O, BOOK B
 WHERE O.BOOKID = B.BOOKID
 ;
+SELECT *
+FROM ORDERS O JOIN BOOK B
+ON O.BOOKID = B.BOOKID
+WHERE B.PRICE - O.SALEPRICE = (SELECT MAX(B.PRICE - O.SALEPRICE)
+                                FROM ORDERS O, BOOK B
+                                WHERE O.BOOKID = B.BOOKID)
+                                ;
+
 --------------------------------------------------------------
 
 -- (13) 도서의판매액평균보다자신의구매액평균이더높은고객의이름
