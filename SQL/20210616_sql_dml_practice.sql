@@ -106,3 +106,12 @@ UPDATE PHONEINFO_COM SET FR_C_COMPANY = '맨시티' WHERE IDX = 3;
 -- DELETE
 DELETE FROM PHONEINFO_COM WHERE IDX = 3;
 DELETE FROM PHONEINFO_COM WHERE IDX = (SELECT IDX FROM PHONEINFO_COM WHERE FR_C_COMPANY = NULL);
+
+
+
+-- 전체 친구 정보
+select *
+from phoneinfo_basic pb, phoneinfo_univ pu, phoneinfo_com pc
+where pb.idx = pu.fr_ref and pb.idx = pc.fr_ref(+)
+;
+
