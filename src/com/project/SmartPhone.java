@@ -30,6 +30,7 @@ public class SmartPhone {
 		switch(menuNum) {
 		case 1:
 			String name, tel, email, addr, birth, group;
+			System.out.print("이름을 입력하세요 >");
 			name = sc.nextLine();
 			System.out.print("전화번호을 입력하세요 > ");
 			tel = sc.nextLine();
@@ -47,10 +48,11 @@ public class SmartPhone {
 			Contact delArr;
 			if(1 == contactArr.length || arrNum == contactArr.length) {
 				contactArr[arrNum] = null;
-			}
-			for(int i=arrNum; i<contactArr.length; i++) {
-				delArr = contactArr[i];
-				contactArr[i] = contactArr[i+1];
+			} else {
+				for(int i=arrNum; i<contactArr.length - 1; i++) {
+					delArr = contactArr[i];
+					contactArr[i] = contactArr[i+1];
+				}
 			}
 			cnt--;
 			break;
@@ -62,8 +64,21 @@ public class SmartPhone {
 	
 	// 데이터 출력
 	void print() {
-		for(int i=0; i<contactArr.length; i++) {
-			contactArr[i].printInfo();
+		if (contactArr[0] == null) {
+			System.out.println("저장된 배열이 없습니다.");
+			return;
+		} else {
+			for(int i=0; i<contactArr.length; i++) {
+				contactArr[i].printInfo();
+			}
 		}
 	}
+	
+	public static void main(String[] args) {
+		SmartPhone sp = new SmartPhone();
+		sp.saveArr("a", "tel", "email", "addr", "birth", "group");
+		sp.modifyArr();
+		
+	}
+	
 }
