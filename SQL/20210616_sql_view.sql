@@ -45,22 +45,3 @@ where rownum < 6
 order by ename;
 
 
-
--- SEQUENCE : 번호 재생기
-create sequence pi_idx_pk;
-
--- 현재 스퀀스 + 증가치 - pk별로 각각 만들어서 사용
-select pi_idx_pk.nextval
-from dual;
-
--- 현재 시퀀스값 - fk
-select pi_idx_pk.currval
-from dual;
-
-
-
-
-
-
-
-
