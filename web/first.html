@@ -1,12 +1,22 @@
-<!DOCTYPE html>
-<html lang="ko"> // 시작
-<head>
-    <meta charset="UTF-8"> // 출력되는 언어
+ <!DOCTYPE html>  <!-- 문서의 첫행 표시, 웹 브라우저에 HTML5 임을 알림 -->
+<html lang="ko"> <!-- 시작, lang 속성 입력(생략가능)-->
+<head> <!-- 페이지의 필요한 추가 속성 작성 -->
+    <meta charset="UTF-8"> <!-- 출력되는 언어 -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> // 모바일 페이지 속성
-    <title>First HTML5</title> // 문서 제목
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 모바일 페이지 속성 -->
+    <title>First HTML5</title> <!-- 문서 제목 -->
+    <!-- 내부 스타일 설정 -->
+    <style> 
+        h1 {color:white;} <!-- 원하는 태그의 속성 설정-->
+    </style>
+    <!-- 외부 스타일 시트 로드 -->
+    <link rel="stylesheet" href="style.css">
+    <script src="outerjavascript.js"></script>
 </head>
-<body> // 내용
-    test    
+<body> <!-- 내용, 사용자에게 보여지는 부분 -->
+    <h1>test</h1>
+    <script>
+        console.log("안녕하세요. console에 출력합니다");
+    </script>
 </body>
 </html>
