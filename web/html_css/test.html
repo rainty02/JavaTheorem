@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 바깥 틀 */
+        #square{
+            width: 850px;
+            height: 1430px;
+            border: 5px solid rgb(211, 211, 211);
+        }
+
+        #square>header{
+            width: 768px;
+            height: 150px;
+            border: 1px solid rgb(211, 211, 211);
+            margin: 15px;
+            padding-left: 50px;
+        }
+
+        nav{
+            width: 818px;
+            height: 50px;
+            border: 1px solid rgb(211, 211, 211);
+            margin: 15px;
+        }
+
+        nav>ul>li{
+            float: left;
+            list-style: none;
+            width: 85px;
+        }
+
+        /* input text */
+        input[type=text] {
+            height: 18px;
+            float: right;
+            border: 1px solid rgb(211, 211, 211);
+            border-radius: 10px 0px 0px 10px;
+        }
+        /* input submit */
+        input[type=submit] {
+            float: right;
+            border: 1px solid rgb(211, 211, 211);
+            border-radius: 0px 10px 10px 0px;
+            margin-right: 10px;
+        }
+        
+        section{
+            width: 650px;
+            border: 1px solid rgb(211, 211, 211);
+            margin: 15px;
+            padding: 10px;
+            float: left;
+        }
+
+        aside>ul{
+            list-style: none;
+            text-align: center;
+            float: left;
+        }
+
+        footer{
+            clear: both;
+            border: 1px solid rgb(211, 211, 211);
+            margin: 15px;
+        }
+
+    </style>
+</head>
+<body>
+    
+    <div id="square">
+        <header>
+            <h1>HTML5 EXAMPLE</h1>
+            <h3>한빛미디어</h3>
+        </header>
+        <nav>
+            <ul>
+                <li>축구</li>
+                <li>야구</li>
+                <li>농구</li>
+            </ul>
+            <input type="submit">
+            <input type="text"> 
+        </nav>
+        <div id="wrap">
+            <section>
+                <header>
+                    <h1>‘페르소나’ 황의조와 다시 금메달 사냥</h1>
+                    <h5>2021년 7월 1일</h5>
+                </header>
+                <img src="http://placehold.it/430x280">
+                <p>김학범 감독이 이끄는 대한민국 남자 축구 올림픽대표팀이 2020 도쿄하계올림픽에 나설 최종 명단 18인을 공개했다. 많은 관심을 모았던 와일드카드(올림픽 나이등록제한(23세 이하) 외 선수)로는 황의조(29·보르도)를 포함해 김민재(25·베이징궈안), 권창훈(27·수원삼성)이 뽑혔다. 연령별 대표 선수들도 큰 이변 없이 주전급 대부분이 함께한다.</p>
+            </section>
+            <section>
+                <header>
+                    <h1>‘페르소나’ 황의조와 다시 금메달 사냥</h1>
+                    <h5>2021년 7월 1일</h5>
+                </header>
+                <img src="http://placehold.it/430x280">
+                <p>김학범 감독이 이끄는 대한민국 남자 축구 올림픽대표팀이 2020 도쿄하계올림픽에 나설 최종 명단 18인을 공개했다. 많은 관심을 모았던 와일드카드(올림픽 나이등록제한(23세 이하) 외 선수)로는 황의조(29·보르도)를 포함해 김민재(25·베이징궈안), 권창훈(27·수원삼성)이 뽑혔다. 연령별 대표 선수들도 큰 이변 없이 주전급 대부분이 함께한다.</p>
+            </section>
+        </div>
+        <aside>
+            <ul>
+            <p>카테고리</p>
+            <li>데이터</li>
+            <li>데이터</li>
+            <li>데이터</li>
+            <li>데이터</li>
+            <li>데이터</li>
+            <br>
+            <p>최근 글</p>
+            <li>데이터</li>
+            <li>데이터</li>
+            <li>데이터</li>
+            </ul>
+        </aside>
+        <footer>
+            Copyright 2021. All rights reserved.
+        </footer>
+    </div>
+
+</body>
+</html>
