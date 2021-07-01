@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 각 블럭 하단 밑줄 */
+        .border_bottom {
+            border-bottom: 2px solid rgb(219, 217, 217);
+        }
+        /* 브라우저 가운데 위치 */
+        .div_algin_center{
+            margin: 0 auto;
+        }
+        /* 바깥의 틀 */
+        #square {
+            width: 840px;
+            height: 1330px;
+            border: 5px solid rgb(219, 217, 217);
+            border-radius: 10px;
+        }
+        /* 헤더 설정 */
+        div>header {
+            width: 770px;
+            height: 80px;
+            margin: 15px;
+            padding: 20px;
+            line-height: 16px;
+        }
+        /* 네이게이션 설정 */
+        nav {
+            width: 810px;
+            height: 32px;
+            line-height: 16px;
+            margin: 15px;
+        }
+        /* 네비게이션 리스트 */
+        nav>ul>li {
+            list-style: none;
+            float: left;
+            margin-left: 15px;
+        }
+        /* input text */
+        input[type=text] {
+            height: 18px;
+            float: right;
+            border: 1px solid rgb(219, 217, 217);
+            border-radius: 10px 0px 0px 10px;
+        }
+        /* input submit */
+        input[type=submit] {
+            float: right;
+            border: 1px solid rgb(219, 217, 217);
+            border-radius: 0px 10px 10px 0px;
+        }
+        /* 중앙 contents, aside */
+        #wrap {
+            width: 800px;
+            height: 1050px;
+            margin: 15px;
+        }
+        /* contents 설정 */
+        .contents {
+            width: 600px;
+            height: 1080px;
+            float: left;
+            margin: 15px;   
+        }
+        /* aside 설정 */
+        aside {
+            float: left;
+            text-align: center;
+        }
+        /* aside 리스트 설정 */
+        aside>ul>li {
+            list-style: none;
+            text-align: center;
+        }
+        /* footer 설정 */
+        footer {
+            height: 16px;
+            line-height: 16px;
+            clear: both;
+            color: blue;
+            margin: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="square" class="div_algin_center">
+        <header class="border_bottom">
+            <h1>HTML5 EXAMPLE</h1>
+            <h4>한빛미디어</h4>
+        </header>
+        <nav class="border_bottom">
+            <ul>
+                <li>HTML5</li>
+                <li>CSS3</li>
+                <li>JavaScript</li>
+            </ul>
+            <input type="submit" value="검색">
+            <input type="text">
+        </nav>
+
+        <div id="wrap">
+            <section id="contents1" class="contents">
+                <header>
+                    <h2>‘페르소나’ 황의조와 다시 금메달 사냥</h2>
+                </header>
+                <h5>
+                    2021년 7월 1일
+                </h5>
+                <img src="http://placehold.it/430x280" >
+                <article class="border_bottom">
+                    <P>
+                        김학범 감독이 이끄는 대한민국 남자 축구 올림픽대표팀이 2020 도쿄하계올림픽에 나설 최종 명단 18인을 공개했다. 많은 관심을 모았던 와일드카드(올림픽 나이등록제한(23세 이하) 외 선수)로는 황의조(29·보르도)를 포함해 김민재(25·베이징궈안), 권창훈(27·수원삼성)이 뽑혔다. 연령별 대표 선수들도 큰 이변 없이 주전급 대부분이 함께한다.
+                    </P>
+                </article>
+                <header>
+                    <h2>베네수엘라에 패배…도쿄행 ‘적신호’</h2>
+                </header>
+                <h5>
+                    2021년 7월 1일
+                </h5>
+                <img src="http://placehold.it/430x28s0">
+                <article class="border_bottom">
+                    <P>
+                        아쉬운 결과다. 분위기를 주도하는 데 실패했다. 한순간 수비가 급격히 무너지며 외곽포와 리바운드를 대거 허용하는 모습도 눈에 띄었다. 전반을 38-56, 무려 18점 차이로 크게 뒤진 채 마무리했다. 후반 들어선 조금씩 힘을 냈다. 3쿼터 한때 64-65까지 쫓아가기도 했다. 체력안배의 실패한 것일까. 한국농구의 고질병인 뒷심 부족이 또 등장했다.
+                    </P>
+                </article>
+            </section>
+            <aside>
+                <ul>
+                    <p>카테고리</p>
+                    <li>데이터</li>
+                    <li>데이터</li>
+                    <li>데이터</li>
+                    <li>데이터</li>
+                    <li>데이터</li>
+                </ul>
+                <ul>
+                    <p>최근 글</p>
+                    <li>데이터</li>
+                    <li>데이터</li>
+                    <li>데이터</li>
+                    <li>데이터</li>
+                </ul>
+            </aside>
+        </div>
+        <footer>Copyright 2021. All rights reserved.</footer>
+    </div>
+</body>
+
+</html>

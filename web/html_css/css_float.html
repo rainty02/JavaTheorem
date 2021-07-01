@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div.box{
+            width: 100px;
+            height: 100px;
+            background-color: skyblue;
+            text-align: center;
+            line-height: 100px;
+            border: 3px solid #DDD;
+
+            float: left;
+            margin: 3px;
+        }
+        #wrap{
+            /* float 정렬 영향 받지 않도록1 */
+            /* overflow: hidden; */
+        }
+        .footer{
+            /* float 정렬 영향 받지 않도록2 */
+            clear: both;
+
+            width: 324px;
+            height: 100px;
+            background-color: steelblue;
+            text-align: center;
+            line-height: 100px;
+            border: 3px solid #DDD;
+            margin: 3px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="wrap">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+    </div>
+    <div class="footer">
+        footer
+    </div>
+
+</body>
+</html>
