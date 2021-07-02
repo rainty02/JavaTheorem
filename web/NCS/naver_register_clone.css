@@ -1,0 +1,133 @@
+/* charset 설정 */
+@charset "utf-8";
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+/* 백그라운드 컬러 */
+#bg_color{
+    width: 100%;
+    height: 100%;
+    background-color: #f4f5f6;
+}
+
+/* 메인을 감싸는 블록 */
+#main_wrap{
+    width: 500px;
+    height: 1200px;
+    padding-top: 80px;
+    padding-left: 15px;
+    margin: 0 auto;
+}
+/* 로고 */
+#logo{
+    width: 210px;
+    height: 45px;
+    background-image: url(../images/네이버.PNG);
+    margin-left: 132px;
+    margin-bottom: 40px;
+}
+/* 아이디 / @naver.com 병합*/
+#id{
+    width: 350px;
+    height: 45px;
+    border: 1px solid #DDD;
+    padding: 0 10px;
+    margin-top: 5px;
+    margin-bottom: 30px;
+    display: inline-block;
+    float: left;
+}
+#id:focus{
+    outline: none;
+}
+#com{
+    width: 115px;
+    height: 45px;
+    border: 1px solid #DDD;
+    background-color: white;
+    margin-top: 5px;
+    margin-left: -8px;
+    line-height: 45px;
+    display: inline-block;
+    border-left: 0px;
+    color: gray;
+}
+/* float 다음 블록 해제 */
+#clear{
+    clear: both;
+}
+/* 긴 블럭 input 설정 */
+.full_length{
+    width: 460px;
+    height: 45px;
+    border: 1px solid #DDD;
+    padding: 0 10px;
+    margin-top: 5px;
+    margin-bottom: 30px;
+}
+/* 짧은 블럭 input 설정 */
+.short_length{
+    width: 139px;
+    height: 45px;
+    border: 1px solid #DDD;
+    padding: 0 10px;
+    margin-top: 5px;
+    margin-bottom: 30px;
+    margin-right: 5px;
+}
+/* select 크기 설정 */
+#month{
+    height: 47px;
+}
+/* select 크기 설정 */
+#gender{
+    width: 480px;
+    height: 47px;
+}
+/* select 크기 설정 */
+#cell_phone{
+    width: 480px;
+    height: 47px;
+    margin-bottom: 10px;
+}
+/* 전화번호 입력 크기 설정 */
+#tel_text{
+    width: 340px;
+    height: 45px;
+    padding: 0 10px;
+    border: 1px solid #DDD;
+    margin-bottom: 10px;
+}
+/* 전화번호 입력 버튼 설정 */
+#tel_btn{
+    width: 115px;
+    height: 48px;
+    color: white;
+    background-color: rgb(66, 190, 103);
+    border-left: -2px;
+    border: 1px solid #DDD;
+}
+/* 가입하기 설정 */
+#submit{
+    color: white;
+    background-color: rgb(66, 190, 103);
+}
+/* 라벨 설정 */
+label{
+    display: block;
+    font-weight: bold;
+    font-size: 0.8em;
+}
+/* footer 설정 */
+footer{
+    text-align: center; 
+    font-size: 0.7em;
+    color: rgb(128, 128, 128);
+}
+footer>a{
+    text-decoration: none;
+    color: rgb(128, 128, 128);
+}

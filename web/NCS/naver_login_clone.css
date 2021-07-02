@@ -1,0 +1,118 @@
+/* charset 설정 */
+@charset "utf-8";
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+/* 백그라운드 컬러 */
+#bg_color{
+    width: 100%;
+    height: 100%;
+    background-color: #f4f5f6;
+}
+
+/* 메인을 감싸는 블록 */
+#main_wrap{
+    width: 500px;
+    height: 1000px;
+    padding-top: 100px;
+    padding-left: 25px;
+    margin: 0 auto;
+}
+
+/* 네이버 로고 */
+#logo{
+    width: 210px;
+    height: 45px;
+    background-image: url(../images/네이버.PNG);
+    margin-left: 132px;
+    margin-bottom: 40px;
+}
+
+/* 로그인 관련 */
+.login{  
+    width: 450px;
+    height: 45px;
+    margin-bottom: 15px;
+    padding: 0 10px;
+    border: 1px solid rgb(223, 223, 223);
+}
+
+/* 로그인 버튼 */
+.btn{
+    width: 474px;
+    height: 45px;
+    margin-bottom: 15px;
+    background-color: green;
+    border: 0px;
+    color: white;
+    font-size: 1.2em;
+}
+
+/* 로그인 하단 로그인 상태 */
+#login_stat{
+    width: 470px;
+    border-bottom: 1px solid rgb(223, 223, 223);
+    line-height: 20px;
+    font-size: 15px;
+    padding-bottom: 15px;
+}
+/* 체크박스 */
+#chk{
+    width: 20px;
+    height: 20px;
+    float: left;
+    margin-right: 10px;
+}
+/* 중단 더욱 간편한 로그인 */
+#simple_login{
+    width: 470px;
+    height: 200px;
+    padding-top: 30px;
+}
+#simple_login>h1{
+    font-size: 23px;
+    font-weight: lighter;
+    text-align: center;
+}
+/* QR, 일회용 로그인 */
+.sub_login{
+    width: 232px;
+    height: 45px;
+    background-color: white;
+    border: 1px solid green;
+    margin-top: 20px;
+    font-size: 1.1em;
+}
+/* 아이디, 비밀번호찾기 회원가입 설정 */
+#finder{
+    text-align: center;
+    margin-top: 10px;
+}
+#finder>a{
+    text-decoration: none;
+    color: rgb(134, 134, 134);
+}
+/* 하단 배너 */
+#banner{
+    width: 420px;
+    height: 145px;
+    background-image: url(../images/banner.PNG);
+    background-size: 100%;
+    margin-top: 40px;
+    margin-left: 27px;
+    border: 1px solid rgb(194, 194, 194);
+}
+/* footer 설정 */
+footer{
+    text-align: center;
+    margin-top: 100px;  
+}
+
+footer>a{
+    text-decoration: none;
+    color: black;   
+    font-size: 0.7em;
+}
