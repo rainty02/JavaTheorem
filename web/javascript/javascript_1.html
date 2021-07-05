@@ -211,25 +211,48 @@
         console.log('273' + 22); // 문자 + 숫자
         console.log('273' + '22'); // 문자 + 문자
         console.log(273 + 22); // 숫자 + 숫자
-*/
+
         // 덧셈을 제외한 사칙 연산은 숫자 우선 연산
         console.log('273 * 22') // 문자열
         console.log(273 * '22'); // 숫자 + 문자
         console.log('273' * 22); // 문자 + 숫자
         console.log('273' * '22'); // 문자 + 문자
         console.log(273 * 22); // 숫자 + 숫자
-
+*/
         // Integer.parseInt(String) = Number(String)
         var year = prompt('태어난 년도를 입력해주세요.');
         var numberVal = Number(year);
+        // 숫자타입으로 강제적안 형변환, 문자열이 숫자가 아닌 경우 NaN 반환
+
         console.log('타입은 ', typeof numberVal);
 
         // isNaN(숫자데이터) - NaN일때 true 반환
-        if(!isNaN(numberVal)){
+        // if(!isNaN(numberVal)){
+        // if(boolean(numberVal)) {
+        if(!!numberVal) {
             alert(2021-numberVal+'살 입니다.'); // year 문자열을 숫자타입으로 자동형변환
         } else {
             alert('정상적인 숫자 데이터를 입력해주세요.')
         }
+
+
+        // boolean 타입으로 강제 형변환
+        // boolean() => 논리값 반환
+        // 0, NaN, ''(공백), null, undefined => false
+        // 나머지 모두 true
+        console.log('Boolean(0)', Boolean(0));
+        console.log('Boolean(NaN)', Boolean(NaN));
+        console.log('Boolean(\'\')', Boolean(''));
+        console.log('Boolean(null)', Boolean(null));
+        console.log('Boolean(undefined)', Boolean(undefined));
+
+
+        // 논리부정연산자 사용시 0, NaN, ''(공백), null, undefined - false로 자동형변환
+        console.log(!!0);
+        console.log(!!NaN);
+        console.log(!!'');
+        console.log(!!null);
+        console.log(!!undefined);
 
 
 
