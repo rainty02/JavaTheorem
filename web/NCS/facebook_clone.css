@@ -153,6 +153,7 @@ li{
     list-style: none;
     float: left;
     padding-right: 10px;
+    
 }
 li>input{
     width: 30px;
