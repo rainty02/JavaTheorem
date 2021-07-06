@@ -13,10 +13,10 @@
         // 2. 명시적 선언함수
         // 변수의 호이스팅 특징으로 변수는 미리 만들어진다.
         console.log('check', fn1);
-        //fn1();
+        //fn1(); // 함수명은 선언됐지만 함수는 대입하지 않아 undefined 반환
         // 익명함수를 사용하는 예
         var fn1 = function () {
-            alert('익명함수 호출!!!');
+            alert('익명함수 호출');
         };
         var fn1 = function () {
             alert('재정의된 함수 호출');
@@ -30,7 +30,7 @@
             alert('명시적 정의 함수 호출');
         }
         function fn2() {
-            alert('재정의된 명시적 함수 호출!!!');
+            alert('재정의된 명시적 함수 호출');
         }
         // 함수의 호출
         //fn2();
@@ -51,8 +51,8 @@
             alert(name+'님 반갑습니다.');
         }
 
-        hello('KING', 10, 20);        
-
+        hello('KING', 10, 20);
+        // 추가적인 매개변수는 arguments에 저장
     </script> -->
 
     <!-- <script>
@@ -70,6 +70,7 @@
 
     <!-- <script>
         // 함수에서 사용되는 return
+        // 가급적 return은 한번만 사용하도록 코드 작성
         // 1. 함수의 종료
         // 2. 값의 반환
 
@@ -130,6 +131,7 @@
     </script> -->
 
     <script>
+
         var won  = '1000원';
         var dollar = '1.5$';
 
@@ -141,7 +143,15 @@
         // parseInt() / parseFloat() 사용시
         // 숫자가 아닌 값을 버리고 숫자를 반환
         console.log(parseInt(won));
+        console.log(parseInt(dollar)); // 소수점 버림
         console.log(parseFloat(dollar));
+
+        console.log(parseInt('0x273')); // 16진수 표현
+        console.log(parseInt('0273')); // 8진수 표현
+        console.log(parseInt('237', 8)); // 8진수 표현
+        console.log(parseInt('273', 16)); // 16진수 표현
+        console.log(parseInt('1000', 2)); // 2진수 표현
+
     </script>
 </head>
 <body>
