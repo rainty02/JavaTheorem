@@ -55,7 +55,7 @@
 
     </script> -->
 
-    <script>
+    <!-- <script>
         // 가변 매개변수 활용
         function sumAll(){
             var sum = 0;
@@ -66,9 +66,83 @@
         }
         console.log('1~10까지의 합 : ', sumAll(1,2,3,4,5,6,7,8,9,10));
 
+    </script> -->
+
+    <!-- <script>
+        // 함수에서 사용되는 return
+        // 1. 함수의 종료
+        // 2. 값의 반환
+
+        function returnFunc(){
+            alert('AAA');
+            return; // 함수의 종료
+            alert('BBB');
+        }
+        var value = returnFunc();
+        // 리턴값이 없으므로 undefined 타입의 undefined 값으로 확인됨
+        console.log(typeof value, value);
+    </script> -->
+
+    <!-- <script>
+        // 콜백 함수 : 매개변수로 전달받은 함수
+        // 매개변수로 전달받은 함수를 10번 실행하는 함수를 작성
+        function callTenTimes(callBackFn){
+            // 데이터처리 ....
+            for(var i=0; i<10; i++){
+                callBackFn();
+            }
+        }
+
+        function callBack(){
+            console.log('callBack Function call');
+        }
+        var callBack = function(){
+            console.log('callBack Function call');
+        };
+
+        callTenTimes(callBack);
+    </script> -->
+
+    <!-- <script>
+        //  Interval 함수
+        // 1초마다 시간을 출력
+        var id = setInterval(function(){
+            // var html = '<h3>' + new Date() + '</h3>'
+            // document.body.innerHTML = html;
+            document.body.innerHTML = '<h3>' + new Date() + '</h3>';
+        }, 1000);
+
+        // 10초후에 인터벌함수 종료
+        setTimeout(function(){
+            clearInterval(id);
+        }, 10000);
+    </script> -->
+
+    <!-- <script>
+        // eval 함수 : 문자열을 코드로 실행하는 함수
+        // 문자열 생성
+        var jsStr = '';
+        jsStr += 'var num11 = 10;';
+        jsStr += 'alert(num11);';
+
+        // 문자열을 코드로 실행
+        eval(jsStr);
+    </script> -->
+
+    <script>
+        var won  = '1000원';
+        var dollar = '1.5$';
+
+        // Number() 사용시
+        // 숫자가 아닌 문자가 입력되면 NaN 반환
+        console.log(Number(won)); // NaN
+        console.log(Number(dollar)); // NaN
+
+        // parseInt() / parseFloat() 사용시
+        // 숫자가 아닌 값을 버리고 숫자를 반환
+        console.log(parseInt(won));
+        console.log(parseFloat(dollar));
     </script>
-
-
 </head>
 <body>
     
