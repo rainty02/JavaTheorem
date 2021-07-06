@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,8 +25,8 @@
         console.log(obj.name);
     </script> -->
 
-    <script>
-        // 객체의 속성을 동적으로 추가
+    <!-- <script>
+        // 객체의 속성을 동적으로 추가, 삭제
         var player = {};
         console.log(player); 
         
@@ -36,11 +37,78 @@
         player.play = function(){
             alert('Goal!!');
         };
+        player.address = '런던';
         console.log(player); 
+
+        // 속성 삭제 : delete
+        delete player.address;
+        console.log(player); 
+    </script> -->
+
+    <script>
+        // body를 읽기전에 실행하므로 body가 없으므로 실행되지 않음
+        // html을 다 읽고 난 뒤 실행
+        window.onload = function () {
+            // 학생들의 과목점수를 저장하는 배열
+            // 학생들의 과목점수는 객체로 생성 => 배열로 객체를 저장
+            var students = [];
+            // 배열(객체)에 요소를 추가하는 메소드
+            students.push({ name: 'AAA', kor: 90, eng: 91, math: 80 });
+            students.push({ name: 'BBB', kor: 80, eng: 89, math: 90 });
+            students.push({ name: 'CCC', kor: 70, eng: 90, math: 10 });
+            students.push({ name: 'DDD', kor: 60, eng: 99, math: 20 });
+            students.push({ name: 'EEE', kor: 50, eng: 98, math: 30 });
+            students.push({ name: 'FFF', kor: 40, eng: 97, math: 40 });
+            students.push({ name: 'GGG', kor: 30, eng: 96, math: 50 });
+            students.push({ name: 'HHH', kor: 20, eng: 95, math: 60 });
+            students.push({ name: 'III', kor: 10, eng: 94, math: 70 });
+            students.push({ name: 'JJJ', kor: 90, eng: 93, math: 80 });
+
+            // 각 요소 객체에 메소드를 추가
+            // 합을 구해서 반환하는 메소드
+            // 평균값을 구해서 반환하는 메소드
+            for (var i = 0; i < students.length; i++) {
+                // 합을 구하는 메소드
+                students[i].getSum = function () {
+                    return this.kor + this.eng + this.math;
+                }
+                // 평균을 구하는 메소드
+                students[i].getAvg = function () {
+                    return this.getSum() / 3;
+                }
+                // 데이터 출력 메소드
+                students[i].print = function () {
+                    return this.name + ' : ' + this.getSum() + ' : ' + this.getAvg();
+                }
+            }
+
+            // var html = '<h3> 이름 : 총점 : 평균 </h3>';
+            var html = '<table border="1">';
+                html += '   <tr>';
+                html += '       <th>이름</th>';
+                html += '       <th>총점</th>';
+                html += '       <th>평균</th>';
+                html +='    </tr>';
+            for (var i = 0; i < students.length; i++) {
+                // body태그에 요소들을 추가
+                html += '   <tr>';
+                html += '       <td>'+students[i].name+'</td>';
+                html += '       <td>'+students[i].getSum()+'</td>';
+                html += '       <td>'+students[i].getAvg()+'</td>';
+                html += '   </tr>';
+                // html += '<h3>' + students[i].print() + '</h3>';
+            }
+            html += '</table>';
+            document.body.innerHTML = html;
+        }
     </script>
 
+
+    </script>
 </head>
+
 <body>
-    
+
 </body>
+
 </html>
