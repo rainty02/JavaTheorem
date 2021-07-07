@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript Event</title>
+    <style>
+        h1{
+            background-color: blanchedalmond;
+            display: inline-block;
+        }
+        h2{
+            background-color: cornsilk;
+        }
+    </style>
+
+    <script>
+        
+        window.onload = function(){
+            // 이벤트 적용 : 캐스팅 후 이벤트 속성에 핸들러 할당
+            // h1 태그를 캐스팅
+            var header = document.getElementById('btn');
+            // 이벤트 속성에 핸들러 할당
+            header.onclick = function(){
+                alert('h1태그를 클릭했습니다');
+
+            // 이벤트 속성 제거
+            header.onclick = null;
+            };
+        };
+
+        
+        function mClick(){
+            alert('클릭했습니다');
+        };
+    </script>
+
+</head>
+<body>
+    
+    <h1 id='btn'>Click</h1>
+    <h2 onclick="mClick();">Click</h2>
+
+</body>
+</html>
