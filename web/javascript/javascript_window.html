@@ -28,7 +28,55 @@
         );
         */
 
-        console.log(screen);
+        // console.log(screen);
+        
+        /*
+        // 웹 주소관련
+        console.log(location);
+
+        // 3초 후 해당 페이지로 이동
+        setTimeout(function(){
+            location.href='https://www.google.com';
+        }, 3000);
+
+        if(confirm('구글로 이동하시겠습니까?')){
+            location.href='https://www.google.com';
+        };
+        */
+
+        // 네이게이터 관련
+        // console.log(navigator);
+
+
+        onload = function(){
+            // 텍스트 노드를 갖고 있는 문서객체
+            // 태그 생성, 텍스트 생성 -> 태그에 텍스트 연결
+            // h1 tag 생성
+            var header = document.createElement('h1');
+            // 텍스트 노드 생성
+            var text = document.createTextNode('안녕하세요');
+            // tag에 텍스트노드 연결
+            header.appendChild(text); // <h1>안녕하세요</h1>
+            document.body.appendChild(header);
+
+
+            // 텍스트 노드가 없는 문서객체
+            // img 태그 생성 -> 속성도 적용
+            var img = document.createElement('img');
+            // img.src = '../images/html.png';
+            // img.width = 300;
+            // img.height = 400;
+
+            // setAttribute 속성값 직접참조하지 않음
+            img.setAttribute('src', '../images/html.png');
+            img.setAttribute('width', '300');
+            // 지정속성이 아닌 속성 추가
+            img.setAttribute('data-role', 'image');
+
+            document.body.appendChild(img);
+        };
+
+
 
 
     </script>
