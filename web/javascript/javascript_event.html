@@ -7,11 +7,15 @@
     <title>Javascript Event</title>
     <style>
         h1{
-            background-color: blanchedalmond;
-            display: inline-block;
+            background-color: blanchedalmond;   
         }
         h2{
             background-color: cornsilk;
+        }
+        .btn{
+            width: 100px;
+            height: 30px;
+            border: 1px solid black;
         }
     </style>
 
@@ -27,7 +31,54 @@
 
             // 이벤트 속성 제거
             header.onclick = null;
+            
             };
+
+            document.getElementById('btn1').onclick = function(){
+                // document.getElementById('btn1').style.backgroundColor = 'black';
+                // document.getElementById('btn1').style.color = 'white';
+                // this : 이벤트가 발생한 객체 가르킴
+                this.style.backgroundColor = 'black';
+                this.style.color = 'white';
+            }
+
+            // 버튼A, 버튼B를 클릭할 때 클릭횟수를 화면에 출력
+            // 버튼과 출력 영역을 캐스팅
+            var btnA = document.getElementById('btnA');
+            var btnB = document.getElementById('btnB');
+            var cntA = document.getElementById('cntA');
+            var cntB = document.getElementById('cntB');
+
+            // 버튼에 클릭이벤트 연결
+            btnA.onclick = function(){
+                // 카운트를 증가시키고 화면갱신
+                var cnt = Number(cntA.innerText) + 1;
+                cntA.innerText = cnt;
+            };
+
+            btnB.onclick = function(){
+                // 카운트를 증가시키고 화면갱신
+                // var cnt = Number(cntB.innerText) + 1;
+                cntB.innerText = Number(cntB.innerText) + 1;
+                // 이벤트 강제 발생
+                btnA.onclick();
+            };
+
+            // form 태그 캐스팅
+            var form = document.getElementById('myForm');
+            form.onsubmit = function(){
+                console.log('submit 이벤트');
+
+                var id = document.getElementById('userID').value;
+                console.log(typeof id, id);
+                if(id.length<1){
+                    alert('아이디를 입력해주세요');
+                    return false;
+                };
+
+            };
+
+
         };
 
         
@@ -38,9 +89,25 @@
 
 </head>
 <body>
+
+
+    <form id="myForm" action="https://www.naver.com" method="POST">
+        id <input type="text" id="userID" name="userID"><br>
+        pw <input type="password" id="userPW" name="userPW"><br>
+        <input type="submit" value="로그인">
+    </form>
+
     
+    <button id="btnA" class="btn">ButtonA</button>
+    <input id="btnB" class="btn" type="button" value="ButtonB">
+    <!-- <input class="btn" type="submit" value="ButtonC"> -->
+
+    <h3>Button A - <span id="cntA">0</span></h3>
+    <h3>Button B - <span id="cntB">0</span></h3>
+
     <h1 id='btn'>Click</h1>
     <h2 onclick="mClick();">Click</h2>
+    <h1 id="btn1">클릭하세요</h1>
 
 </body>
 </html>
