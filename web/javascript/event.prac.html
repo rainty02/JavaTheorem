@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+
+        onload = function(){
+            // h1 태그 캐스팅
+            var header = document.getElementById('btn1');
+            // 이벤트 속성에 핸들러 할당
+            header.onclick = function(){
+                alert('h1 태그를 클릭했습니다');
+            // 이벤트 속성 제거
+            header.onclick = null;
+            };
+
+            document.getElementById('btn1').onclick = function(){
+                this.style.backgroundColor = 'black';
+                this.style.color = 'white';
+            }
+
+            var btn1 = document.getElementById('btn1');
+            var cnt1 = document.getElementById('cnt1');
+
+            btn1.onclick = function(){
+                var cnt = Number(cntA.innerText) + 1;
+                cnt1.innerText = cnt;
+            };
+
+        };
+
+    </script>
+</head>
+<body>
+    <h1 id="btnA">클릭클릭</h1>
+    <button id="btn1" class="btn">ButtonA</button>
+    <h1>클릭 <span id="cnt1">0</span>회</h1>
+</body>
+</html>

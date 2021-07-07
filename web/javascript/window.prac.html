@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+
+        window.onload = function(){
+            // // 텍스트 노드를 갖고 있는 문서객체
+            // // createElement : 요소(태그) 생성
+            // var header = document.createElement('div');
+            // // createTextNode : 텍스트노드 생성
+            // var text = document.createTextNode('텍스트노드 추가');
+            // // 요소(태그)에 텍스트노드 연결
+            // header.appendChild(text);
+            // // 바디에 문서객체 연결
+            // document.body.appendChild(header);
+
+            // // 텍스트 노드가 없는 문서객체
+            // var img = document.createElement('img');
+            // img.setAttribute('src', '../images/html.png');
+            // img.setAttribute('width', '300');
+
+            // document.body.appendChild(img);
+
+            // // 바디에 텍스트 삽입
+            // document.body.innerText = '<h1>test</h1>';
+            // // 바디에 html 삽입
+            // document.body.innerHTML = '<h1>test</h1>';
+
+
+
+            // html 문서dp 작성된 태그를 문서객체로 만들기
+            var header1 = document.getElementById('header-1');
+            var header2 = document.getElementById('header-2');
+            
+
+            console.log(typeof header1, header1.innerHTML);
+            console.log(typeof header2, header2.innerHTML);
+
+            // 해당 HTML 변경
+            header1.innerHTML = 'Hello';
+            header2.innerHTML = 'See u again'
+
+        };
+
+    </script>
+</head>
+<body>
+    
+    <header>머릿말입니다</header>
+
+    <p id="header-1"> 헤더-1 </p>
+    <p id="header-2"> 헤더-2 </p>
+
+</body>
+</html>

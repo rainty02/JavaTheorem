@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script>
+        onload = function(){
+            // 객체 생성
+            var car = {
+                publisher : 'porshe',
+                medel : '911turbo',
+                color : 'white',
+                price : 300000000
+            };
+
+            // 객체에서 json 문자열로 변경
+            var jsonData = JSON.stringify(car);
+            console.log(jsonData);
+            // json 문자열에서 객체로 변경
+            document.getElementById('json').innerHTML = jsonData;
+
+            var newData = '{"publisher":"porshe","medel":"911turbo","color":"white","price":300000000}';
+            var newCar = JSON.parse(newData);
+            console.log(typeof newCar, newCar);
+        };
+    </script>
+
+</head>
+<body>
+    
+    <h2 id="json">json 연습중입니다</h2>
+
+</body>
+</html>

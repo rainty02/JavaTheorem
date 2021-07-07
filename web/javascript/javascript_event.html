@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Javascript Event</title>
     <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
         h1{
             background-color: blanchedalmond;   
         }
@@ -31,7 +35,6 @@
 
             // 이벤트 속성 제거
             header.onclick = null;
-            
             };
 
             document.getElementById('btn1').onclick = function(){
@@ -73,23 +76,43 @@
                 console.log(typeof id, id);
                 if(id.length<1){
                     alert('아이디를 입력해주세요');
+                    // 유효성 검사
                     return false;
                 };
 
             };
 
+            // 이벤트가 중첩되서 더블링이 될 경우 처리하는 법
+            var p1 = document.getElementById('p1');
+            p1.onclick = function(e){
+                // e가 null이면 false를 반환하므로 false 일 때 이벤트 실행
+                var event = e || window.event;
+                alert('P Click');
+
+                // IE일 때
+                // event.cancelBubble = true;
+                // IE 이외 브라우저
+                if(event.stopPropagation){
+                    event.stopPropagation();
+                };
+            };
 
         };
 
         
-        function mClick(){
-            alert('클릭했습니다');
-        };
+        
     </script>
 
 </head>
 <body>
 
+    <div style="border: 2px solid black;"onclick="alert('outer div')">
+        <div style="border: 2px solid green;"onclick="alert('inner div')">
+            <h1 style="border: 2px solid blue;"onclick="alert('h1')">
+                <p id="p1" style="border: 2px solid red; background-color: red; width: 50%;">클릭하세요</p>
+            </h1>
+        </div>
+    </div>
 
     <form id="myForm" action="https://www.naver.com" method="POST">
         id <input type="text" id="userID" name="userID"><br>
@@ -106,6 +129,10 @@
     <h3>Button B - <span id="cntB">0</span></h3>
 
     <h1 id='btn'>Click</h1>
+    <script>function mClick(){
+        alert('클릭했습니다');
+    };
+    </script>
     <h2 onclick="mClick();">Click</h2>
     <h1 id="btn1">클릭하세요</h1>
 
