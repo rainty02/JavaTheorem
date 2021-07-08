@@ -64,3 +64,8 @@ form label{
     font-family: 'Jua', sans-serif;
     background-color: aliceblue;
 }
+
+div.msg{
+    color: red;
+    display: none;
+}
