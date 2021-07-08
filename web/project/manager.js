@@ -174,7 +174,7 @@ function setList(){
 // 배열의 요소 삭제 함수
 function deleteMember(index){
     // alert(index+'번 회원의 정보를 삭제합니다.');
-    // var chk = confirm('삭제하시겠습니까?');
+    // var chk = confirm('삭제하시겠습니까?');s
 
     // 배열의 index 요소를 삭제
     // splice(index, count)
@@ -191,5 +191,53 @@ function deleteMember(index){
 
 // 배열의 요소 수정 함수
 function editMember(index){
-    alert(index+'번 회원의 정보를 수정합니다.');
+    // alert(index+'번 회원의 정보를 수정합니다.');
+
+    // 전달받은 index로 members 배열의 객체를 특정할 수 있음
+    // editForm의 태그의 value값을 세팅
+    var editUserId = document.querySelector('#editId');
+    var editUserPW = document.querySelector('#editPW');
+    var editChkPW = document.querySelector('#editChkPW');
+    var editUserName = document.querySelector('#editName');
+    var editIndex = document.querySelector('#index');
+
+    // 이전 데이터를 폼에 세팅
+    editUserId.value = members[index].userID;
+    editUserPW.value = members[index].userPW;
+    editChkPW.value = members[index].userPW;
+    editUserName.value = members[index].userName;
+    editIndex.value = index;
+
+    document.querySelector('#editForm').onsubmit = function(){
+
+        // 수정 폼 영역 : display 변경
+        document.querySelector('#editFormArea').style.display = 'block';
+
+        // var member = new Member(editUserId.value, editUserPW.value, editUserName.value);
+        // console.log(member);
+
+        // 비밀번호 일치여부
+        if(editUserPW.value != editChkPW.value){
+            alert('비밀번호가 일치하지 않습니다.');
+            return false;
+        }
+
+
+        if(!confirm('수정하시겠습니까?')){
+            return false;
+        }
+
+        members[editIndex.value].userPW = editUserPW.value;
+        members[editIndex.value].userName = editUserName.value;
+
+        alert('수정되었습니다.');
+
+        // 테이블 세팅
+        setList();
+
+        // alert('수정');
+        
+        return false;
+    }
+
 }
