@@ -140,7 +140,7 @@ function setList(){
     // var tbody = list.innerHTML;
 
     var tbody = '<tr>';
-    tbody += '  <th>회원번호</th>';
+    tbody += '  <th>번호(index)</th>';
     tbody += '  <th>아이디</th>';
     tbody += '  <th>비밀번호</th>';
     tbody += '  <th>이름</th>';
@@ -153,6 +153,7 @@ function setList(){
         tbody += '<td colspan="5">데이터가 없습니다.</td>';
         tbody += '</tr>';
     } else {
+
         // 반복 입력
         for(var i=0; i<members.length; i++){
 
@@ -161,7 +162,7 @@ function setList(){
             tbody += '  <td>'+members[i].userID+'</td>';
             tbody += '  <td>'+members[i].userPW+'</td>';
             tbody += '  <td>'+members[i].userName+'</td>';
-            tbody += '  <td>수정 | 삭제</td>';
+            tbody += '  <td><a href="javascript:editMember('+i+')">수정</a> | <a href="javascript:deleteMember('+i+')">삭제</a></td>';
             tbody += '</tr>';
         }
     }
@@ -169,3 +170,26 @@ function setList(){
     list.innerHTML = tbody;
 
 };
+
+// 배열의 요소 삭제 함수
+function deleteMember(index){
+    // alert(index+'번 회원의 정보를 삭제합니다.');
+    // var chk = confirm('삭제하시겠습니까?');
+
+    // 배열의 index 요소를 삭제
+    // splice(index, count)
+    // index에서 시작해서 count만큼의 삭제하고 남은 요소의 배열을 반환
+    // splice(index, 1)
+    
+    if(confirm('삭제하시겠습니까?')){
+        members.splice(index, 1);
+        alert('삭제되었습니다.');
+        // 테이블 리스트 갱신
+        setList();
+    }
+}
+
+// 배열의 요소 수정 함수
+function editMember(index){
+    alert(index+'번 회원의 정보를 수정합니다.');
+}
