@@ -15,7 +15,7 @@ Member.prototype.makeHtml = function(){
 ///////////////////////////////////////////////////
 // 회원 정보를 저장하는 배열
 
-var members = []; // new Array();
+var members = []; // new Array()
 
 
 ///////////////////////////////////////////////////
@@ -25,6 +25,9 @@ var members = []; // new Array();
 
 
 window.onload = function(){
+
+    // 테이블 세팅
+    setList();
 
     var userID = document.querySelector('#userID');
     var userPW = document.querySelector('#userPW');
@@ -99,6 +102,9 @@ window.onload = function(){
         // form 초기화
         this.reset();
 
+        // 테이블세팅
+        setList();
+
         return false;
     }
 
@@ -123,5 +129,43 @@ window.onload = function(){
         document.querySelector('#userName+div.msg').style.display = 'none';
         document.querySelector('#userName+div.msg').innerHTML = '';
     });
+
+};
+
+// 배열에 있는 요소를 테이블 행을 만들어 출력
+function setList(){
+    // table의 tbody 캐스팅
+    var list = document.querySelector('#list');
+    // // list의 html 코드를 tbody에 대입
+    // var tbody = list.innerHTML;
+
+    var tbody = '<tr>';
+    tbody += '  <th>회원번호</th>';
+    tbody += '  <th>아이디</th>';
+    tbody += '  <th>비밀번호</th>';
+    tbody += '  <th>이름</th>';
+    tbody += '  <th>관리</th>';
+    tbody += '</tr>';
+
+
+    if(members.length<1){
+        tbody += '<tr>';
+        tbody += '<td colspan="5">데이터가 없습니다.</td>';
+        tbody += '</tr>';
+    } else {
+        // 반복 입력
+        for(var i=0; i<members.length; i++){
+
+            tbody += '<tr>';
+            tbody += '  <td>'+i+'</td>';
+            tbody += '  <td>'+members[i].userID+'</td>';
+            tbody += '  <td>'+members[i].userPW+'</td>';
+            tbody += '  <td>'+members[i].userName+'</td>';
+            tbody += '  <td>수정 | 삭제</td>';
+            tbody += '</tr>';
+        }
+    }
+
+    list.innerHTML = tbody;
 
 };

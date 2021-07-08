@@ -69,3 +69,22 @@ div.msg{
     color: red;
     display: none;
 }
+
+/* 회원 리스트 영역 */
+#listArea{
+    padding: 20px 40px;
+    border-bottom: 1px solid #aaa;
+}
+
+#listArea>table{
+    margin: 10px 0;
+    width: 600px;
+    /* 테이블 각 칸마다 간격이 없도록 */
+    border-collapse: collapse; 
+}
+
+#listArea>table td, #listArea>table th{
+    padding: 10px;
+    border: 1px solid #aaa;
+    text-align: center;
+}
