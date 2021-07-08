@@ -96,6 +96,9 @@ window.onload = function(){
         alert('등록되었습니다.');
         console.log('회원리스트', members);
 
+        // form 초기화
+        this.reset();
+
         return false;
     }
 
