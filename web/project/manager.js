@@ -17,17 +17,33 @@ Member.prototype.makeHtml = function(){
 
 var members = []; // new Array()
 
+// 배열 -> JSON -> localStorage 저장
+// 저장
+// 수정
+// 삭제
+// setItem('members', JSON.stringify(members))
 
 ///////////////////////////////////////////////////
 // 사용자 입력 정보를 Member객체를 생성
 // submit 이벤트 연결
 
 
-
 window.onload = function(){
 
-    // 테이블 세팅
-    setList();
+    // localStorage 저장된 데이터가 있는지 확인
+    // localStorage.getItem('members') 값이 없으면 null 반환
+    if(localStorage.getItem('members') == null){
+        // 배열 members를 저장
+        localStorage.setItem('members', JSON.stringify(members)); 
+    } else {
+        // JSON 문자열 -> 객체 변환
+        members = JSON.parse(localStorage.getItem('members')); 
+        console.log(members);
+
+        // 테이블 세팅
+        setList();
+    }
+
 
     var userID = document.querySelector('#userID');
     var userPW = document.querySelector('#userPW');
@@ -96,6 +112,10 @@ window.onload = function(){
 
         // 배열에 사용자 정보 추가
         members.push(new Member(userID.value, userPW.value, userName.value));
+        
+        // 배열 저장
+        localStorage.setItem('members', JSON.stringify(members));
+        
         alert('등록되었습니다.');
         console.log('회원리스트', members);
 
@@ -184,6 +204,10 @@ function deleteMember(index){
     if(confirm('삭제하시겠습니까?')){
         members.splice(index, 1);
         alert('삭제되었습니다.');
+
+        // 배열 저장
+        localStorage.setItem('members', JSON.stringify(members));
+
         // 테이블 리스트 갱신
         setList();
     }
@@ -191,6 +215,11 @@ function deleteMember(index){
 
 // 배열의 요소 수정 함수
 function editMember(index){
+
+    // 수정 폼 영역 : display 변경
+    document.querySelector('#editFormArea').style.display = 'block';
+
+
     // alert(index+'번 회원의 정보를 수정합니다.');
 
     // 전달받은 index로 members 배열의 객체를 특정할 수 있음
@@ -210,9 +239,6 @@ function editMember(index){
 
     document.querySelector('#editForm').onsubmit = function(){
 
-        // 수정 폼 영역 : display 변경
-        document.querySelector('#editFormArea').style.display = 'block';
-
         // var member = new Member(editUserId.value, editUserPW.value, editUserName.value);
         // console.log(member);
 
@@ -230,14 +256,23 @@ function editMember(index){
         members[editIndex.value].userPW = editUserPW.value;
         members[editIndex.value].userName = editUserName.value;
 
+        // 배열 저장
+        localStorage.setItem('members', JSON.stringify(members));
+
         alert('수정되었습니다.');
 
         // 테이블 세팅
         setList();
+
+        editMemberClose();
 
         // alert('수정');
         
         return false;
     }
 
+}
+
+function editMemberClose(){
+    document.querySelector('#editFormArea').style.display = 'none';
 }
