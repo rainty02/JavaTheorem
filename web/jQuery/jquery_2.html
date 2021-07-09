@@ -14,6 +14,9 @@
         .floatLeft{
             float: left;
         }
+        h1{
+            color: aqua;
+        }
     </style>
 
     <script src="https://code.jquery.com/jquery-1.12.4.js" 
@@ -49,11 +52,68 @@
             });
             $('.img').removeAttr('height');
 
+
+            // css : css속성 반환/정의
+            console.log($('h1').css('color'));
+            // css 적용
+            $('h1').css('background-color', 'red');
+            
+            var colors = ['black', 'white', 'yellow'];
+            $('h1').css('background-color', function(index){
+                return colors[index];
+            });
+
+            $('h1').css({
+                color : 'green',
+                backgroundColor : function(index){
+                    return colors[index];
+                }
+            });
+
+            // QuerySelector와 달리 첫번째 엘리먼트를 반환
+            var strHtml = $('h1').html();
+            console.log(strHtml);
+
+            console.log($('#menu').html());
+            console.log($('#menu').text());
+
+            $('div').html(function(index, html){
+                console.log(index, html);
+                $(this).html('<h1>'+html+index+'!!!!! </h1>');
+            });
+
+            // remove() : 선택자 태그 삭제
+            $('#btn03').click(function(){
+                $('#menu').remove();
+            });
+
+            // empty() : 선택자 내부의 태그 삭제
+            $('#btn04').click(function(){
+                $('#menu').empty();
+            });
+
+
+
         });
     </script>
 
 </head>
 <body>
+
+
+
+
+
+    <div>DIV - 0</div>
+    <div>DIV - 0</div>
+    <div>DIV - 0</div>
+
+    <h1 class="title">header - 0</h1>
+    <h1>header - 1</h1>
+    <h1>header - 2</h1>
+    <h1>header - 3</h1>
+    <h1>header - 4</h1>
+    <h1>header - 5</h1>
     
     <img class="img" src="../images/페이스북.PNG">
     <img class="img" src="../images/페이스북.PNG">
@@ -68,5 +128,7 @@
     </ul>
     <button id="btn01">변경</button>
     <button id="btn02">초기화</button>
+    <button id="btn03">메뉴 삭제</button>
+    <button id="btn04">내용 삭제</button>
 </body>
 </html>
