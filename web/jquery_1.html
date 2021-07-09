@@ -13,12 +13,82 @@
         // $() jquery 객체 생성 : 메소드
         // document 객체를 jquery 객체로 변환
         $(document).ready(function(){ // window.onload와 같음
-            $('*'/*문자열*/).css('color', 'red');
+            $('h1, h2'/*문자열*/).css('color', 'red');
+
+            // val() get 메소드 호출
+            var value = $('input[type=text]').val();
+            // = document.querySelector('intput[type=text]');
+            console.log(value);
+            // val('문자열') set 메소드 호출 (오버로딩)
+            // $('input[type=text]').val('bye');
+            $('input:text').val('bye'); // input:속성 입력가능
+
+
+            // 5초후에 select의 선택 항목의 value값 확인
+            setTimeout(function(){
+                var selVal = $('select>option:selected').val();
+                console.log(selVal);
+
+                var chk = $('input:checkbox:checked').val();
+                console.log(chk);
+            }, 5000);
+
+
+            // odd 홀수, even 짝수
+            $('table tr:odd').css('background-color', '#ddd');
+            $('table tr:even').css('background-color', '#aaa');
+            $('table tr:first').css('background-color', '#000').css('color', '#fff');
+            $('table tr:last').css('background-color', '#fff');
+
+
         });
     </script>
 </head>
 <body>
     
+    <table border="1">
+        <thead>
+            <tr>
+                <th>thead 1</th>
+                <th>thead 2</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>tbody 1 - 1</td>
+                <td>tbody 1 - 2</td>
+            </tr>
+            <tr>
+                <td>tbody 1 - 1</td>
+                <td>tbody 1 - 2</td>
+            </tr>
+            <tr>
+                <td>111</td>
+                <td>222</td>
+                <td>333</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>tbody 2 - 1</td>
+                <td>tbody 2 - 2</td>
+            </tr>
+        </tfoot>
+    </table>
+
+
+
+    개인정보 보호정책 보기 <input type="checkbox" value="OK">
+
+    <select>
+        <option value="21">2021</option>
+        <option>2020</option>
+        <option>2019</option>
+    </select>
+
+
+    <input type="text" value="hello">
+
     <h1>안녕하세요</h1>
     <h2>안녕하세요</h2>
 
