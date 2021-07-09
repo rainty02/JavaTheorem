@@ -5,6 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>jquery</title>
+    <style>
+        #wrap{
+            overflow: hidden;
+        }
+        .title{
+            background-color: red;
+            color: white;
+            float: left;
+        }
+    </style>
     <script src="https://code.jquery.com/jquery-1.12.4.js" 
             integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" 
             crossorigin="anonymous">
@@ -13,7 +23,7 @@
         // $() jquery 객체 생성 : 메소드
         // document 객체를 jquery 객체로 변환
         $(document).ready(function(){ // window.onload와 같음
-            $('h1, h2'/*문자열*/).css('color', 'red');
+            // $('h1, h2'/*문자열*/).css('color', 'red');
 
             // val() get 메소드 호출
             var value = $('input[type=text]').val();
@@ -36,15 +46,76 @@
 
             // odd 홀수, even 짝수
             $('table tr:odd').css('background-color', '#ddd');
-            $('table tr:even').css('background-color', '#aaa');
+
+            // $('table tr:even').css('background-color', '#aaa');
+            // filter 메소드를 이용해서 탐색
+            $('table tr').filter(':even').css('background-color', '#aaa');
+
             $('table tr:first').css('background-color', '#000').css('color', '#fff');
             $('table tr:last').css('background-color', '#fff');
 
 
+            // 배열을 다루는 .each() 메소드
+            // $.each(배열원본, callback : 배열 중 하나의 요소를 처리하는 함수, 매개변수 배열의 인덱스 값, 요소 데이터)
+            // 배열생성
+            var links = [
+                {name:'네이버', url:'http://www.naver.com'},
+                {name:'다음', url:'http://www.daum.net'},
+                {name:'카카오', url:'http://www.kakao.com'}
+            ];
+
+            var output = '';
+            $.each(links, function(index, item){
+                console.log(index, item.name);
+                output += '<a href="'+item.url+'">'+item.name+'</a>\n';
+            });
+            console.log(output);
+
+            // document.body.innerHTML = output;
+            // console.log($('body').html()); // getter
+            $('#links').html(output); // setter
+            
+            $('h1').each(function(index, item){
+                console.log(index, item.innerHTML);
+                console.log(index, $(item).html());
+            });
+
+            // 특정 태그에 클래스명 부여
+            $('h1').addClass('title');
+
+            // 필터 선택자
+            $('h3').filter(function(index){ // 논리값 반환 (오버로딩)
+                return index % 3 == 0;
+            }).css({
+                backgroundColor: 'black',
+                color: 'white'
+            });
+            
         });
     </script>
 </head>
 <body>
+
+    <h3>heager - 0</h3>
+    <h3>heager - 1</h3>
+    <h3>heager - 2</h3>
+    <h3>heager - 3</h3>
+    <h3>heager - 4</h3>
+    <h3>heager - 5</h3>
+
+
+
+    <div id="wrap">
+    <h1>header - 0</h1>
+    <h1>header - 1</h1>
+    <h1>header - 2</h1>
+    <h1>header - 3</h1>
+    <h1>header - 4</h1>
+    </div>
+
+    <div id="links">
+
+    </div>
     
     <table border="1">
         <thead>
