@@ -81,7 +81,7 @@
             });
 
             // 특정 태그에 클래스명 부여
-            $('h1').addClass('title');
+            // $('h1').addClass('title');
 
             // 필터 선택자
             $('h3').filter(function(index){ // 논리값 반환 (오버로딩)
@@ -91,10 +91,30 @@
                 color: 'white'
             });
             
+
+            // end() 메소드 : 체이닝된 메소드 중 이전 메소드를 해제
+            $('h2').css('background', 'orange').filter(':odd').css('color', 'white').end().filter(':even').css('color', 'red');
+
+            // eq() 해당 인덱스의 태그만 적용
+            $('h1').eq(3).css('background', 'orange');
+            $('h1').last().css('background', 'blue');
+            $('h1').first().css('background', 'green');
+
+            // add()
+            $('h1').css('background', 'gray').add('h3').css('float', 'left');
+
         });
     </script>
 </head>
 <body>
+
+    <h2>header - 0</h2>
+    <h2>header - 1</h2>
+    <h2>header - 2</h2>
+    <h2>header - 3</h2>
+    <h2>header - 4</h2>
+    <h2>header - 5</h2>
+
 
     <h3>heager - 0</h3>
     <h3>heager - 1</h3>
@@ -160,8 +180,8 @@
 
     <input type="text" value="hello">
 
-    <h1>안녕하세요</h1>
-    <h2>안녕하세요</h2>
+    <!-- <h1>안녕하세요</h1>
+    <h2>안녕하세요</h2> -->
 
 </body>
 </html>
