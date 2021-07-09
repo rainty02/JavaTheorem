@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery Banner</title>
+
+    <style>
+        div>img{
+            width: 250px;
+            height: 200px;
+        }
+        #banner{
+            width: 250px;
+            height: 200px;
+            border: 10px solid #aaa;
+            overflow: hidden;
+        }
+    </style>
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js" 
+    integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" 
+    crossorigin="anonymous">
+    </script>
+
+    <script>
+
+        $(document).ready(function(){
+            setInterval(function(){
+            $('#banner>img').first().appendTo('#banner');
+            }, 10);
+        });
+
+        
+
+    </script>
+
+</head>
+<body>
+    <div id="banner">
+        <img src="../images/네이버.PNG">
+        <img src="../images/페이스북.PNG">
+        <img src="../images/6.jpg">
+        <img src="../images/unnamed.jpg">
+    </div>
+</body>
+</html>
