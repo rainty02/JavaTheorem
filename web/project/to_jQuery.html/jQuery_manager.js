@@ -160,12 +160,14 @@ function editMember(index){
     var editIndex = $('#editIndex').val(index);
     var editUserId = $('#editId').val(members2[index].userID);
     var editUserPW = $('#editPW').val(members2[index].userPW);
-    var editchkPW = $('#editchkPW').val(members2[index].chkPW);
+    var editchkPW = $('#editChkPW').val(members2[index].userPW);
     var editUserName = $('#editName').val(members2[index].userName);
+
+    console.log(editIndex.val(), editUserId.val(), editUserPW.val(), editchkPW.val(), editUserName.val());
 
     $('editForm').submit(function(){
 
-        if(editUserPW != editChkPW){
+        if(editUserPW.val() != editChkPW.val()){
             alert('비밀번호가 일치하지 않습니다.');
             return false;
         };
@@ -174,8 +176,8 @@ function editMember(index){
             return false;
         };
 
-        members2[editIndex].userPW = editUserPW;
-        members2[editIndex].userName = editUserName;
+        members2[editIndex.val()].userPW = editUserPW.val();
+        members2[editIndex.val()].userName = editUserName.val();
 
         alert('수정되었습니다.');
 
