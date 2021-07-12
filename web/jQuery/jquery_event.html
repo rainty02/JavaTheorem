@@ -74,12 +74,37 @@
             });
 
             // $('선택자', context) context 매개변수
-            $('div').click(function(){
+            $('div').click(function(e){
                 // 이벤트가 발생한 div 안에 위치한 h3 선택
                 var h3 = $('h3', this).text();
                 var p = $('p', this).text();
                 var input = $('input', this).val();
                 alert(h3 + '\n' + p + '\n' + input);
+
+                console.log(e);
+            });
+
+            setInterval(function(){
+                // 클릭 이벤트 강제 발생
+                // $('h1').last().trigger('click');
+            }, 1000);
+
+            $('a').click(function(e){
+                alert('a tag click');
+
+                // e가 false(null) 일때
+                var e = e || window.event;
+
+                // 이벤트 버블링 제거
+                if(e.stopPropagation) {
+                    e.stopPropagation();
+                }
+
+                // 기본 이벤트 제거
+                e.preventDefault();
+                // ?????????????????????????????????????????????????
+
+                // return false;
             });
 
 
@@ -89,6 +114,12 @@
 
 </head>
 <body>
+
+    <div>
+        <h1>
+            <a href="#">click</a>
+        </h1>
+    </div>
 
     <div>
         <h3>header 1</h3>
