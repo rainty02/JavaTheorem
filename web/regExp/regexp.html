@@ -35,11 +35,34 @@
         result = String.replace(regExp, '+$&+');
         console.log(result);
 
+        regExp = /[aj]/ig;
+        result = String.replace(regExp, '+$&+');
+        console.log(result);
+
+        // var String = prompt('소문자와 숫자로 된 단어를 입력하세요.');
+        // 소문자와 숫자만 가능
+        // regExp = /([0-9]|[a-z])/g;
+        // 한글만 가능
+        // regExp = /[가-힣]/g;
+        // 이메일 패턴
+        regExp = /\w+@\w+\.+\w+/;
+        result = String.replace(regExp, '');
+        if(result.length == 0){
+            console.log(result, '패턴에 일치하는 문자열');    
+        } else {
+            console.log(result, '패턴에 일치하지 않는 문자열을 포함');
+        }
+        
 
     </script>
 
 </head>
 <body>
     
+    <form>
+        <input type="email">
+        <input type="submit">
+    </form>
+
 </body>
 </html>
