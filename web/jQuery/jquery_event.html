@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery Event</title>
+
+    <style>
+        h1, h2{
+            border: 1px solid #aaa;
+        }
+        h1:hover, h2:hover{
+            cursor: pointer;
+        }
+        .reverse{
+            background-color: black;
+            color: white;
+        }
+        div{
+            border: 1px solid #aaa;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px;
+        }
+        div h3, div p{
+            text-align: center;
+        }
+    </style>
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js" 
+    integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" 
+    crossorigin="anonymous">
+    </script>
+
+    <script>
+
+        $(document).ready(function(){
+
+            // h1 태그를 캐스팅 후 click 이벤트 연결
+            // 이벤트명은 문자열로 작성
+            $('h1').on('click', function(){
+                // **this : 이벤트가 발생한 객체를 지칭
+                $(this).html(function(index, html){
+                    return html + '+';
+                });
+            });
+
+            // 객체를 사용하면 여러개의 이벤트를 한번에 정의할 수 있지만 많이 사용하지 않음
+            $('h1').on({
+                // click: function(){
+                //     $(this).html(function(index, html){
+                //     return html + '+';
+                // });
+                // },
+                // 해당 요소에 마우스가 위치할 때
+                mouseenter: function(){
+                    $(this).addClass('reverse');
+                },
+                // 해당 요소에 마우스가 떠날 때
+                mouseleave: function(){
+                    $(this).removeClass('reverse');
+                }
+            });
+
+            // .hover() -> mouseenter, mouseleave 한번에 처리해주는 메소드
+            $('h2').hover(function(){
+                $(this).addClass('reverse');
+            }, function(){
+                $(this).removeClass('reverse');
+                // .off() -> 이벤트 연결 제거
+                // $(this).off();
+                $(this).off('mouseleave')
+            });
+
+            // $('선택자', context) context 매개변수
+            $('div').click(function(){
+                // 이벤트가 발생한 div 안에 위치한 h3 선택
+                var h3 = $('h3', this).text();
+                var p = $('p', this).text();
+                var input = $('input', this).val();
+                alert(h3 + '\n' + p + '\n' + input);
+            });
+
+
+        });
+
+    </script>
+
+</head>
+<body>
+
+    <div>
+        <h3>header 1</h3>
+        <p>paragraph 1</p>
+        <input type="hidden" value="1">
+    </div>
+    <div>
+        <h3>header 2</h3>
+        <p>paragraph 2</p>
+    </div>
+    <div>
+        <h3>header 3</h3>
+        <p>paragraph 3</p>
+    </div>
+
+    <h2>header - 0</h2>
+    <h2>header - 1</h2>
+    <h2>header - 2</h2>
+
+    <h1>header - 0</h1>
+    <h1>header - 1</h1>
+    <h1>header - 2</h1>
+
+</body>
+</html>
