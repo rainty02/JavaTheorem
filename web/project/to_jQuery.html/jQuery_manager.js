@@ -167,6 +167,25 @@ function editMember(index){
         if($('#editPW').val() != $('#editchkPW').val()){
             alert('비밀번호가 일치하지 않습니다.');
             return false;
-        }
+        };
+
+        if(!confirm('수정하시겠습니까?')){
+            return false;
+        };
+
+        members2[index].userPW = $('#editPW').val();
+        members2[index].userName = $('#editName').val();
+
+        alert('수정되었습니다.');
+
+        setList();
+
+        editMemberClose();
+
+        return false;
     });
-}
+};
+
+function editMemberClose(){
+    $('#editFormArea').css('display', 'none');
+};
