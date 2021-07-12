@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원관리 프로그램</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.js" 
+            integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" 
+            crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" href="jQuery_default.css">
+    <script src="jQuery_manager.js"></script>
+</head>
+
+<body>
+    <!-- header 시작 -->
+    <header>
+        <h1 class="title_font">Member Manager</h1>
+    </header>
+    <!-- header 끝 -->
+
+    <!-- 회원 등록 폼 시작 -->
+    <div id="regFormArea">
+        <h2 class="title_font">회원 정보 등록</h2>
+        <form id="regForm">
+            <table>
+                <tr>
+                    <td>
+                        <label for="userID">아이디</label>
+                        <input type="text" id="userID" placeholder="아이디를 입력하세요">
+                        <div class="msg"></div>
+                    </td>
+                    <td>
+                        <label for="userPW">비밀번호</label>
+                        <input type="password" id="userPW" placeholder="비밀번호를 입력하세요">
+                        <div class="msg"></div>
+                    </td>
+                    <td>
+                        <label for="chkPW">비밀번호 확인</label>
+                        <input type="password" id="chkPW" placeholder="비밀번호를 한번 더 입력하세요">
+                        <div class="msg"></div>
+                    </td>
+                    <td>
+                        <label for="userName">이름</label>
+                        <input type="text" id="userName" placeholder="이름을 입력하세요">
+                        <div class="msg"></div>
+                    </td>
+                    <td>
+                        <input type="submit" value="등록">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <!-- 회원 등록 폼 끝 -->
+
+    <!-- 회원 리스트 출력 영역 시작 -->
+    <div id="listArea">
+        <h2 class="title_font">회원 리스트</h2>
+        <table>
+            <tbody id="list">
+                <tr>
+                    <th>번호(index)</th>
+                    <th>아이디</th>
+                    <th>비밀번호</th>
+                    <th>이름</th>
+                    <th>관리</th>
+                </tr>
+            </tbody>
+            <!-- 출력될 값 -->
+            <!-- <tr>
+                <td>0</td>
+                <td>id</td>
+                <td>password</td>
+                <td>name</td>
+                <td>수정 | 삭제</td>
+            </tr> -->
+        </table>
+    </div>
+    <!-- 회원 리스트 출력 영역 끝 -->
+
+    <!-- 정보 수정 영역 시작 -->
+    <div id="editFormArea">
+        <div id="div_header">
+            <h2 class="title_font">회원정보 수정</h2>
+            <div><a href="javascript:editMemberClose()">닫기</a></div>
+        </div>
+        <form id="editForm">
+            <table>
+                <tr>
+                    <td>아이디 </td>
+                    <td>
+                        <input type="text" id="editId" disabled>
+                        <input type="hidden" id="index">
+                    </td>
+                </tr>
+                <tr>
+                    <td>비밀번호 </td>
+                    <td><input type="password" id="editPW" required> </td>
+                </tr>
+                <tr>
+                    <td>비밀번호 확인 </td>
+                    <td><input type="password" id="editChkPW" required> </td>
+                </tr>
+                <tr>
+                    <td>이름 </td>
+                    <td><input type="text" id="editName" required> </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="submit" value="수정">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <!-- 정보 수정 영역 끝 -->
+</body>
+
+</html>
