@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>regExp</title>
+
+    <script>
+
+        // /확인할 문자열/옵션; 정규표현식
+        var regExp = /script/;
+        var String = 'Javascript \njQuery Ajax';
+
+        // regExp.test 문자열 포함여부 논리값 반환
+        var result = regExp.test(String);
+        console.log(result);
+
+        // 문자열 타입의 메소드 : split
+        result = String.split(regExp);
+        console.log(result);
+
+        regExp = /a/img;
+        // 문자열의 해당 패턴을 찾아 특정문자열로 변경
+        result = String.replace(regExp, '+$&+'); // $& 확인할 문자열 = +a+
+        console.log(result);
+
+        // 함수를 이용해서 변경하고자 하는 값을 지정
+        result = String.replace(regExp, function(value){
+            return '+'+value+'+';
+        });
+        console.log(result);
+
+        regExp = /^j/ig;
+        result = String.replace(regExp, '+$&+');
+        console.log(result);
+
+
+    </script>
+
+</head>
+<body>
+    
+</body>
+</html>
