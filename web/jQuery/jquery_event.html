@@ -96,15 +96,14 @@
                 var e = e || window.event;
 
                 // 이벤트 버블링 제거
-                if(e.stopPropagation) {
-                    e.stopPropagation();
-                }
+                // if(e.stopPropagation) {
+                //     e.stopPropagation();
+                // }
 
                 // 기본 이벤트 제거
-                e.preventDefault();
-                // ?????????????????????????????????????????????????
-
-                // return false;
+                // e.preventDefault();
+                
+                return false;
             });
 
 

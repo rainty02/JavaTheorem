@@ -31,6 +31,8 @@
             //     var oldHtml = $(this).html();
 
             //     $('#wrap').append('<h1>' + lenght + '-' + oldHtml + '</h1>');
+            // 해당 이벤트를 실행하려면 추가된 태그에 직접 이벤트를 작성
+            //     $('#wrap').append('<h1 onclick="함수()">' + lenght + '-' + oldHtml + '</h1>');
             // });
 
             // 동적으로 추가된 태그에 대해서도 이벤트 적용
@@ -41,11 +43,67 @@
                 $('#wrap').append('<h1>' + lenght + '-' + oldHtml + '</h1>');
             });
             
+
+            // 키보드 이벤트
+            $('textarea').keyup(function(){
+                var cnt = $(this).val().length;
+                var remain = 150 - cnt;
+
+                if(remain<0){
+                    alert('150자까지 작성이 가능합니다.');
+                    var str = $(this).val().substr(0, 150);
+                    $(this).val(str);
+                    $('span').text('0');
+                    return false;
+                }
+
+                // console.log(cnt, remain);
+                $('span').text(remain);
+            });
+
+
+            $('#myForm').submit(function(){
+                alert('myForm submit');
+                // 이벤트 제거
+                return false;
+            });
+
+
+            // change 이벤트
+            $('#allCheck').change(function(){
+                
+                // 선택상태면 true, 미선택이면 false
+                if(this.checked){
+                    // #checkItem 안에 있는 checkbox - checked 변경
+                    $('#checkItem').children().prop('checked', true);
+                } else {
+                    // #checkItem 안에 있는 checkbox - uncheck 변경
+                    $('#checkItem').children().prop('checked', false);
+                }
+            });
+
+
+
         });
     </script>
 
 </head>
 <body>
+
+    <input type="checkbox" id="allCheck">
+    <label for="allCheck">allCheck</label>
+    <div id="checkItem">
+        <input type="checkbox"> <label>A type</label>
+        <input type="checkbox"> <label>B type</label>
+        <input type="checkbox"> <label>C type</label>
+    </div>
+
+    <form id="myForm">
+        <input type="submit">
+    </form>
+
+    <textarea cols="50" rows="10"></textarea>
+    <span>0</span>/150
 
     <div id="wrap">
         <h1>header</h1>
