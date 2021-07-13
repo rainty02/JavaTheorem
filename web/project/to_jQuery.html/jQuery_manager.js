@@ -6,12 +6,8 @@ function Member2(userID, userPW, userName){
     this.userName = userName;
 }
 
-// 객체가 가지는 메소드는 공통으로 사용 : prototype
-// Member2.prototype.makeHtml = function(){
-//     return '[id:'+this.userID+' , pw:'+this.userPW+', name:'+this.userName+' ]';
-// };
-
-var members2 = []; // new Array()
+// 객체
+var members2 = [];
 
 
 $(document).ready(function(){
@@ -157,15 +153,27 @@ function editMember(index){
 
     $('#editFormArea').css('display', 'block');
 
-    var editIndex = $('#editIndex').val(index);
-    var editUserId = $('#editId').val(members2[index].userID);
-    var editUserPW = $('#editPW').val(members2[index].userPW);
-    var editchkPW = $('#editChkPW').val(members2[index].userPW);
-    var editUserName = $('#editName').val(members2[index].userName);
+    // var editIndex = $('#editIndex').val(index);
+    // var editUserId = $('#editId').val(members2[index].userID);
+    // var editUserPW = $('#editPW').val(members2[index].userPW);
+    // var editChkPW = $('#editChkPW').val(members2[index].userPW);
+    // var editUserName = $('#editName').val(members2[index].userName);
 
-    console.log(editIndex.val(), editUserId.val(), editUserPW.val(), editchkPW.val(), editUserName.val());
+    var editIndex = $('#editIndex');
+    var editUserId = $('#editId');
+    var editUserPW = $('#editPW');
+    var editChkPW = $('#editChkPW');
+    var editUserName = $('#editName');
 
-    $('editForm').submit(function(){
+    editIndex.val(index);
+    editUserId.val(members2[index].userID);
+    editUserPW.val(members2[index].userPW);
+    editChkPW.val(members2[index].userPW);
+    editUserName.val(members2[index].userName);
+
+    console.log(editIndex.val(), editUserId.val(), editUserPW.val(), editChkPW.val(), editUserName.val());
+
+    $('#editForm').submit(function(){
 
         if(editUserPW.val() != editChkPW.val()){
             alert('비밀번호가 일치하지 않습니다.');
@@ -184,7 +192,7 @@ function editMember(index){
         setList();
 
         editMemberClose();
-
+        console.log(editIndex.val(), editUserId.val(), editUserPW.val(), editChkPW.val(), editUserName.val());
         return false;
     });
 };
