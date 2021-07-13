@@ -6,19 +6,23 @@ function Member2(userID, userPW, userName){
     this.userName = userName;
 }
 
+Member2.prototype.makeHtml = function(){
+    return '[id:'+this.userID+' , pw:'+this.userPW+', name:'+this.userName+' ]';
+};
+
 // 객체
 var members2 = [];
 
 
 $(document).ready(function(){
 
-    // if(localStorage.getItem('members2') == null){
-    //     localStorage.setItem('members2', JSON.stringify(members2));
-    // } else {
-    //     members2 = JSON.parse(localStorage.getItem('members2')); 
-    //     console.log(members2);
-    //     setList();
-    // }
+    if(localStorage.getItem('members2') == null){
+        localStorage.setItem('members2', JSON.stringify(members2));
+    } else {
+        members2 = JSON.parse(localStorage.getItem('members2')); 
+        console.log(members2);
+        setList();
+    }
 
     var userID = $('#userID');
     var userPW = $('#userPW');
@@ -144,6 +148,7 @@ function deleteMember(index){
     if(confirm('삭제하시겠습니까?')){
         members2.splice(index, 1);
         alert('삭제되었습니다.');
+        localStorage.setItem('members2', JSON.stringify(members2));
         setList();
     };
 };
@@ -153,28 +158,16 @@ function editMember(index){
 
     $('#editFormArea').css('display', 'block');
 
-    // var editIndex = $('#editIndex').val(index);
-    // var editUserId = $('#editId').val(members2[index].userID);
-    // var editUserPW = $('#editPW').val(members2[index].userPW);
-    // var editChkPW = $('#editChkPW').val(members2[index].userPW);
-    // var editUserName = $('#editName').val(members2[index].userName);
-
-    var editIndex = $('#editIndex');
-    var editUserId = $('#editId');
-    var editUserPW = $('#editPW');
-    var editChkPW = $('#editChkPW');
-    var editUserName = $('#editName');
-
-    editIndex.val(index);
-    editUserId.val(members2[index].userID);
-    editUserPW.val(members2[index].userPW);
-    editChkPW.val(members2[index].userPW);
-    editUserName.val(members2[index].userName);
+    var editIndex = $('#editIndex').val(index);
+    var editUserId = $('#editId').val(members2[index].userID);
+    var editUserPW = $('#editPW').val(members2[index].userPW);
+    var editChkPW = $('#editChkPW').val(members2[index].userPW);
+    var editUserName = $('#editName').val(members2[index].userName);
 
     console.log(editIndex.val(), editUserId.val(), editUserPW.val(), editChkPW.val(), editUserName.val());
 
     $('#editForm').submit(function(){
-
+        
         if(editUserPW.val() != editChkPW.val()){
             alert('비밀번호가 일치하지 않습니다.');
             return false;
@@ -183,16 +176,21 @@ function editMember(index){
         if(!confirm('수정하시겠습니까?')){
             return false;
         };
-
+        
+        
         members2[editIndex.val()].userPW = editUserPW.val();
         members2[editIndex.val()].userName = editUserName.val();
+  
+        localStorage.setItem('members2', JSON.stringify(members2));
 
         alert('수정되었습니다.');
 
         setList();
 
         editMemberClose();
+
         console.log(editIndex.val(), editUserId.val(), editUserPW.val(), editChkPW.val(), editUserName.val());
+        
         return false;
     });
 };
