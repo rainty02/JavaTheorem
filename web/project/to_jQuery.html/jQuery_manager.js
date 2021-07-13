@@ -95,6 +95,38 @@ $(document).ready(function(){
         return false;
     });
 
+
+
+    // editForm 캐스팅 후 submit 이벤트 연결
+    $('#editForm').submit(function(){
+
+        if($('#editPW').val() != $('#editChkPW').val()){
+            alert('비밀번호가 일치하지 않습니다.');
+            return false;
+        };
+
+        if(!confirm('수정하시겠습니까?')){
+            return false;
+        };
+        
+        // 변경된 값으로 배열 수정
+        members2[$('#editIndex').val()].userPW = $('#editPW').val();
+        members2[$('#editIndex').val()].userName = $('#editName').val();
+  
+        localStorage.setItem('members2', JSON.stringify(members2));
+
+        alert('수정되었습니다.');
+
+        // 리스트 갱신
+        setList();
+
+        // 수정폼 display 속성 변경
+        editMemberClose();
+        
+        return false;
+    });
+
+
     // input focus 이벤트
     $('#userID').focus(function(){
         $('#userID+div.msg').css('display', 'none');
@@ -169,42 +201,12 @@ function editMember(index){
     $('#editFormArea').css('display', 'block');
 
     // 기존 정보 input value 대입
-    var editIndex = $('#editIndex').val(index);
-    var editUserId = $('#editId').val(members2[index].userID);
-    var editUserPW = $('#editPW').val(members2[index].userPW);
-    var editChkPW = $('#editChkPW').val(members2[index].userPW);
-    var editUserName = $('#editName').val(members2[index].userName);
+    $('#editIndex').val(index);
+    $('#editId').val(members2[index].userID);
+    $('#editPW').val(members2[index].userPW);
+    $('#editChkPW').val(members2[index].userPW);
+    $('#editName').val(members2[index].userName);
 
-    $('#editForm').submit(function(){});
-
-    // // editForm 캐스팅 후 submit 이벤트 연결
-    $('#editForm').submit(function(){
-        
-        if(editUserPW.val() != editChkPW.val()){
-            alert('비밀번호가 일치하지 않습니다.');
-            return false;
-        };
-
-        if(!confirm('수정하시겠습니까?')){
-            return false;
-        };
-        
-        // 변경된 값으로 배열 수정
-        members2[editIndex.val()].userPW = editUserPW.val();
-        members2[editIndex.val()].userName = editUserName.val();
-  
-        localStorage.setItem('members2', JSON.stringify(members2));
-
-        alert('수정되었습니다.');
-
-        // 리스트 갱신
-        setList();
-
-        // 수정폼 display 속성 변경
-        editMemberClose();
-        
-        return false;
-    });
 };
 
 // 수정폼 display 속성 변경
