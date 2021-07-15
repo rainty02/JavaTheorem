@@ -52,11 +52,30 @@ div{
 }
 
 #nav{
-    border: 1px solid black;
+    width: 600px;
+    height: 30px;
+    border: 1px solid #aaa;
+    display: hidden;
 }
 
 #nav>ul>li{
     float: left;
     list-style: none;
     padding: 5px;
+}
+
+#ul_Green>li>a{
+    color: rgb(52, 211, 52);
+    font-weight: bold;
+    font-size: 0.8em;
+}
+
+#ul_Black>li>a{
+    color: black;
+    font-weight: bold;
+    font-size: 0.8em;
+}
+
+a{
+    text-decoration: none;
 }
