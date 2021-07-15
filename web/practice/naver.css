@@ -1,0 +1,45 @@
+/* charset 설정 */
+@charset "utf-8";
+
+*{
+    padding: 0;
+    margin: 0;
+}
+
+#search{
+    width: 600px;
+    height: 45px;
+    border: 1px solid black;
+    padding: 30px 120px;
+    text-align: center;
+}
+
+#search>div{
+    width: 160px;
+    height: 40px;
+    /* border: 1px solid black; */
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 20px;
+    background-image: url("../images/네이버.PNG");
+    background-size: 160px 40px;
+    background-repeat: no-repeat;
+}
+
+#searchBar, #submitBtn{
+    width: 300px;
+    height: 40px;
+    border: 1px solid rgb(52, 211, 52);
+    vertical-align: middle;
+    
+}
+
+#searchBar :hover{
+    border: 1px solid rgb(52, 211, 52);
+}
+
+#submitBtn{
+    width: 50px;
+    margin-left: -10px;
+    background-color: rgb(52, 211, 52);
+}
