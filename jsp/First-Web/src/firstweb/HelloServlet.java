@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 public class HelloServlet extends HttpServlet {
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// **request.getContextPath() 경로
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
