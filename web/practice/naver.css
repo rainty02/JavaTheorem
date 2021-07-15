@@ -52,10 +52,11 @@ div{
 }
 
 #nav{
-    width: 600px;
-    height: 35px;
-    border: 1px solid #aaa;
-    display: hidden;
+    width: 800px;
+    /* height: 35px; */
+    border-top: 1px solid #aaa;
+    border-bottom: 1px solid #aaa;
+    overflow: hidden;
     /* line-height: 0.8em; */
 }
 
@@ -75,6 +76,16 @@ div{
     color: black;
     font-weight: bold;
     font-size: 0.8em;
+}
+
+#ul_View>li>a{
+    color: black;
+    font-weight: bold;
+    font-size: 0.8em;
+}
+
+#ul_View{
+    float: right;
 }
 
 a{
