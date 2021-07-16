@@ -5,7 +5,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="css/myblog.css">
+<link rel="stylesheet" href="/First-Web/blog/css/myblog.css">l
+<!-- http://loaclhost:8080/First-Web/blog/css/myblog.css -->
 <style>
 </style>
 <script>

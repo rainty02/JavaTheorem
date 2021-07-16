@@ -19,6 +19,17 @@
 	<div id="warp">
 		<%@ include file="include/news.jsp" %>
 		<%@ include file="include/shopping.jsp" %>
-	</div>			
+	</div>	
+	
+	<!-- 실행된 jsp -> html(text) 결과를 걀과를 자겨옴 --> 
+	<jsp:include page="footer.jsp">
+		<jsp:param name="email" value="test@gmail.com"/>
+		<jsp:param name="tel" value="010-0000-0000"/>
+	</jsp:include>
+	<%-- <jsp:include page=""/> 으로도 가능--%>
+	
+	
+	
+			
 </body>
 </html>
