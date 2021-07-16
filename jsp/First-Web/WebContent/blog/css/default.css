@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic&family=Nanum+Pen+Script&display=swap');
+
+.font_nanum{
+    font-family: 'Nanum Gothic';
+}
+
+.font_nanum_pen{
+    font-family: 'Nanum Pen Script';
+}
+
+.font_jua{
+    font-family: 'Jua';
+}

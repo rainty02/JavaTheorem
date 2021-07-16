@@ -1,0 +1,220 @@
+/* charset 설정 */
+@charset "utf-8";
+
+/* 폰트 설정 */
+@import url('https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic:wght@700&family=Sunflower:wght@500&display=swap');
+
+/* 나눔고딕, 주아, 선플라워
+font-family: 'Jua', sans-serif;
+font-family: 'Nanum Gothic', sans-serif;
+font-family: 'Sunflower', sans-serif;
+*/
+
+/* 브라우저마다 위치가 달라지지 않도록 */
+*{
+    margin: 0;
+    padding: 0;
+}
+
+/* 기본값 설정 */
+html, body, div, h1, h2, h3, h4, h5, h6,
+table, input,
+header, nav, aside, section, article,
+p {
+    font-size: 16px;
+    font-family: '돋움체';
+}
+
+body{
+    background-color: cornsilk;
+}
+
+/* 전체요소를 감싸는 블록 */
+#main_wrap{
+    /* 800 - (패딩*2) - (보더두께*2) - (쉐도우*2) */
+    width: 776px;
+    height: 1430px;
+
+    background-color: #FFF;
+
+    border: 1px solid #AAA;
+    border-radius: 5px;
+    
+    margin: 10px auto;
+    box-shadow: 2px 2px 3px #DDD;
+
+    padding: 10px;
+}
+
+/* header 영역 */
+header{
+    padding: 20px;
+}
+
+header>h1{
+    font-size: 2.0em;
+    font-weight: 400;
+}
+
+/* navigation 영역 */
+nav{
+    height: 35px;
+    border-top: 1px solid #AAA;
+    border-bottom: 1px solid #AAA;
+
+    overflow: hidden;
+}
+
+nav>ul{
+    float: left;
+    overflow: hidden;
+    list-style: none;
+}
+
+nav>ul>li{
+    float: left;
+    height: 35px;
+    line-height: 35px;
+}
+
+nav>ul>li>a{
+    display: block;
+    padding: 0 20px;
+}
+
+nav>ul>li>a:hover{
+    background-color: gray;
+}
+
+nav>div{
+    float: right;
+}
+
+nav>div>input[type=text]{
+    width: 100px;
+    height: 24px;
+    margin-top: 4.5px;
+    border-radius: 11px 0 0 11px;
+    padding: 0 10px;
+    border: 1px solid #AAA;
+}
+
+nav>div>input[type=submit]{
+    height: 26px;
+    margin-top: 4.5px;
+    margin-left: -9px;
+    margin-right: 5px;
+    border-radius: 0 13px 13px 0 ;
+    padding: 0 5px;
+    border: 1px solid #AAA;
+}
+
+/* 컨텐츠 영역 */
+#content_wrap{
+    overflow: hidden;
+
+    margin-top: 20px;
+}
+
+section{
+    width: 560px;
+    float: left;
+    padding: 5px;
+}
+
+aside{
+    width: 170px;
+    float: right;
+    padding-top: 20px;
+    padding-right: 20px;
+}
+
+aside>div>div{
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    /* background-color: black; */
+    background-image: url(../images/unnamed.jpg);
+    background-size: cover;
+    padding: 10px;
+}
+
+aside>div{
+    text-align: center;
+    margin-bottom: 100px;
+    padding-right: 5px;
+}
+
+aside>h3{
+    font-size: 120%;
+    margin-top: 20px;
+    text-align: center;
+}
+
+aside>ul{
+    list-style: none;
+    text-align: center;
+}
+
+aside>ul>li{
+    /* padding-left: 20px; */
+    line-height: 160%;
+}
+/* footer 영역 */
+footer{
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+}
+
+
+/* 공통으로 사용할 클래스 */
+.font_jua{
+    font-family: 'Jua', sans-serif;
+}
+
+.border_bottom_a{
+    border-bottom: 1px solid #AAA;
+}
+
+.margin_bottom_20{
+    margin-bottom: 20px;
+}
+
+a{
+    color: #333;
+    text-decoration: none;
+}
+
+a:hover{
+    color: hotpink;
+    /* text-decoration: underline; */
+}
+
+
+.title{
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 5px 0;
+    font-family: 'Sunflower', sans-serif;
+}
+
+.date{
+    font-weight: 600;
+    font-style: italic;
+}
+
+.post_img{
+    width: 500px;
+    margin: 10px 5px;
+    border: 0;
+}
+
+.postcontent{
+    font-family: 'Nanum Gothic', sans-serif;    
+    line-height: 180%;
+    margin-bottom: 15px;
+}
+
+
+
