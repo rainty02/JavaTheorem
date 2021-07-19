@@ -14,6 +14,7 @@
 </script>
 </head>
 <body>
+
 	<h1>NullPointer 에러가 발생햇습니다..<br>
 		다시 확인하시고 요청해주세요.</h1>
 	<h3>
