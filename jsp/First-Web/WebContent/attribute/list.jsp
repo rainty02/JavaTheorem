@@ -6,4 +6,4 @@
 	// view 페이지에 선수리스트(결과)를 공유
 	request.setAttribute("players", list);
 %>
-<jsp:forward page="list_View.jsp"/>
+<jsp:forward page="list_view.jsp"/>
