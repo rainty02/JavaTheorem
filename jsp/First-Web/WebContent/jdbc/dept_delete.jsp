@@ -1,19 +1,14 @@
 <%@page import="jdbc.util.ConnectionProvider"%>
 <%@page import="java.sql.DriverManager"%>
-<%@page import="java.sql.Connection"%>
 <%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.Connection"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
 <%
-	//입력데이터의 한글처리
-	request.setCharacterEncoding("utf-8");
-	
-	// 1. 사용자가 입력한 데이터를 받아
+	// 사용자가 전달하는 deptno 받음
 	String deptno = request.getParameter("deptno");
-	String dname = request.getParameter("dname");
-	String loc = request.getParameter("loc");
-	
+
+	// DB 데이터 삭제
 	int resultCnt = 0;
 	// 2. DB 저장 : insert
 	// 드라이버 로드
@@ -29,40 +24,24 @@
 	conn = DriverManager.getConnection(jdbcUrl, user, pw); */
 	conn = ConnectionProvider.getConnection();
 	
-	String sqlUpdate = "update dept set dname=?, loc=? where deptno=?";
-	pstmt = conn.prepareStatement(sqlUpdate);
+	String sqlDel = "delete from dept where deptno=?";
+	pstmt = conn.prepareStatement(sqlDel);
 	
-	pstmt.setString(1, dname);
-	pstmt.setString(2, loc);
-	pstmt.setInt(3, Integer.parseInt(deptno));
+	pstmt.setInt(1, Integer.parseInt(deptno));
 	
 	resultCnt = pstmt.executeUpdate();
 	
 	if(resultCnt > 0){ 
-	%>
-		<script>
-			alert('수정되었습니다.');
-			location.href = 'dept_list.jsp';
-		</script>		
-		<%
-	} else {
 		%>
-			alert('해당 데이터를 찾지 못했습니다.');
-			location.href = 'dept_list.jsp';
-		<%
-	}
+			<script>
+				alert('삭제되었습니다.');
+				location.href = 'dept_list.jsp';
+			</script>		
+			<%
+		} else {
+			%>
+				alert('해당 데이터를 찾지 못했습니다.');
+				location.href = 'dept_list.jsp';
+			<%
+		}
 %>
-
-
-
-
-
-
-
-
-
-
-
-
-
-

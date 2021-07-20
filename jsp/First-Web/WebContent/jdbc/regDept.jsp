@@ -1,3 +1,4 @@
+<%@page import="jdbc.util.ConnectionProvider"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
@@ -17,19 +18,20 @@
 	int resultCnt = 0;
 	// 2. DB 저장 : insert
 	// 드라이버 로드
+	
 	Class.forName("com.mysql.cj.jdbc.Driver");
-	
-	
-	try {
 	// 연결
 	Connection conn = null;
 	PreparedStatement pstmt = null;
 	
-	String jdbcUrl = "jdbc:mysql://localhost:3306/project?serverTimezone";
+	try {
+		
+	/* String jdbcUrl = "jdbc:mysql://localhost:3306/project?serverTimezone";
 	String user = "bit";
 	String pw = "bit";
 	
-	conn = DriverManager.getConnection(jdbcUrl, user, pw);
+	conn = DriverManager.getConnection(jdbcUrl, user, pw); */
+	conn = ConnectionProvider.getConnection();
 	
 	// PreparedStatement
 	String sqlInsert = "insert into dept values (?,?,?)";
