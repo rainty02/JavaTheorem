@@ -32,7 +32,7 @@
 	stmt = conn.createStatement();
 	
 	// sql
-	String sqlSelect = "select * from dept";
+	String sqlSelect = "select * from project.dept";
 	
 	// 4. Resultset
 	rs = stmt.executeQuery(sqlSelect);
