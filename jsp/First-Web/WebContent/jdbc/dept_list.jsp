@@ -43,23 +43,11 @@
 		deptList.add(new Dept(rs.getInt("deptno"), rs.getString("dname"), rs.getString("loc")));
 	}
 	
-	out.println(deptList);
+	//out.println(deptList);
 	// 6. 결과 데이터 request의 속성에 저장 : 데이터 공유(전달)
+	request.setAttribute("result", deptList);
 	
 %>
 
 
-<%-- <jsp:forward page="list_view.jsp"/>	<!-- view의 역할 --> --%>
-
-
-
-
-
-
-
-
-
-
-
-
-
+<jsp:forward page="list_view.jsp"/>	<!-- view의 역할 -->
