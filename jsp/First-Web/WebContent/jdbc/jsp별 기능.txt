@@ -1,0 +1,15 @@
+dept_list : DB와 연결 후 값을 가져와 list view.jsp 로 전달(공유)
+list_view : 전달 받은 값으로 페이지 작성
+
+dept_regForm : 사용자에게 등록 값을 받아 regDept.jsp로 전달(공유)
+regDept : 전달받은 값을 DB에 작성, 작성 여부 출력 후 초기 페이지 이동
+
+list_view 수정
+dept_editForm : 수정하려는 deptno로 DB를 검색해 해당 값을 form_view로 전달(공유)
+form_view : 전달받은 값을 입력창에 출력, 사용자에게 수정받은 값을 editDept로 전달
+editDept : 전달받은 값으로 DB 수정, 수정 여부 출력 후 초기 페이지 이동
+
+list_view 삭제
+dept_delete : 전달받은 deptno 값으로 DB 삭제, 삭제 여부 출력 후 초기 페이지 이동
+
+ConnectionProvider : 커넥션 객체 클래스
