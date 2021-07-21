@@ -14,23 +14,39 @@
 
 	<h1>회원 관리 프로그램</h1>
 	<hr>
-	<form>
-		<table action="regMember.jsp" method="get">
+	<form action="regMember.jsp" method="post">
+		<table>
 			<tr>
 				<th>아이디</th>
 				<th>비밀번호</th>
-				<th>비밀번호 확인</th>
 				<th>이름</th>
 			</tr>
 			<tr>
 				<td><input type="text" name="id"></td>
 				<td><input type="password" name="pw"></td>
-				<td><input type="password" name="chkPw"></td>
 				<td><input type="text" name="name"></td>
 				<td><input type="submit" value="등록"></td>
 			</tr>
 		</table>
 	</form>
+	<hr>
+	<h1>회원 리스트</h1>
+	<hr>
+	<table>
+		<tr>
+			<th>아이디</th>
+			<th>비밀번호</th>
+			<th>이름</th>
+			<th>가입일시</th>
+		</tr>
+		<tr>
+		<%
+			
+		
+		
+		%>		
+		</tr>
+	</table>
 	
 </body>
 </html>
