@@ -9,21 +9,24 @@ public class JdbcUtil {
 
 	// Connection
 	public static void close(Connection conn) {
-		if(conn != null) {
+
+		if (conn != null) {
 			try {
 				conn.close();
 			} catch (SQLException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}	
+		}
 	}
-	
-	// Statement, PreparedStatement (다형성)
+
+	// Statement, PreparedStatement
 	public static void close(Statement stmt) {
 		if(stmt != null) {
 			try {
 				stmt.close();
 			} catch (SQLException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -31,7 +34,7 @@ public class JdbcUtil {
 	
 	// ResultSet
 	public static void close(ResultSet rs) {
-		if(rs != null ) {
+		if(rs!=null) {
 			try {
 				rs.close();
 			} catch (SQLException e) {
@@ -39,5 +42,5 @@ public class JdbcUtil {
 				e.printStackTrace();
 			}
 		}
-	}	
+	}
 }

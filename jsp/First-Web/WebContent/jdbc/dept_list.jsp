@@ -1,58 +1,33 @@
+<%@page import="jdbc.util.JdbcUtil"%>
 <%@page import="dept.dao.DeptDao"%>
 <%@page import="jdbc.util.ConnectionProvider"%>
 <%@page import="dept.domain.Dept"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.util.List"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.Statement"%>
-<%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.Connection"%>
+<%@page import="java.sql.SQLException" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
 
-	// dept_list.jsp : 요청을 받고 처리
-
-	// 1. 드라이버 로드
-	//Class.forName("com.mysql.cj.jdbc.Driver");
-
-	// 2. DB 연결
+// 2. DB 연결
 	Connection conn = null;
-	//Statement stmt = null;
-	//ResultSet rs = null;
+	DeptDao dao = DeptDao.getInstance();
+		
+	try {
+		conn = ConnectionProvider.getConnection();
 	
-	DeptDao dao = new DeptDao();
-	
-	// jdbcUrl, user, pw
-/* 	String jdbcUrl = "jdbc:mysql://localhost:3306/project?serverTimezone=UTC";
-	String user = "bit";
-	String pw = "bit";
-	
-	conn = DriverManager.getConnection(jdbcUrl, user, pw); */
-	conn = ConnectionProvider.getConnection();
-	
-	// 3. Statement
-	//stmt = conn.createStatement();
-	
-	// sql
-	//String sqlSelect = "select * from project.dept";
-	
-	// 4. Resultset
-	//rs = stmt.executeQuery(sqlSelect);
-	
-	// 5. List<Dept> : 결과
-	//List<Dept> deptList = new ArrayList<Dept>();
-	
-	// List에 객체 추가
-	//while(rs.next()){
-	//	deptList.add(new Dept(rs.getInt("deptno"), rs.getString("dname"), rs.getString("loc")));
-	//}
-	
-	//out.println(deptList);
-	// 6. 결과 데이터 request의 속성에 저장 : 데이터 공유(전달)
-	request.setAttribute("result", dao.getDeptList(conn));
+		// 6. 결과 데이터 request의 속성에 저장 : 데이터 공유(전달)
+		request.setAttribute("result", dao.getDeptList(conn));
+		
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();		
+	} catch (Exception e) {
+		e.printStackTrace();
+	} finally {
+		JdbcUtil.close(conn);
+	}
+
 	
 %>
-
 
 <jsp:forward page="list_view.jsp"/>	<!-- view의 역할 -->
