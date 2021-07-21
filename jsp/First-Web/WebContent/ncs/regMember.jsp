@@ -1,3 +1,5 @@
+<%@page import="java.sql.SQLException"%>
+<%@page import="ncs.Connetor"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="ncs.MemberDao"%>
 <%@page import="ncs.Member"%>
@@ -17,17 +19,18 @@
 	// Dao 
 	MemberDao dao = MemberDao.getInstance();
 	int resultCnt = 0;
-	
-	String jdbcUrl = "jdbc:mysql://localhost:3306/project?serverTimezone=UTC";
-	String user = "bit";
-	String jdbcPw = "bit";
-	
+
 	// DB 연결
 	Connection con = null;	
-	con = DriverManager.getConnection(jdbcUrl, user, jdbcPw);
 	
-	// 결과값 반환
-	resultCnt = dao.insertMem(con, new Member(id, pw, name));
+	try {
+		con = Connetor.getConnector();		
+		// 결과값 반환
+		resultCnt = dao.insertMem(con, new Member(id, pw, name));
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
 	
 	if(resultCnt>0){
 	%>

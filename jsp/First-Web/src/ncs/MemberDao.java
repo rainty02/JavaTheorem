@@ -13,6 +13,7 @@ public class MemberDao {
 		return dao;
 	}
 	
+	// 멤버 추가
 	public int insertMem(Connection con, Member mem) {
 		
 		int result = 0;	
@@ -30,13 +31,7 @@ public class MemberDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			if(pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+			Close.close(pstmt);
 		}
 		return result;	
 	}
