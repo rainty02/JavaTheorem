@@ -35,7 +35,6 @@
 					<input type="submit" value="등록">
 					<input type="reset">
 				</td>
-				
 			</tr>
 		</table>
 	</form>
