@@ -1,3 +1,4 @@
+<%@page import="dept.dao.DeptDao"%>
 <%@page import="jdbc.util.ConnectionProvider"%>
 <%@page import="dept.domain.Dept"%>
 <%@page import="java.util.ArrayList"%>
@@ -13,12 +14,14 @@
 	// dept_list.jsp : 요청을 받고 처리
 
 	// 1. 드라이버 로드
-	Class.forName("com.mysql.cj.jdbc.Driver");
+	//Class.forName("com.mysql.cj.jdbc.Driver");
 
 	// 2. DB 연결
 	Connection conn = null;
-	Statement stmt = null;
-	ResultSet rs = null;
+	//Statement stmt = null;
+	//ResultSet rs = null;
+	
+	DeptDao dao = new DeptDao();
 	
 	// jdbcUrl, user, pw
 /* 	String jdbcUrl = "jdbc:mysql://localhost:3306/project?serverTimezone=UTC";
@@ -29,25 +32,25 @@
 	conn = ConnectionProvider.getConnection();
 	
 	// 3. Statement
-	stmt = conn.createStatement();
+	//stmt = conn.createStatement();
 	
 	// sql
-	String sqlSelect = "select * from project.dept";
+	//String sqlSelect = "select * from project.dept";
 	
 	// 4. Resultset
-	rs = stmt.executeQuery(sqlSelect);
+	//rs = stmt.executeQuery(sqlSelect);
 	
 	// 5. List<Dept> : 결과
-	List<Dept> deptList = new ArrayList<Dept>();
+	//List<Dept> deptList = new ArrayList<Dept>();
 	
 	// List에 객체 추가
-	while(rs.next()){
-		deptList.add(new Dept(rs.getInt("deptno"), rs.getString("dname"), rs.getString("loc")));
-	}
+	//while(rs.next()){
+	//	deptList.add(new Dept(rs.getInt("deptno"), rs.getString("dname"), rs.getString("loc")));
+	//}
 	
 	//out.println(deptList);
 	// 6. 결과 데이터 request의 속성에 저장 : 데이터 공유(전달)
-	request.setAttribute("result", deptList);
+	request.setAttribute("result", dao.getDeptList(conn));
 	
 %>
 

@@ -11,8 +11,8 @@
 	// DB 데이터 삭제
 	int resultCnt = 0;
 	// 2. DB 저장 : insert
-	// 드라이버 로드
-	Class.forName("com.mysql.cj.jdbc.Driver");
+	// 드라이버 로드 : 서블릿 클래스 Loader 에서 로드
+	//Class.forName("com.mysql.cj.jdbc.Driver");
 	
 	Connection conn = null;
 	PreparedStatement pstmt = null;

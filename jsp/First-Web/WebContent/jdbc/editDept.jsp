@@ -17,7 +17,7 @@
 	int resultCnt = 0;
 	// 2. DB 저장 : insert
 	// 드라이버 로드
-	Class.forName("com.mysql.cj.jdbc.Driver");
+	//Class.forName("com.mysql.cj.jdbc.Driver");
 	
 	Connection conn = null;
 	PreparedStatement pstmt = null;
