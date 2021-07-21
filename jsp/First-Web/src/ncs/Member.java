@@ -5,6 +5,7 @@ public class Member {
 	private String id;
 	private String pw;
 	private String name;
+	private String regDate;
 	
 	public Member() {}
 
@@ -12,6 +13,13 @@ public class Member {
 		this.id = id;
 		this.pw = pw;
 		this.name = name;
+	}
+	
+	public Member(String id, String pw, String name, String regDate) {
+		this.id = id;
+		this.pw = pw;
+		this.name = name;
+		this.regDate = regDate;
 	}
 
 	public String getId() {
@@ -37,4 +45,13 @@ public class Member {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public String getRegDate() {
+		return regDate;
+	}
+
+	public void setRegDate(String regDate) {
+		this.regDate = regDate;
+	}
+		
 }

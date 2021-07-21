@@ -2,7 +2,11 @@ package ncs;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MemberDao {
 	
@@ -17,10 +21,11 @@ public class MemberDao {
 	public int insertMem(Connection con, Member mem) {
 		
 		int result = 0;	
-		PreparedStatement pstmt = null;		
+		PreparedStatement pstmt = null;	
 		
-		try {			
-			String sql = "insert into member (ID, PW, NAME) values (?, ?, ?)";
+		String sql = "insert into member (ID, PW, NAME) values (?, ?, ?)";
+		
+		try {		
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, mem.getId());
 			pstmt.setString(2, mem.getPw());
@@ -35,4 +40,31 @@ public class MemberDao {
 		}
 		return result;	
 	}
+	
+	// 전체 멤버 출력
+	public List<Member> selectMem(Connection con){
+		
+		List<Member> list = null;
+		Statement stmt = null;
+		ResultSet rs =null;
+		
+		String sql = "select * from member";
+		
+		try {
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(sql);
+			
+			list = new ArrayList<Member>();
+			while(rs.next()) {
+				list.add(new Member(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Close.close(rs);
+			Close.close(stmt);
+		}
+		return list;		
+	}
+	
 }
