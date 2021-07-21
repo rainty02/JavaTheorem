@@ -1,5 +1,7 @@
 <%@page import="java.sql.DriverManager"%>
-<%@page import="java.sql.PreparedStatement"%>
+<%@page import="ncs.MemberDao"%>
+<%@page import="ncs.Member"%>
+<%@page import="java.util.List"%>
 <%@page import="java.sql.Connection"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -9,41 +11,36 @@
 
 	// regMember에서 전달 받은 값
 	String id = request.getParameter("id");
-	String password = request.getParameter("pw");
+	String pw = request.getParameter("pw");
 	String name = request.getParameter("name");
-		
-	// 1. 드라이버 로드
-	Class.forName("com.mysql.cj.jdbc.Driver");
+	
+	// Dao 
+	MemberDao dao = MemberDao.getInstance();
+	int resultCnt = 0;
 	
 	String jdbcUrl = "jdbc:mysql://localhost:3306/project?serverTimezone=UTC";
 	String user = "bit";
-	String pw = "bit";
+	String jdbcPw = "bit";
 	
-	// 2. DB 처리
-	Connection con = null;
-	PreparedStatement pstmt = null;
-	int resultCnt = 0;
+	// DB 연결
+	Connection con = null;	
+	con = DriverManager.getConnection(jdbcUrl, user, jdbcPw);
 	
-	con = DriverManager.getConnection(jdbcUrl, user, pw);
-	
-	String sql = "insert into member (ID, PW, NAME) values (?, ?, ?)";
-	pstmt = con.prepareStatement(sql);
-	pstmt.setString(1, id);
-	pstmt.setString(2, password);
-	pstmt.setString(3, name);
-	
-	resultCnt = pstmt.executeUpdate();
+	// 결과값 반환
+	resultCnt = dao.insertMem(con, new Member(id, pw, name));
 	
 	if(resultCnt>0){
 	%>
 	<script>
 		alert('등록되었습니다.');
+		location.href="regMember_form.jsp";
 	</script>
 	<%
 	} else {
 	%>
 	<script>
-		alert('오류가 발생했습니다.');
+		alert('오류가 발생했습니다.\n다시 시도해주세요.');
+		location.href="regMember_form.jsp";
 	</script>
 	<%
 	}	
