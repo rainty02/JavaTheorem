@@ -50,13 +50,7 @@
 		response.addCookie(CookieBox.makeCookie("reid", memberId, "/", 0));
 	}
 	
-	if(loginChk) {
-	%>
-<script>
-	alert('로그인 되었습니다.');
-	location.href = '<%= request.getContextPath()%>';   // /mm
-</script>		
-	<%		
+	if(loginChk) {	
 		response.sendRedirect("index.jsp");
 	} else {
 	%>
