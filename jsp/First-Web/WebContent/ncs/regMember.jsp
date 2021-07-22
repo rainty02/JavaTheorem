@@ -12,9 +12,16 @@
 	request.setCharacterEncoding("utf-8");
 
 	// regMember에서 전달 받은 값
-	String id = request.getParameter("id");
-	String pw = request.getParameter("pw");
-	String name = request.getParameter("name");
+	//String id = request.getParameter("id");
+	//String pw = request.getParameter("pw");
+	//String name = request.getParameter("name");
+	
+	// request 대신 유즈빈 액션태그 사용
+%>
+<jsp:useBean id="member" class="ncs.Member"/>
+<jsp:setProperty property="*" name="member"/>
+<%
+
 	
 	// Dao 
 	MemberDao dao = MemberDao.getInstance();
@@ -26,7 +33,7 @@
 	try {
 		con = Connetor.getConnector();		
 		// 결과값 반환
-		resultCnt = dao.insertMem(con, new Member(id, pw, name));
+		resultCnt = dao.insertMem(con, new Member(member.getId(), member.getPw(), member.getName()));
 		
 	} catch (SQLException e) {
 		e.printStackTrace();
