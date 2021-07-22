@@ -26,26 +26,15 @@
 				// getValue() : 쿠키의 값 반환
 				String value = cookies[i].getValue();
 				
-				out.println("<h1>"+name+"="+value+"</h1>");
+				if(name.equals("cname")) {
+					out.println("<h1>"+name+"="+value+"</h1>");
+				}
 			}
 		}
 	%>
+	
+	<a href="editCookie.jsp">쿠키 수정</a>
+	<a href="deleteCookie.jsp">쿠키 삭제</a>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
