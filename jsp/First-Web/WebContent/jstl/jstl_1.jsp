@@ -1,3 +1,5 @@
+바디가 없는 경우
+<c:url value="value" [context="context"] [var="varName"] [scope="{page|request|session|application}"]/>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
