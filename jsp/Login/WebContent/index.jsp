@@ -1,11 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="<%= request.getContextPath()%>/css/default.css"> 
+
+<c:url value="/css/default.css" var="css" scope="session"/>
+<link rel="stylesheet" href="${css}"> 
+
 <style>
 </style>
 <script>
@@ -13,9 +19,11 @@
 </head>
 <body>
 
-<%@ include file="/WEB-INF/frame/header.jsp" %>
+<c:url value="WEB-INF/frame/header.jsp" var="head" scope="session"/>
+<c:url value="WEB-INF/frame/nav.jsp" var="nav" scope="session"/>
 
-<%@ include file="/WEB-INF/frame/nav.jsp" %>
+<c:import url="${head}"/>
+<c:import url="${nav}"/> 
 
 	<div class="contents">
 	
