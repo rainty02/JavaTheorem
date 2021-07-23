@@ -17,6 +17,7 @@
 
 	<h3>
 
+		<!-- /의 유무에 따라 절대경로와 상대경로로 출력됨 -->
 		<c:url value="/index.jsp" var="urlIndex"/>
 		${urlIndex}
 		<br>
