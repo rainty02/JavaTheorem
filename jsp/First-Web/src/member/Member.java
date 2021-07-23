@@ -12,6 +12,13 @@ public class Member {
 	public Member() {}
 	
 //	public Member(String name) {}
+	
+	// jstl용 생성자
+	public Member(String id, String pw, String name) {
+		this.id = id;
+		this.pw = pw;
+		this.name = name;
+	}
 
 	// getter
 	public String getId() {
