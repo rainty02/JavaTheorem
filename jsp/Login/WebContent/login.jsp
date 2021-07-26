@@ -10,7 +10,6 @@
 	// 사용자가 전달한 데이터를 받고 -> DB에서 확인 -> 로그인 처리
 	// 로그인 처리 -> Session 객체에 사용자 정보를 저장
 	// reid 확인 하고 값을 받아오면 쿠키 설정
-	
 	String memberId = request.getParameter("memberid");
 	String password = request.getParameter("password");
 	String reid = request.getParameter("reid");

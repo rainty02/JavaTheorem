@@ -4,12 +4,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:if test="${loginInfo == null}">
-	<script>
-		alert('로그인이 필요한 페이지입니다.\n로그인 후 사용해주세요.');
-		location.href = '<%= request.getContextPath()%>/loginForm.jsp';
-	</script>
-</c:if>
 <c:if test="${loginInfo != null}">
 
 <!DOCTYPE html>

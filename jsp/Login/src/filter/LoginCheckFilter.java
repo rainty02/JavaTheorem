@@ -21,11 +21,13 @@ public class LoginCheckFilter implements Filter {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpSession session = httpRequest.getSession(false);
 		
-		if(session != null && session.getAttribute("memberId") != null) {
-			
-			// 로그인으 됐다면 다음 필터를 실행, 현재 필터가 마지막 필터면 실제 요청 처리
+		if(session != null && session.getAttribute("loginInfo") != null) {
+
+			// 로그인이 됐다면 다음 필터를 실행, 현재 필터가 마지막 필터면 실제 요청 처리
 			chain.doFilter(request, response);
+			
 		} else {
+
 			String viewPage = "/loginForm.jsp";
 			
 			RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

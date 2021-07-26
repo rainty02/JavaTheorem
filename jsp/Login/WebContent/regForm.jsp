@@ -8,7 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="<%= request.getContextPath()%>/css/default.css">
+<link rel="stylesheet" href="${css}"> 
 <style>
 </style>
 <script>
@@ -47,10 +47,7 @@
 				</tr>
 			</table>
 		</form>
-
-
 	</div>
-
-
+	
 </body>
 </html>

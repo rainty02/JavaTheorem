@@ -37,7 +37,7 @@
 			<table>
 				<tr>
 					<th>ID</th>
-					<td><input type="text" name="memberid" value="${reid}"></td>
+					<td><input type="text" name="memberid" value="${cookie.reid.value}"></td>
 				</tr>
 				<tr>
 					<th>PW</th>
@@ -46,7 +46,7 @@
 				<tr>
 					<th></th>
 					<td><input type="checkbox" name="reid" value="on"
-						${checked}> 아이디 기억하기</td>
+						${cookie.reid ? 'checked':''}> 아이디 기억하기</td>
 				</tr>
 				<tr>
 					<th></th>
