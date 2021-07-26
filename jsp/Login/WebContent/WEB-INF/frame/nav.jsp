@@ -2,11 +2,11 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:url value="/regForm.jsp" var ="regForm"/>
-<c:url value="/loginForm.jsp" var ="loginForm"/>
-<c:url value="/logout.jsp" var ="logout"/>
-<c:url value="/member_list.jsp" var ="member_list"/>
-<c:url value="/mypage.jsp" var ="mypage"/>
+<c:url value="/regForm.jsp" var ="regForm" scope="application"/>
+<c:url value="/loginForm.jsp" var ="loginForm" scope="application"/>
+<c:url value="/logout.jsp" var ="logout" scope="application"/>
+<c:url value="/member_list.jsp" var ="member_list" scope="application"/>
+<c:url value="/mypage.jsp" var ="mypage" scope="application"/>
 
 	<nav>
 		<ul>

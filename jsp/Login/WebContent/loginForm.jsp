@@ -3,33 +3,12 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
 <%
 	CookieBox cBox = new CookieBox(request);
 
 	String reid = cBox.exists("reid") ? cBox.getValue("reid") : "";
 	String checked = cBox.exists("reid") ? "checked" : "";
 %>
-
-<%-- 
-<c:choose>
-	<c:when test="${}">
-		<c:set var="reid" value="${CookieBox.reid}"/>
-	</c:when>
-	<c:when test="${CookieBox(${request}).reid == null}">
-		<c:set var="reid" value=""/>
-	</c:when>
-</c:choose>
-
-<c:choose>
-	<c:when test="${CookieBox.reid != null}">
-		<c:set var="checked" value="checked"/>
-	</c:when>
-	<c:when test="${CookieBox.reid == null}">
-		<c:set var="checked" value=""/>
-	</c:when>
-</c:choose>
- --%>
 
 <!DOCTYPE html>
 <html>
@@ -77,10 +56,7 @@
 
 		</form>
 
-
-
 	</div>
-
-
+	
 </body>
 </html>

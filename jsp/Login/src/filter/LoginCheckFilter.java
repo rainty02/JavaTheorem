@@ -18,33 +18,20 @@ public class LoginCheckFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		
-		
-		// 요청의 필터 처리 : request
-		// 회원의 로그인 여부 확인 : session 속성에 회원의 로그인 정보를 갖고 있는지 확인
-		// 1. session 객체를 구함 : request.getSession(false)
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpSession session = httpRequest.getSession(false);
-		// getSession(true) : 세션 객체가 있다면 현재 세션 객체를 반환, 세션 객체가 없다면 새로운 세션을 생성해 반환
-		// getSession(false) : 세션 객체가 있다면 현재 세션 객체 반환, 없다면 null 반환
-		// getSession() : 현재 아이디와 같은 세션 객체를 반환, 없다면 null 반환
 		
-		// 세션객체에 userName 속성이 있다면 원래 요청처리를 진행
-		// 없다면 로그인폼으로 이동
-		if(session != null && session.getAttribute("userName") != null) {
-			// 로그인 상태
-			chain.doFilter(request, response); // 다음 필터를 실행, 현재 필터가 마지막 필터면 실제 요청을 처리
+		if(session != null && session.getAttribute("memberId") != null) {
+			
+			// 로그인으 됐다면 다음 필터를 실행, 현재 필터가 마지막 필터면 실제 요청 처리
+			chain.doFilter(request, response);
 		} else {
-			String viewPage = "/member/loginForm.jsp";
+			String viewPage = "/loginForm.jsp";
 			
 			RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 			dispatcher.forward(request, response);
 		}
-		
 
-		
-		// 필터를 이용한 응답 데이터 처리 : response
-		
-		
 	}
 
 	@Override
