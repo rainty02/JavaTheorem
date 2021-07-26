@@ -24,9 +24,9 @@ public class LoginCheckFilter implements Filter {
 		// 1. session 객체를 구함 : request.getSession(false)
 		HttpServletRequest httpRquest = (HttpServletRequest) request;
 		HttpSession session = httpRquest.getSession(false);
-		// getSession(true) : 무조건 새로운 세션 객체 반환
-		// getSession(false) : 세션 객체가 없다면 null 반환
-		// getSession() : 세션 객체가 있다면 현제 세션 객체를 반환, 세션 객체가 없다면 새로운 세션을 생성해 반환 
+		// getSession(true) : 세션 객체가 있다면 현재 세션 객체를 반환, 세션 객체가 없다면 새로운 세션을 생성해 반환
+		// getSession(false) : 세션 객체가 있다면 현재 세션 객체 반환, 없다면 null 반환
+		// getSession() : 현재 아이디와 같은 세션 객체를 반환, 없다면 null 반환
 		
 		// 세션객체에 userName 속성이 있다면 원래 요청처리를 진행
 		// 없다면 로그인폼으로 이동
