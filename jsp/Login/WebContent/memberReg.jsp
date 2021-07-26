@@ -26,8 +26,8 @@
 		e.printStackTrace();
 	}
 
-	out.println(result);
-	
+	//out.println(result);
+
 	if (result > 0) {
 %>
 <script>
@@ -45,5 +45,4 @@
 <%
 	}
 %>
-
 
