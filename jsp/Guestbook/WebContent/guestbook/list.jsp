@@ -12,7 +12,7 @@
 </head>
 <body>
 
-	<form action="writtemessage.jsp" method="post">
+	<form action="writemessage.jsp" method="post">
 		<table>
 			<tr>
 				<td>이름</td>
@@ -25,7 +25,7 @@
 			<tr>
 				<td>메시지</td>
 				<td>
-					<textarea name="message" rows="1" cols="10"></textarea>
+					<textarea name="message" rows="10" cols="30"></textarea>
 				</td>
 			</tr>
 			<tr>
