@@ -11,6 +11,12 @@ import guest.jdbc.JdbcUtil;
 
 public class WirteMessageService {
 	
+	private WirteMessageService() {}
+	private static WirteMessageService service = new WirteMessageService();
+	public static WirteMessageService getInstance() {
+		return service;
+	}
+	
 	// 메시지를 DB에 쓰고 처리된 결과를 생성, 반환
 	public int  wirteMessage(MessageRequest requestMessage ) {
 		
@@ -22,7 +28,7 @@ public class WirteMessageService {
 		
 		try {
 			conn = ConnectionProvider.getConnection();
-			dao = new MessageDao();
+			dao = MessageDao.getInstance();
 			
 			// AutoCommit의 기본값은 true : 자동커밋
 			// Java Jdbc에서 트랜잭션을 컨트롤 : false, rollback
