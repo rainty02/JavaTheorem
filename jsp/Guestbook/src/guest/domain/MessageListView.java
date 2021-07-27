@@ -28,7 +28,7 @@ public class MessageListView {
 			this.pageTotalCount = 0;
 		} else {
 			this.pageTotalCount = this.messageTotalCount / this.messageCountPerpage;
-			if(this.messageTotalCount / this.messageCountPerpage > 0) {
+			if(this.messageTotalCount % this.messageCountPerpage > 0) {
 				this.pageTotalCount++;
 			}
 		}
