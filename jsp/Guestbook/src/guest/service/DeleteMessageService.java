@@ -10,7 +10,7 @@ import guest.exception.MessageNotFoundException;
 import guest.jdbc.ConnectionProvider;
 import guest.jdbc.JdbcUtil;
 
-class DeleteMessageService {
+public class DeleteMessageService {
 
 	private DeleteMessageService() {}
 	private static DeleteMessageService service = new DeleteMessageService();
