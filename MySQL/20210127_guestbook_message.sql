@@ -10,11 +10,13 @@ create table project.guestbook_message(
 -- 최근 게시된 순서대로
 select * from project.guestbook_message order by regdate desc;
 -- limit index, count / index부터 count개씩 (페이징 처리)
-select * from project.guestbook_message limit 0, 3;
+select * from project.guestbook_message order by regdate desc limit 0, 3;
+-- 전체 게시물의 개수
+select count(*) from project.guestbook_message;
+
 
 -- insert
-insert into project.guestbook_message (guestname, password, message)
-values ('?', '?', '?');
+insert into project.guestbook_message (guestname, password, message) values ('?', '?', '?');
 
 -- update
 update project.guestbook_message

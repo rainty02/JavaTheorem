@@ -34,6 +34,9 @@
 			</tr>
 		</table>
 	</form>
+	<hr>
+	${listView}
+	
 	
 </body>
 </html>

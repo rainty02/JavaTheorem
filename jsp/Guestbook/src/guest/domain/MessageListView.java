@@ -61,6 +61,13 @@ public class MessageListView {
 	public int getEndRow() {
 		return endRow;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "MessageListView [messageList=" + messageList + ", messageTotalCount=" + messageTotalCount
+				+ ", currentPageNumber=" + currentPageNumber + ", pageTotalCount=" + pageTotalCount
+				+ ", messageCountPerpage=" + messageCountPerpage + ", firstRow=" + firstRow + ", endRow=" + endRow
+				+ "]";
+	}
+		
 }
