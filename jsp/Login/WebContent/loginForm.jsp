@@ -3,13 +3,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%
-	CookieBox cBox = new CookieBox(request);
-
-	String reid = cBox.exists("reid") ? cBox.getValue("reid") : "";
-	String checked = cBox.exists("reid") ? "checked" : "";
-%>
-
 <!DOCTYPE html>
 <html>
 <head>

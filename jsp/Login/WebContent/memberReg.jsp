@@ -1,3 +1,4 @@
+<%@page import="service.MemberRegService2"%>
 <%@page import="service.MemberRegService"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="util.ConnectionProvider"%>
@@ -7,7 +8,8 @@
 	pageEncoding="UTF-8"%>
 
 <%
-	int result = MemberRegService.getInstance().regMember(request);
+	MemberRegService2.getInstance().regMember(request);
+	//int result = MemberRegService.getInstance().regMember(request);
 	//request.setAttribute("result", result);
 %>
 <jsp:forward page="reg_view.jsp"/>
