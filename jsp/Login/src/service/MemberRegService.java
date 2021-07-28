@@ -35,6 +35,8 @@ public class MemberRegService {
 		Connection conn = null;
 		MemberDao dao = null;
 		
+		File newFile = null;
+		
 		try {
 		// 1. multipart/form-data 여부 확인
 		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
@@ -89,12 +91,13 @@ public class MemberRegService {
 						// 파일이름, 사이즈
 						if(item.getName()!=null && item.getSize()>0) {
 							// 저장
-							item.write(new File(saveDir, item.getName()));
+							newFile = new File(saveDir, item.getName());
+							item.write(newFile);
 							// DB에 저장할 파일의 이름
 							member.setMemberphoto(item.getName());
+							System.out.println("파일을 저장했습니다.");
 						}
 					}
-					
 				}
 			}
 		} else {
@@ -111,12 +114,20 @@ public class MemberRegService {
 		
 		} catch (SQLException e) {
 			e.printStackTrace();
+			// 예외발생시 파일 삭제
+			if(newFile!=null && newFile.exists()) {
+				newFile.delete();
+				System.out.println("파일을 삭제했습니다.");
+			}
+			
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		request.setAttribute("result", resultCnt);
+		
 		return resultCnt;
 	}
 	
