@@ -24,7 +24,7 @@
 
 		<h2>회원가입</h2>
 		<hr>
-		<form action="memberReg.jsp" method="post"> 
+		<form action="memberReg.jsp" method="post" enctype="multipart/form-data"> 
 			<table>
 				<tr>
 					<td>아이디</td>
@@ -37,6 +37,10 @@
 				<tr>
 					<td>이름</td>
 					<td><input type="text" name="membername"></td>
+				</tr>
+				<tr>
+					<td>사진</td>
+					<td><input type="file" name="photo"></td>
 				</tr>
 				<tr>
 					<td></td>

@@ -1,3 +1,4 @@
+<%@page import="java.io.File"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="org.apache.commons.fileupload.FileItem"%>
 <%@page import="java.util.List"%>
@@ -42,13 +43,21 @@
 					String paramValue = item.getString("utf-8");
 					title = paramValue;
 					
-					out.println("title : " + title + "<br>");
+					//out.println("title : " + title + "<br>");
 				} else if(paramName.equals("title2")){
 					// ....
 				}
 				
 			} else {
 				// type=file 처리
+						
+				// 웹 경로
+				String uploadUri = "/upload";
+				// 시스템 경로
+				String dir = request.getSession().getServletContext().getRealPath(uploadUri);
+				
+				//out.println("path : " + dir);
+						
 				String paramName = item.getFieldName();
 				
 				if(paramName.equals("photo")){
@@ -59,6 +68,15 @@
 					out.println("fileName : " + userFileName + "<br>");
 					out.println("contentType : " + contentType + "<br>");
 					out.println("fileSize : " + fileSize + "<br>");
+				
+					// 파일 유효성 조건
+					if(userFileName != null && fileSize > 0){
+						File savePath = new File(dir, userFileName);
+						item.write(savePath);
+						System.out.println("데이터가 저장되었습니다.");
+						newFile = userFileName;
+					}
+					
 				} else if(paramName.equals("file")){
 					// ....
 				}
@@ -66,9 +84,11 @@
 		}
 	}
 	
+	request.setAttribute("title", title);
+	request.setAttribute("photo", newFile);
 	
 %>
-<%-- <jsp:forward page="upload_view.jsp"/> --%>
+<jsp:forward page="upload_view.jsp"/>
 
 
 

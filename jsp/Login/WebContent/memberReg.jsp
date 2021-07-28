@@ -6,11 +6,13 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<%--
 <jsp:useBean id="member" class="domain.Member" />
 <jsp:setProperty property="*" name="member" />
+--%>
 
 <%
-	out.println(member);
+	//out.println(member);
 
 	int result = 0;
 	Connection conn = null;
@@ -20,7 +22,7 @@
 		conn = ConnectionProvider.getConnection();
 		dao = MemberDao.getInstance();
 
-		result = dao.insertMember(conn, member);
+		//result = dao.insertMember(conn, member);
 
 	} catch (SQLException e) {
 		e.printStackTrace();
