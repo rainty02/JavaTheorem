@@ -1,31 +1,33 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="<c:url value='/css/default.css'/>">
+<link rel="stylesheet" href="<c:url value='/css/default.css'/>"> 
 <style>
-	.display_none {
+
+	.display_none{
 		display: none;
 	}
-	.color_blue {
-		color : blue;
+	.color_blue{
+		color: blue;
 	}
-	.color_red {
-		color : red;
+	.color_red{
+		color: red;
 	}
-	#loadingimg {
-		height : 20px;
+	#Loadingimg{
+		height: 20px;
 	}
 </style>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script>
 	
 	$(document).ready(function(){
-		
 		$('#memberid').focusin(function(){
 			$('#msg').addClass('display_none');
 			$('#msg').removeClass('color_blue');
@@ -35,31 +37,28 @@
 		});
 		
 		$('#memberid').focusout(function(){
-			// ajax 비동기 통신 > id를 서버로 보내고 사용 가능 유무의 응답 코드를 받는다 -> 화면에 메시지 출력
-			
+			// ajax 비동기 통신 -> id를 서버로 보내고 사용가능 유무 응답코드를 받아 화면에 메시지 출력
 			$.ajax({
 				url : 'idcheck.jsp',
 				type : 'post',
-				data : {
-					mid : $(this).val()
-				},
+				data : { mid : $(this).val() },
 				beforeSend : function(){
 					$('#loadingimg').removeClass('display_none');
-				} ,
+				},
 				success : function(data){
-					// data : Y / N
-					if(data == 'Y'){
+					// data 사용가능 유무 : Y / N
+					if(data == 'Y') {
 						$('#msg').html('사용가능');
 						$('#msg').addClass('color_blue');
 						$('#msg').removeClass('display_none');
 					} else {
-						$('#msg').html('사용 불가능');
+						$('#msg').html('사용불가');
 						$('#msg').addClass('color_red');
 						$('#msg').removeClass('display_none');
 					}
 				},
 				error : function(request, status, error){
-					alert('서버 통신에 문제가 발생했습니다. 다시 실행해주세요.');
+					alert('서버 통신에 문제가 발생했습니다. 다시 실행해주세요.')
 					console.log(request);
 					console.log(status);
 					console.log(error);
@@ -68,18 +67,15 @@
 					$('#loadingimg').addClass('display_none');
 				}
 			});
-			
 		});
-		
 	});
 	
 </script>
 </head>
 <body>
 
-	<%@ include file="/WEB-INF/frame/header.jsp"%>
-
-	<%@ include file="/WEB-INF/frame/nav.jsp"%>
+<%@ include file="/WEB-INF/frame/header.jsp" %>
+<%@ include file="/WEB-INF/frame/nav.jsp" %>
 
 	<div class="contents">
 
@@ -92,7 +88,7 @@
 					<td>
 						<input type="text" name="memberid" id="memberid">
 						<span id="msg" class="display_none"></span>
-						<img id="loadingimg" class="display_none" alt="loading" src="<c:url value="/image/loading.gif"/>"> 
+						<img id="Loadingimg" class="display_none" alt="Loading" src="<c:url value="/image/loading.gif"/>">
 					</td>
 				</tr>
 				<tr>
@@ -116,10 +112,8 @@
 				</tr>
 			</table>
 		</form>
-
-
 	</div>
-
-
+	
 </body>
 </html>
+
