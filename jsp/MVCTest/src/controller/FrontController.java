@@ -1,9 +1,13 @@
 package controller;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -30,9 +34,59 @@ public class FrontController extends HttpServlet {
 	public void init(ServletConfig config) throws ServletException {
 		
 		// commands에 요청 문자열과 처리할 객체 저장
-		commands.put("/", new GreetingCommandImpl()); // "/"
-		commands.put("/greeting.do", new GreetingCommandImpl()); // "/greering.do"
-		commands.put("/date.do", new DateCommandImpl());
+		//commands.put("/", new GreetingCommandImpl()); // "/"
+		//commands.put("/greeting.do", new GreetingCommandImpl()); // "/greering.do"
+		//commands.put("/date.do", new DateCommandImpl());
+		
+		// 설정파일의 경로 가져오기
+		String configFile = config.getInitParameter("config");
+		
+		Properties prop = new Properties();
+		FileInputStream fis = null;
+		// 설정 파일의 시스템 경로
+		String configPath = config.getServletContext().getRealPath(configFile);
+		System.out.println("경로 : " + configPath);
+		
+		try {
+			fis = new FileInputStream(configPath);
+			prop.load(fis);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Iterator<Object> itr = prop.keySet().iterator();
+		while(itr.hasNext()) {
+			String command = (String) itr.next();
+			String commandClassName = prop.getProperty(command);
+			
+			
+			// 클래스 이름으로 해당 클래스의 인스턴스 생성
+			try {
+				Class commandClass = Class.forName(commandClassName);
+				
+				Command commandObj = (Command) commandClass.newInstance();
+				
+				commands.put(command, commandObj);
+				
+				System.out.println(command+"="+commandClassName);
+				
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InstantiationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
 	}	
 	
 	@Override
