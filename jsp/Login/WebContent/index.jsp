@@ -9,8 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 
-<c:url value="/css/default.css" var="css" scope="application"/>
-<link rel="stylesheet" href="${css}"> 
+<link rel="stylesheet" href="<c:url value='/css/default.css'/>">
 
 <style>
 </style>
@@ -19,11 +18,8 @@
 </head>
 <body>
 
-<c:url value="WEB-INF/frame/header.jsp" var="head" scope="application"/>
-<c:url value="WEB-INF/frame/nav.jsp" var="nav" scope="application"/>
-
-<c:import url="${head}"/>
-<c:import url="${nav}"/> 
+<%@ include file="/WEB-INF/frame/header.jsp" %>
+<%@ include file="/WEB-INF/frame/nav.jsp" %>
 
 	<div class="contents">	
 		<h1>Index</h1>	
