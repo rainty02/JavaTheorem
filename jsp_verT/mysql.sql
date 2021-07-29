@@ -14,6 +14,9 @@ delete from membert where idx=1 and idx=2;
 
 drop table project.membert;
 
+select * from membert where memberid = cool;
+select count(*) from project.membert where memberid = hot;
+
 CREATE TABLE `membert` (
   `idx` int DEFAULT NULL,
   `memberid` varchar(45) NOT NULL,
