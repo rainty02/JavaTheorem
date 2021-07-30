@@ -1,5 +1,5 @@
-<%@page import="service.MemberRegService2"%>
-<%@page import="service.MemberRegService"%>
+<%@page import="warehouse.MemberRegService2"%>
+<%@page import="warehouse.MemberRegService"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="util.ConnectionProvider"%>
 <%@page import="dao.MemberDao"%>

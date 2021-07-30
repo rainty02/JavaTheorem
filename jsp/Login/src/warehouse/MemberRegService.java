@@ -1,4 +1,4 @@
-package service;
+package warehouse;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;

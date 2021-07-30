@@ -14,7 +14,6 @@ public class IdCheckCommandImpl implements Command {
 	@Override
 	public String getPage(HttpServletRequest request, HttpServletResponse response) {
 
-		
 		int cnt = 0;
 		
 		Connection conn = null;
@@ -26,24 +25,17 @@ public class IdCheckCommandImpl implements Command {
 			
 			String memberId = request.getParameter("mid");
 			cnt = dao.selectById(conn, memberId);
-
 			
-			String result = cnt > 0 ? "N" : "Y";
-			System.out.println(memberId +" : "+ cnt +" : "+ result);
+			//result = cnt > 0 ? "N" : "Y";
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-//		if (cnt > 0) {
-//			request.setAttribute("result", "N");
-//			System.out.println(request.getAttribute("result"));
-//		} else {
-//			request.setAttribute("result", "Y");
-//			System.out.println(request.getAttribute("result"));
-//		}
-		request.setAttribute("result", cnt > 0 ? "N" : "Y");
 		
-		return "/WEB-INF/views/regForm.jsp";
+		request.setAttribute("idChk", cnt > 0 ? "N" : "Y");
+		
+		return "/WEB-INF/views/idcheck.jsp";
 	}
 
 }
