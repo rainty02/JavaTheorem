@@ -9,7 +9,7 @@ public class InvalidCommandImpl implements Command {
 		// 핵심처리
 		request.setAttribute("result", "안녕하세요");
 		
-		return "/WEB-INF/views/default.jsp";
+		return "/WEB-INF/views/index.jsp";
 	}
 
 }

@@ -3,6 +3,8 @@ package service;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import javax.servlet.http.HttpServletRequest;
+
 import dao.MemberDao;
 import util.ConnectionProvider;
 

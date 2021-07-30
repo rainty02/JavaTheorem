@@ -4,7 +4,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:if test="${loginInfo != null}">
+<%-- <c:if test="${loginInfo != null}"> --%>
 
 <!DOCTYPE html>
 <html>
@@ -35,4 +35,4 @@
 
 </body>
 </html>
-</c:if>
+<%-- </c:if> --%>

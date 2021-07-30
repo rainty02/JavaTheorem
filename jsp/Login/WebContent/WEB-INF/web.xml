@@ -14,9 +14,26 @@
       <param-name>driver</param-name>
       <param-value>com.mysql.cj.jdbc.Driver</param-value>
     </init-param>
-    <!-- 1회 실행 -->
+  </servlet>
+  
+  <!-- 컨트롤러 등록 -->
+  <servlet>
+  	<servlet-name>FrontController</servlet-name>
+  	<servlet-class>controller.FrontController</servlet-class>
+  	<!-- 설정파일 등록 -->
+  	<init-param>
+  		<param-name>config</param-name>
+  		<param-value>/WEB-INF/command.propertise</param-value>
+  	</init-param>
+  	   <!-- 1회 실행 -->
     <load-on-startup>1</load-on-startup>
   </servlet>
+  
+  <!-- 컨트롤러 매핑 -->
+  <servlet-mapping>
+  	<servlet-name>FrontController</servlet-name>
+  	<url-pattern>*.do</url-pattern>
+  </servlet-mapping>
   
   <!-- 필터 등록 -->
     <filter>
