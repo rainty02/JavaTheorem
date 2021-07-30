@@ -3,6 +3,7 @@ package dept.dao;
 import static org.junit.Assert.*;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -12,6 +13,7 @@ import org.junit.Test;
 
 import dept.domain.Dept;
 import jdbc.util.ConnectionProvider;
+import jdbc.util.DummyConnectionProvider;
 
 public class DeptDaoTest {
 
@@ -48,6 +50,8 @@ public class DeptDaoTest {
 		assertEquals("deptList - deptno 비교", 20, dao.getDeptList(conn).get(1).getDeptno());
 		assertEquals("deptList - deptno 비교", 30, dao.getDeptList(conn).get(2).getDeptno());
 		assertEquals("deptList - deptno 비교", 40, dao.getDeptList(conn).get(3).getDeptno());
+		// notnull
+		assertNotNull("getDeptList", dao.getDeptList(conn));
 	}
 
 	@Test
@@ -57,7 +61,8 @@ public class DeptDaoTest {
 
 	@Test
 	public void testDeleteDept() {
-		assertEquals("더미 데이터 삭제", 1, dao.deleteDept(conn, insertDummy.getDeptno()));
+		// same
+		assertSame("더미 데이터 삭제", 1, dao.deleteDept(conn, insertDummy.getDeptno()));
 	}
 
 	@Test
@@ -67,7 +72,15 @@ public class DeptDaoTest {
 
 	@Test
 	public void testUpdateDept() {
-		assertEquals("더미데이터 업데이트", 1, dao.updateDept(conn, selectDummy));
+		assertEquals("더미 데이터 업데이트", 1, dao.updateDept(conn, selectDummy));
+	}
+	
+	@Test(expected = SQLException.class)
+	public void testSQLException() throws SQLException {
+		Connection dummyConn;
+		// 로그인 계정이 없는 커넥션
+		dummyConn = DummyConnectionProvider.getConnection();
+		dao.getDeptList(dummyConn);
 	}
 
 }
