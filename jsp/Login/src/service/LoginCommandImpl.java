@@ -14,7 +14,8 @@ import util.CookieBox;
 
 public class LoginCommandImpl implements Command {
 
-	public boolean login(HttpServletRequest request, HttpServletResponse response) {
+	@Override
+	public String getPage(HttpServletRequest request, HttpServletResponse response) {
 
 		// 사용자가 전달한 데이터를 받고 -> DB에서 확인 -> 로그인 처리
 		// 로그인 처리 -> Session 객체에 사용자 정보를 저장
@@ -53,7 +54,7 @@ public class LoginCommandImpl implements Command {
 				// 쿠키값을 저장하지 않는다!!!
 				response.addCookie(CookieBox.makeCookie("reid", memberId, "/", 0));
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
@@ -61,13 +62,7 @@ public class LoginCommandImpl implements Command {
 		}
 
 		request.setAttribute("loginChk", loginChk);
-		return loginChk;
-	}
 
-	
-	@Override	
-	public String getPage(HttpServletRequest request, HttpServletResponse response) {
-		login(request, response);
 		return "/WEB-INF/views/login.jsp";
 	}
 }

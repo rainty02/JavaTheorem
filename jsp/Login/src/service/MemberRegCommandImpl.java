@@ -21,7 +21,8 @@ import util.ConnectionProvider;
 
 public class MemberRegCommandImpl implements Command {
 
-	public int regMember(HttpServletRequest request) throws FileUploadException {
+	@Override
+	public String getPage(HttpServletRequest request, HttpServletResponse response) {
 		
 		int resultCnt = 0;
 		
@@ -123,17 +124,6 @@ public class MemberRegCommandImpl implements Command {
 		}
 		request.setAttribute("result", resultCnt);
 		
-		return resultCnt;
-	}
-	
-	@Override
-	public String getPage(HttpServletRequest request, HttpServletResponse response) {
-		
-		try {
-			regMember(request);
-		} catch (FileUploadException e) {
-			e.printStackTrace();
-		}
 		return "/WEB-INF/views/reg_view.jsp";
 
 	}
