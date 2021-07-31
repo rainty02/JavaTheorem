@@ -8,3 +8,4 @@
 /list_view.do=service.MemberListCommandImpl
 /mypage.do=service.MyPageCommandImpl
 /idcheck.do=service.IdCheckCommandImpl
+/deletemember.do=service.MemberDelCommandImpl

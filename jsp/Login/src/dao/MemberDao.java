@@ -154,4 +154,27 @@ public class MemberDao {
 			
 			return cnt;
 		}
+
+		
+		public int deleteMember(Connection conn, int midx) {
+			
+			int resultCnt = 0;
+			PreparedStatement pstmt = null;
+			
+			String sql = "delete from membert where idx = ?";
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, midx);
+				
+				resultCnt = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				JdbcUtil.close(pstmt);
+			}
+			return resultCnt;
+		}
 }
