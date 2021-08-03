@@ -1,4 +1,4 @@
-package com.bitcamp.firstSpring;
+package com.test.app;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -33,7 +33,7 @@ public class HomeController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
-		return "home"; // /WEB-INF/views/ + home + .jsp
+		return "home";
 	}
 	
 }
