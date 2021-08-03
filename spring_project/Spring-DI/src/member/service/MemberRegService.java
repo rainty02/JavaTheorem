@@ -9,8 +9,32 @@ import member.domain.RegRequest;
 public class MemberRegService {
 
 	// Dao dao = new MemberDao();
-	Dao dao;
+	private Dao dao;
+	private int num;
 	
+	// 프로퍼티 방식 : setter 메소드 이용, 기본 생성자 필요
+	public void setDao(Dao dao) {
+		this.dao = dao;
+	}
+	
+	// 생성자 정의
+	// 기본 생성자
+	public MemberRegService() {}
+	
+	// 정수데이터를 받는 생성자
+	public MemberRegService(int num) {
+		//this.dao = dao;
+		System.out.println("MemberRegService 인스턴스 생성");
+	}	
+	
+	// 인스턴스와 정수데이터를 받는 생성자
+	public MemberRegService(Dao dao, int num) {
+		this.dao = dao;
+		this.num = num;
+		System.out.println("MemberRegService 인스턴스 생성");
+	}
+	
+	// 의존 설정시 생성자 필요
 	public MemberRegService(Dao dao) {
 		this.dao = dao;
 		System.out.println("MemberRegService 인스턴스 생성");

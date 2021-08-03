@@ -5,7 +5,14 @@ import member.domain.Member;
 
 public class ChangePasswordService {
 
-	Dao dao;
+	private Dao dao;
+	
+	public void setDao(Dao dao) {
+		this.dao = dao;
+	}
+	
+	// 기본 생성자
+	public ChangePasswordService() {}
 	
 	public ChangePasswordService(Dao dao) {
 		this.dao = dao;
