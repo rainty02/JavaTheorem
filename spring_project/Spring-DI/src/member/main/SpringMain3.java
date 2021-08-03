@@ -40,12 +40,12 @@ public class SpringMain3 {
 			}
 			if(cmd.startsWith("change")) {
 				String[] values= cmd.split(" ");
-				processChagnePw(values);
+				processChangePw(values);
 			}			
 		}		
 	}
 
-	private static void processChagnePw(String[] values) {
+	private static void processChangePw(String[] values) {
 		 
 		//ChangePasswordService service = new ChangePasswordService(dao);
 		//ChangePasswordService service = assembler.getPasswordService();
