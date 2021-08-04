@@ -16,12 +16,10 @@ public class OrderController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public String order(
-			OrderCommand orderCommand
-			) {
+	public String order(OrderCommand orderCommand) {
 		
 		System.out.println(orderCommand);
 				
-		return null;
+		return "order/order";
 	}
 }
