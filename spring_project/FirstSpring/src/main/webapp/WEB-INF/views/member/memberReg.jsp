@@ -15,39 +15,29 @@
 </head>
 <body>
 
-	<h1>회원가입</h1>
+	<h1>가입 정보</h1>
 	<hr>				<!-- /web/member/mypage.jsp  -->
-	<form method="post"> 
+	 
 			<table>
 				<tr>
 					<td>아이디</td>
-					<td>
-						<input type="text" name="memberid" id="memberid">
-						<span id="msg" class="display_none"></span>
-						<img id="Loadingimg" class="display_none" alt="Loading" src="<c:url value="/image/loading.gif"/>">
-					</td>
+					<td>${reqmemberid}, ${memberid}, ${regReq.memberid}</td>
 				</tr>
 				<tr>
 					<td>비밀번호</td>
-					<td><input type="password" name="password"></td>
+					<td>${reqpassword}, ${password}, ${regReq.password}</td>
 				</tr>
 				<tr>
 					<td>이름</td>
-					<td><input type="text" name="membername"></td>
+					<td>${reqmembername}, ${membername}, ${regReq.membername}</td>
 				</tr>
 				<tr>
 					<td>사진</td>
-					<td><input type="file" name="photo"></td>
+					<td>${reqphoto}, ${photo}, ${regReq.photo}</td>
 				</tr>
-				<tr>
-					<td></td>
-					<td>
-						<input type="submit">
-						<input type="reset" >
-					</td>
-				</tr>
+
 			</table>
-		</form>
+		
 
 </body>
 </html>

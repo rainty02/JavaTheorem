@@ -16,6 +16,7 @@
 	<!-- 이미 만들어진 정적 리소스(파일) 매핑 (컨트롤러 X)-->
 	<resources mapping="/resources/**" location="/resources/" />
 	<resources mapping="/css/**" location="/css/" />
+	<resources mapping="/image/**" location="/image/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<!-- jsp 파일명 앞에 경로, 뒤에 확장자를 붙여줌-->
