@@ -18,7 +18,8 @@
 	<h1>Login Form</h1>
 	<hr>				<!-- /web/member/mypage.jsp  -->
 	<form method="post">
-		<!-- action = "/context -->
+		  <!--  action="/contextPath/member/login" -->
+		  <!-- /web/member/mypage/mypage.jsp -->
 		<table>
 			<tr>
 				<td>아이디</td>
