@@ -15,25 +15,21 @@
 </head>
 <body>
 
-	<h1>Login Form</h1>
+	<h1>Login Request Data</h1>
 	<hr>				<!-- /web/member/mypage.jsp  -->
-	<form method="post">
+
 		<!-- action = "/context -->
 		<table>
 			<tr>
 				<td>아이디</td>
-				<td><input type="text" name="id"></td>
+				<td></td>
 			</tr>
 			<tr>				
 				<td>비밀번호</td>
-				<td><input type="password" name="pw"></td>
-			</tr>
-			<tr>
 				<td></td>
-				<td><input type="submit"></td>				
 			</tr>
 		</table>
-	</form>
+
 
 </body>
 </html>

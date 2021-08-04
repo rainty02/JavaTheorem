@@ -30,6 +30,7 @@
 		@Controller	: 기능 컨트롤러
 		@Service	: 서비스 객체
 		@Repository	: DAO
+		협업시 base-package 경로를 변경해서 사용 - 동일한 경로일 경우 bean이 중복등록
 	 -->
 	<context:component-scan base-package="com.bitcamp.firstSpring" />
 	
