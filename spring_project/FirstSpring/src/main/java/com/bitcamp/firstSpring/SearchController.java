@@ -14,6 +14,7 @@ public class SearchController {
 
 	@RequestMapping("/search/search")
 	public String search() {
+		System.out.println("뷰 페이지 지정");
 		return "search/search";
 	}
 	
@@ -28,11 +29,13 @@ public class SearchController {
 		list.add(new SearchType(1, "팀이름+선수이름"));
 		list.add(new SearchType(2, "팀이름"));
 		list.add(new SearchType(3, "선수이름"));
+		System.out.println("타입 리스트");
 		return list;
 	}
 	
 	@ModelAttribute("queryList")
 	public String[] getQueryList() {
+		System.out.println("쿼리 리스트");
 		return new String[] {"son", "lee", "pack"};
 	}
 }
