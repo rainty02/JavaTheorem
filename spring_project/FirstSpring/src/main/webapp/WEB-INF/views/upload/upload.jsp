@@ -8,7 +8,7 @@
 </head>
 <body>
 
-	<h1>@RequeatParam 파일 업로드 결과</h1>
+	<h1>파일 업로드 결과</h1>
 	<hr>
 
 		<table border="1">
@@ -25,6 +25,7 @@
 				<td>${reportfile}</td>
 			</tr>
 		</table>
+		<hr>
 
 </body>
 </html>

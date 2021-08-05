@@ -26,17 +26,17 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	
+	<!-- 파일을 받기위한 반드시 설정 -->
 	<beans:bean id="multipartResolver"
 				class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
 				p:defaultEncoding="utf-8"
 				p:maxUploadSize="10000000"
 				>
-
 	</beans:bean>
-	
-	
-	
+<!-- 	
+	<beans:bean id="fileDao" class="com.bitcamp.firstSpring.dao.FileUploadDao" />
+	<beans:bean id="fileService" class="com.bitcamp.firstSpring.FileUploadService" />
+ -->	
 	<!-- 자동 bean 등록 : 어노테이션 찾아 bean객체 생성 -->
 	<!-- 
 		@Component	: 일반 객체
