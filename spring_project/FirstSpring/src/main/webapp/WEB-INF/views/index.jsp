@@ -25,6 +25,7 @@
 		<li><a href="<c:url value="/member/mypage/cool"/>">/member/mypage/cool</a></li>
 		<li><a href="<c:url value="/member/mypage/hot"/>">/member/mypage/hot</a></li>
 		<li><a href="<c:url value="/member/mypage/123"/>">/member/mypage/123</a></li>
+		<li><a href="<c:url value="/error/error"/>">/error/error</a></li>
 	</ul>
 
 </body>
