@@ -8,35 +8,30 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bitcamp.register.dao.Dao;
 import com.bitcamp.register.dao.MemberDao;
 import com.bitcamp.register.domain.Member;
 import com.bitcamp.util.ConnectionProvider;
 
 @Service
-public class MemberRegCommandImpl implements Command {
+public class RegService {
 
 	@Autowired
-	private Dao dao;
+	MemberDao dao;
 	
-	@Override
-	public String getPage(HttpServletRequest request, HttpServletResponse response) {
+	public void regMember(HttpServletRequest request) {
 		
 		int resultCnt = 0;
 		
 		Member member = new Member();		
 		
 		Connection conn = null;
-		MemberDao dao = null;
 		
 		File newFile = null;
 		
@@ -45,7 +40,6 @@ public class MemberRegCommandImpl implements Command {
 		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 		
 		if(isMultipart){
-			
 			// 2. 파일을 저장할 Factory 객체 생성
 			DiskFileItemFactory factory = new DiskFileItemFactory();
 			
@@ -107,11 +101,7 @@ public class MemberRegCommandImpl implements Command {
 			throw new Exception("multipart 타입이 아닙니다.");
 		}
 		
-		// DB insert
-		// Connection, MemberDao
-		
 		conn = ConnectionProvider.getConnection();
-		//dao = MemberDao.getInstance();
 		
 		resultCnt = dao.insertMember(conn, member);
 		
@@ -131,8 +121,6 @@ public class MemberRegCommandImpl implements Command {
 		}
 		request.setAttribute("result", resultCnt);
 		
-		return "/WEB-INF/views/reg_view.jsp";
-
 	}
 
 }

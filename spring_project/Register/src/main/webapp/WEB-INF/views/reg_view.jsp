@@ -5,7 +5,7 @@
 <c:if test="${result == 1}">
 	<script>
 		alert('등록되었습니다.');
-		location.href = '<c:url value="/index.jsp"/>';
+		location.href = '<c:url value="/"/>';
 	</script>
 </c:if>
 <c:if test="${result == 0}">

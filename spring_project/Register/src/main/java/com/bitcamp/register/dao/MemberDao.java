@@ -16,12 +16,6 @@ import com.bitcamp.util.JdbcUtil;
 @Repository
 public class MemberDao implements Dao {
 
-//	private MemberDao() {}
-//	private static MemberDao dao = new MemberDao();
-//	public static MemberDao getInstance() {
-//		return dao;
-//	}
-
 	public int insertMember(Connection conn, Member member) throws SQLException {
 
 		int resultCnt = 0;
