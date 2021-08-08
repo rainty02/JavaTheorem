@@ -1,0 +1,14 @@
+@charset "UTF-8";
+
+	.display_none{
+		display: none;
+	}
+	.color_blue{
+		color: blue;
+	}
+	.color_red{
+		color: red;
+	}
+	#Loadingimg{
+		height: 20px;
+	}
