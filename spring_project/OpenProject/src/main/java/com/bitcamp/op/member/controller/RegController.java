@@ -1,7 +1,6 @@
 package com.bitcamp.op.member.controller;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.bitcamp.op.member.service.LoginService;
+import com.bitcamp.op.member.domain.MemberFile;
 import com.bitcamp.op.member.service.RegService;
 
 @Controller
@@ -32,20 +31,19 @@ public class RegController {
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public String register(
-			
-			
+			MemberFile memberFile,
+			@RequestParam("memberid") String memberid,
+			HttpServletRequest request,
 			Model model
 			) {
+		System.out.println(memberFile.getMemberid());
+		System.out.println(memberFile.getPassword());
+		System.out.println(memberFile.getMembername());
+		System.out.println(memberFile.getPhoto().getOriginalFilename());
 		
-		// 사용자가 입력한 아아디, 패스워드 서비스에 전달해서 로그인 처리
-		boolean loginChk = regService.register();
-		model.addAttribute("loginChk", loginChk);
-		String view = "member/regForm";
+		int insertChk = regService.register(memberFile, request);		
+		model.addAttribute("insertChk", insertChk);
 		
-		if(redirectUri!=null && loginChk) {
-			view = "redirect:"+redirectUri;
-		}
-		
-		return view;
+		return "member/reg";
 	}
 }

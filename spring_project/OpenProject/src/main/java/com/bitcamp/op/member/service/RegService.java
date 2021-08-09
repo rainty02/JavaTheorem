@@ -1,18 +1,19 @@
 package com.bitcamp.op.member.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.bitcamp.op.jdbc.ConnectionProvider;
 import com.bitcamp.op.member.dao.MemberDao;
-import com.bitcamp.op.member.domain.Member;
+import com.bitcamp.op.member.domain.MemberFile;
 
 @Service
 public class RegService {
@@ -20,25 +21,37 @@ public class RegService {
 	@Autowired
 	MemberDao dao;
 	
-	public int register(Member member, HttpSession session, HttpServletResponse response) {
+	final String UPLOAD_URI = "/uploadfile";
+	
+	public int register(MemberFile memberFile, HttpServletRequest request) {
 		
 		int insertChk = 0;
-		
-		// 전달받은 멤버 객체로 회원가입 처리
 		Connection conn = null;
+				
 		try {
 			conn = ConnectionProvider.getConnection();
-			insertChk = dao.insertMember(conn, member);
+			insertChk = dao.insertMember(conn, memberFile);
+			saveFile(request, memberFile.getPhoto());
 			
-			if(insertChk!=0) {
-				// 회원가입
-				session.setAttribute("insertChk", insertChk);
-			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}	
-		
+			
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
 		return insertChk;
 	}
+	
+	private void saveFile(HttpServletRequest request, MultipartFile multiPartFile) throws IllegalStateException, IOException {
+		String saveDir = request.getSession().getServletContext().getRealPath(UPLOAD_URI);
+		File newFile = new File(saveDir, multiPartFile.getOriginalFilename());
+		multiPartFile.transferTo(newFile);
+	}
+	
 }

@@ -17,7 +17,7 @@
 
 	
 	<div id="content">
-		<h1>Content : 로그인</h1>
+		<h1>Content : 회원가입</h1>
 		
 		<h2>Register</h2>
 
@@ -26,22 +26,22 @@
 				<tr>
 					<td>아이디</td>
 					<td>
-						<input type="text" name="member.memberid" id="memberid">
+						<input type="text" name="memberid" id="memberid">
 						<%-- <span id="msg" class="display_none"></span>
 						<img id="Loadingimg" class="display_none" alt="Loading" src="<c:url value="/image/loading.gif"/>"> --%>
 					</td>
 				</tr>
 				<tr>
 					<td>비밀번호</td>
-					<td><input type="password" name="member.password"></td>
+					<td><input type="password" name="password"></td>
 				</tr>
 				<tr>
 					<td>이름</td>
-					<td><input type="text" name="member.membername"></td>
+					<td><input type="text" name="membername"></td>
 				</tr>
 				<tr>
 					<td>사진</td>
-					<td><input type="file" name="member.photo"></td>
+					<td><input type="file" name="photo"></td>
 				</tr>
 				<tr>
 					<td></td>

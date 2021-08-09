@@ -12,11 +12,12 @@ import org.springframework.stereotype.Repository;
 
 import com.bitcamp.op.jdbc.JdbcUtil;
 import com.bitcamp.op.member.domain.Member;
+import com.bitcamp.op.member.domain.MemberFile;
 
 @Repository
 public class MemberDao {
 
-	public int insertMember(Connection conn, Member member) throws SQLException {
+	public int insertMember(Connection conn, MemberFile memberFile) throws SQLException {
 
 		int resultCnt = 0;
 
@@ -24,20 +25,20 @@ public class MemberDao {
 
 		String sql1 = "insert into membert (memberid,password,membername) values (?, ?, ?)";
 		String sql2 = "insert into membert (memberid,password,membername,memberphoto) values (?, ?, ?, ?)";
-
+		
 		try {
 			
-			if(member.getMemberphoto() == null) {
+			if(memberFile.getPhoto() == null) {
 				pstmt = conn.prepareStatement(sql1);
-				pstmt.setString(1, member.getMemberid());
-				pstmt.setString(2, member.getPassword());
-				pstmt.setString(3, member.getMembername());
+				pstmt.setString(1, memberFile.getMemberid());
+				pstmt.setString(2, memberFile.getPassword());
+				pstmt.setString(3, memberFile.getMembername());
 			} else {
 				pstmt = conn.prepareStatement(sql2);
-				pstmt.setString(1, member.getMemberid());
-				pstmt.setString(2, member.getPassword());
-				pstmt.setString(3, member.getMembername());
-				pstmt.setString(4, member.getMemberphoto());
+				pstmt.setString(1, memberFile.getMemberid());
+				pstmt.setString(2, memberFile.getPassword());
+				pstmt.setString(3, memberFile.getMembername());
+				pstmt.setString(4, memberFile.getPhoto().getOriginalFilename());
 			}
 
 			resultCnt = pstmt.executeUpdate();
