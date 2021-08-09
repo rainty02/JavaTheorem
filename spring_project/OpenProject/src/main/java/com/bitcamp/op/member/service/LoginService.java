@@ -29,7 +29,7 @@ public class LoginService {
 		Connection conn = null;
 		try {
 			conn = ConnectionProvider.getConnection();
-			Member member = dao.selectByIdPw(conn, reid, pw);
+			Member member = dao.selectByIdPw(conn, id, pw);
 			
 			if(member!=null) {
 				// 로그인 처리
