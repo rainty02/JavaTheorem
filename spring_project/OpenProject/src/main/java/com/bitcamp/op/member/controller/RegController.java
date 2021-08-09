@@ -32,14 +32,14 @@ public class RegController {
 	@RequestMapping(method = RequestMethod.POST)
 	public String register(
 			MemberFile memberFile,
-			@RequestParam("memberid") String memberid,
+			//@RequestParam("memberid") String memberid,
 			HttpServletRequest request,
 			Model model
 			) {
-		System.out.println(memberFile.getMemberid());
-		System.out.println(memberFile.getPassword());
-		System.out.println(memberFile.getMembername());
-		System.out.println(memberFile.getPhoto().getOriginalFilename());
+		///System.out.println(memberFile.getMemberid());
+		//System.out.println(memberFile.getPassword());
+		//System.out.println(memberFile.getMembername());
+		//System.out.println(memberFile.getPhoto().getOriginalFilename());
 		
 		int insertChk = regService.register(memberFile, request);		
 		model.addAttribute("insertChk", insertChk);

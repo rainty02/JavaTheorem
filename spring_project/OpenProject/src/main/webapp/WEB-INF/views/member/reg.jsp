@@ -27,7 +27,7 @@
 		
 		<h2>회원가입이 완료되었습니다.</h2>
 		<hr>
-		<h2>${member.toString}</h2>		
+		<h2>${memberFile}</h2>		
 	</div>
 
 </body>

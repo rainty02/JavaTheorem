@@ -31,6 +31,7 @@ public class RegService {
 		try {
 			conn = ConnectionProvider.getConnection();
 			insertChk = dao.insertMember(conn, memberFile);
+			
 			saveFile(request, memberFile.getPhoto());
 			
 		} catch (SQLException e) {
