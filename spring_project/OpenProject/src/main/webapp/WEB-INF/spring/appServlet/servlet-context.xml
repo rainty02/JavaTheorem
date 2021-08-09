@@ -25,6 +25,14 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	 	<!-- 로그인 체크 인터셉터 등록 -->
+ 	<!-- <interceptors>
+ 		<interceptor>
+ 			<mapping path="/member/board/**"/>
+ 			<beans:bean class="com.bitcamp.op.interceptor.AuthCheckInterceptor" />
+ 		</interceptor>
+ 	</interceptors> -->
+	
 	<context:component-scan base-package="com.bitcamp.op" />
 	
 	
