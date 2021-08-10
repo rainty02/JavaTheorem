@@ -55,6 +55,7 @@ public class MemberRegService {
 			
 			// Member 객체 생성 : 저장된 파일의 이름을 set
 			Member member = regRequest.toMember();
+			
 			member.setMemberphoto(newFileName);
 			
 			resultCnt = dao.insertMember(conn, member);
