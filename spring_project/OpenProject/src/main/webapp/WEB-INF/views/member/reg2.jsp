@@ -21,6 +21,13 @@
 
 		<%-- ${memberRegRequest} --%>
 		${regRequest}
+		
+		<c:if test="${result == 1}">
+			<h3>회원 가입 성공</h3>
+		</c:if>
+		<c:if test="${result == 0}">
+			<h3>회원 가입 성공</h3>
+		</c:if>
 
 			<table>
 				<tr>

@@ -13,10 +13,46 @@ import org.springframework.stereotype.Repository;
 import com.bitcamp.op.jdbc.JdbcUtil;
 import com.bitcamp.op.member.domain.Member;
 import com.bitcamp.op.member.domain.MemberFile;
+import com.bitcamp.op.member.domain.MemberRegRequest;
 
 @Repository
 public class MemberDao {
 		
+	// Member 타입
+	public int insertMember(Connection conn, Member member) throws SQLException {
+
+		int resultCnt = 0;
+
+		PreparedStatement pstmt = null;
+
+		String sql1 = "insert into membert (memberid,password,membername) values (?, ?, ?)";
+		String sql2 = "insert into membert (memberid,password,membername,memberphoto) values (?, ?, ?, ?)";
+		
+		try {
+			
+			if(member.getMemberphoto() == null) {
+				pstmt = conn.prepareStatement(sql1);
+				pstmt.setString(1, member.getMemberid());
+				pstmt.setString(2, member.getPassword());
+				pstmt.setString(3, member.getMembername());
+			} else {
+				pstmt = conn.prepareStatement(sql2);
+				pstmt.setString(1, member.getMemberid());
+				pstmt.setString(2, member.getPassword());
+				pstmt.setString(3, member.getMembername());
+				pstmt.setString(4, member.getMemberphoto());
+			}
+
+			resultCnt = pstmt.executeUpdate();
+
+		} finally {
+			JdbcUtil.close(pstmt);
+		}
+		return resultCnt;
+
+	}
+	
+	// MemberFile 타입
 	public int insertMember(Connection conn, MemberFile memberFile) throws SQLException {
 
 		int resultCnt = 0;
@@ -46,7 +82,6 @@ public class MemberDao {
 		} finally {
 			JdbcUtil.close(pstmt);
 		}
-
 		return resultCnt;
 
 	}
