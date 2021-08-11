@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.bitcamp.op.jdbc.ConnectionProvider;
 import com.bitcamp.op.jdbc.JdbcUtil;
+import com.bitcamp.op.member.dao.JdbcTemplateMemberDao;
 import com.bitcamp.op.member.dao.MemberDao;
 import com.bitcamp.op.member.domain.Member;
 import com.bitcamp.op.member.domain.MemberRegRequest;
@@ -21,13 +22,16 @@ public class MemberRegService {
 
 	final String UPLOAD_URI = "/uploadfile";
 	
+	//@Autowired
+	//private MemberDao dao;
+	
 	@Autowired
-	private MemberDao dao;
+	private JdbcTemplateMemberDao dao;
 	
 	public int memberReg(MemberRegRequest regRequest, HttpServletRequest request) {
 
 		int resultCnt = 0;
-		Connection conn = null;
+		//Connection conn = null;
 		File newFile = null;	
 		
 		try {
@@ -46,19 +50,18 @@ public class MemberRegService {
 			// 파일 저장 : 새로운 File 객체
 			newFile = new File(newDir, newFileName);
 			
+			// Member 객체 생성 : 저장된 파일의 이름을 set
+			Member member = regRequest.toMember();
+
 			if(!regRequest.getPhoto().isEmpty() && regRequest.getPhoto()!=null) {
 				regRequest.getPhoto().transferTo(newFile);
+				member.setMemberphoto(newFileName);
 			}		
 			
 			// 2. dao 저장
-			conn = ConnectionProvider.getConnection();
-			
-			// Member 객체 생성 : 저장된 파일의 이름을 set
-			Member member = regRequest.toMember();
-			
-			member.setMemberphoto(newFileName);
-			
-			resultCnt = dao.insertMember(conn, member);
+			//conn = ConnectionProvider.getConnection();
+						
+			resultCnt = dao.insertMember(member);
 			
 		} catch (IllegalStateException | IOException e) {
 			// TODO Auto-generated catch block
@@ -70,7 +73,7 @@ public class MemberRegService {
 			}		
 			e.printStackTrace();
 		} finally {
-			JdbcUtil.close(conn);
+			//JdbcUtil.close(conn);
 		}
 		
 		return resultCnt;
