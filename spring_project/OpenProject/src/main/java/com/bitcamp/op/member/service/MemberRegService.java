@@ -52,16 +52,23 @@ public class MemberRegService {
 			
 			// Member 객체 생성 : 저장된 파일의 이름을 set
 			Member member = regRequest.toMember();
-
+			System.out.println(member.getMemberphoto());
 			if(!regRequest.getPhoto().isEmpty() && regRequest.getPhoto()!=null) {
 				regRequest.getPhoto().transferTo(newFile);
 				member.setMemberphoto(newFileName);
-			}		
+			} else {
+				member.setMemberphoto("photo.png");
+			}
 			
 			// 2. dao 저장
 			//conn = ConnectionProvider.getConnection();
 						
-			resultCnt = dao.insertMember(member);
+			resultCnt = dao.insertMember1(member);
+			
+			System.out.println("IDX : " + member.getIdx());
+			// idx 값은 자식 테이블의 insert시 외래키로 사용
+			// 자식 테이블 insert 구문에 사용
+			
 			
 		} catch (IllegalStateException | IOException e) {
 			// TODO Auto-generated catch block

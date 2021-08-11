@@ -20,7 +20,7 @@
 	.color_red{
 		color: red;
 	}
-	#Loadingimg{
+	#loadingimg{
 		height: 20px;
 	}
 </style>

@@ -10,6 +10,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.bitcamp.op.jdbc.JdbcUtil;
@@ -36,6 +39,36 @@ public class JdbcTemplateMemberDao {
 		} else {
 			resultCnt = template.update(sql2, member.getMemberid(), member.getPassword(), member.getMembername(), member.getMemberphoto());
 		}
+		
+		return resultCnt;
+
+	}
+	
+	public int insertMember1(final Member member) throws SQLException {
+
+		int resultCnt = 0;
+		
+		// 자동 증가한 컬럼의 값을 저장할 객체
+		KeyHolder holder = new GeneratedKeyHolder();
+		resultCnt = template.update(
+				new PreparedStatementCreator() {
+					
+					@Override
+					public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+						String sql2 = "insert into membert (memberid,password,membername,memberphoto) values (?, ?, ?, ?)";
+						PreparedStatement pstmt = con.prepareStatement(sql2, new String[] {"idx"});
+						pstmt.setNString(1, member.getMemberid());
+						pstmt.setNString(2, member.getPassword());
+						pstmt.setString(3, member.getMembername());
+						pstmt.setString(4, member.getMemberphoto());
+						
+						return pstmt;
+					}
+				}
+				, holder);
+		
+		Number idx = holder.getKey();
+		member.setIdx(idx.intValue());
 		
 		return resultCnt;
 
@@ -126,25 +159,27 @@ public class JdbcTemplateMemberDao {
 	}
 
 		
-	public int deleteMember(Connection conn, int midx) {
+	public int deleteMember(int midx) {
 		
-		int resultCnt = 0;
-		PreparedStatement pstmt = null;
+//		int resultCnt = 0;
+//		PreparedStatement pstmt = null;
+//		
+//		String sql = "delete from membert where idx = ?";
+//		
+//		try {
+//			pstmt = conn.prepareStatement(sql);
+//			pstmt.setInt(1, midx);
+//			
+//			resultCnt = pstmt.executeUpdate();
+//			
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} finally {
+//			JdbcUtil.close(pstmt);
+//		}
+		//return resultCnt;
 		
-		String sql = "delete from membert where idx = ?";
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, midx);
-			
-			resultCnt = pstmt.executeUpdate();
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			JdbcUtil.close(pstmt);
-		}
-		return resultCnt;
+		return template.update("delete from membert where idx = ?", midx);
 	}
 }

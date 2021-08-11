@@ -21,6 +21,7 @@ public class Member {
 		this.membername = username;
 		this.memberphoto = memberphoto;
 		this.regdate = regdate;
+		
 	}
 	
 	public Member() {}
