@@ -7,13 +7,16 @@ import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bitcamp.op.jdbc.ConnectionProvider;
 import com.bitcamp.op.jdbc.JdbcUtil;
+import com.bitcamp.op.member.dao.Dao;
 import com.bitcamp.op.member.dao.JdbcTemplateMemberDao;
 import com.bitcamp.op.member.dao.MemberDao;
+import com.bitcamp.op.member.dao.mybatisMemberDao;
 import com.bitcamp.op.member.domain.Member;
 import com.bitcamp.op.member.domain.MemberRegRequest;
 
@@ -25,9 +28,17 @@ public class MemberRegService {
 	//@Autowired
 	//private MemberDao dao;
 	
-	@Autowired
-	private JdbcTemplateMemberDao dao;
+	//@Autowired
+	//private JdbcTemplateMemberDao dao;
 	
+	//@Autowired
+	//private mybatisMemberDao dao;
+	
+	@Autowired
+	private SqlSessionTemplate template;
+	private Dao dao;
+	
+		
 	public int memberReg(MemberRegRequest regRequest, HttpServletRequest request) {
 
 		int resultCnt = 0;
@@ -62,8 +73,8 @@ public class MemberRegService {
 			
 			// 2. dao 저장
 			//conn = ConnectionProvider.getConnection();
-						
-			resultCnt = dao.insertMember1(member);
+			dao = template.getMapper(Dao.class);			
+			resultCnt = dao.insertMember(member);
 			
 			System.out.println("IDX : " + member.getIdx());
 			// idx 값은 자식 테이블의 insert시 외래키로 사용
@@ -72,12 +83,6 @@ public class MemberRegService {
 			
 		} catch (IllegalStateException | IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// DB 예외 발생시 저장된 파일 삭제
-			if(newFile != null && newFile.exists()) {
-				newFile.delete();
-			}		
 			e.printStackTrace();
 		} finally {
 			//JdbcUtil.close(conn);
