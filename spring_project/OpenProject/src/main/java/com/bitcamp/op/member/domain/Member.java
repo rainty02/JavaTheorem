@@ -3,17 +3,15 @@ package com.bitcamp.op.member.domain;
 import java.sql.Timestamp;
 import java.util.Date;
 
-import org.springframework.web.multipart.MultipartFile;
-
 public class Member {
-	
+
 	private int idx;
 	private String memberid;
 	private String password;
 	private String membername;
 	private String memberphoto;
 	private Timestamp regdate;
-	
+
 	public Member(int idx, String memberid, String password, String username, String memberphoto, Timestamp regdate) {
 		this.idx = idx;
 		this.memberid = memberid;
@@ -21,10 +19,10 @@ public class Member {
 		this.membername = username;
 		this.memberphoto = memberphoto;
 		this.regdate = regdate;
-		
 	}
-	
-	public Member() {}
+
+	public Member() {
+	}
 
 	public int getIdx() {
 		return idx;
@@ -59,14 +57,14 @@ public class Member {
 	}
 
 	public Timestamp getRegdate() {
-		return regdate;
+		return new Timestamp(regdate.getTime()-(1000*60*60*9));
+		//return regdate;
 	}
 
 	public void setRegdate(Timestamp regdate) {
 		this.regdate = regdate;
 	}
-	
-	
+
 	public String getMemberphoto() {
 		return memberphoto;
 	}
@@ -74,13 +72,14 @@ public class Member {
 	public void setMemberphoto(String memberphoto) {
 		this.memberphoto = memberphoto;
 	}
-	
+
 	// java.sql.TimeStamp -> java.util.Date
 	public Date getDate() {
 		return new Date(getRegdate().getTime());
 	}
 
-		
+	
+
 	@Override
 	public String toString() {
 		return "Member [idx=" + idx + ", memberid=" + memberid + ", password=" + password + ", membername=" + membername

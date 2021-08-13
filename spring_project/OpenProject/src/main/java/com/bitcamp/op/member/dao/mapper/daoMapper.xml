@@ -6,6 +6,18 @@
 <!-- 인터페이스의 경로(패키지).인터페이스명으로 설정 -->
 <mapper namespace="com.bitcamp.op.member.dao.Dao">
 	
+	<!--  -->
+	<resultMap id="memberListResult"
+			   type="com.bitcamp.op.member.domain.Member">
+		<id column="idx" property="idx" />   
+		<result column="memberid" property="memberid" />
+		<result column="membername" property="membername" />
+		<!--<result column="password" property="password" />-->
+		<result column="memberphoto" property="memberphoto" />
+		<result column="regdate" property="regdate" />	   
+	</resultMap>
+	
+	
 	<!-- sql tag 식별은 인터페이스 메소드명과 일치 -->
 	<!-- 매개변수는 param1 param2로 구분, 매개변수가 많아지면 객체나 Map으로 -->
 	<!-- 로그인을 위한 select -->
@@ -42,9 +54,11 @@
 	</delete>
 	
 	<!-- 전체 회원 리스트 -->
+	
 	<select id="selectAll"
-			resultType="com.bitcamp.op.member.domain.Member">
-		select * from membert order by memberid
+			resultMap="memberListResult">
+			<!--resultType="com.bitcamp.op.member.domain.Member">-->
+		select * from membert order by idx
 	</select>
 	
 	<!-- 페이징 처리가 가능한 리스트 -->
@@ -57,7 +71,37 @@
 	<select id="selectTotalCount" resultType="int">
 		select count(*) from membert
 	</select>
+
+	<!-- 검색을 통한 리스트 -->
+	<select id="selectMember"
+			parameterType="com.bitcamp.op.member.domain.SearchType"
+			resultType="com.bitcamp.op.member.domain.Member">
+
+		select * from membert
+		
+		<where>	
+			<if test="searchType == 'id'">
+				<!--memberid like concat('%' , #{keyword}, '%')-->
+				<include refid="searchId"></include>
+			</if>
+			<if test="searchType == 'name'">
+				<!--membername like concat('%' , #{keyword}, '%')-->
+				<include refid="searchName"></include>
+			</if>
+			<if test="searchType == 'both'">
+				<!--memberid like concat('%' , #{keyword}, '%') or where id membername like concat('%' , #{keyword}, '%')-->
+				<include refid="searchId"></include>
+				<include refid="searchName"></include>
+			</if>	
+		</where>
 	
+	</select>
 	
+	<sql id="searchId">
+			or memberid like concat('%' , #{keyword}, '%')
+		</sql>
+		<sql id="searchName">
+			or membername like concat('%' , #{keyword}, '%')
+		</sql>
 	
 </mapper>
