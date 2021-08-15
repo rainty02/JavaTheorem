@@ -46,7 +46,8 @@ public class LoginController {
 		String view = "member/login";
 		
 		if(redirectUri!=null && loginChk) {
-			view = "redirect:"+redirectUri;
+			//view = "redirect:"+redirectUri;
+			view = "index";
 		}
 		
 		return view;

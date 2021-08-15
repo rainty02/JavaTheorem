@@ -8,7 +8,7 @@ commit;
 
 select * from membert;
 
-insert into membert (memberid, membername, password) values ('hot', '김더움', '1111');
+insert into membert (memberid, membername, password) values ('cozy', '최안락', '1111');
 
 delete from membert where idx=1 and idx=2;
 
@@ -22,3 +22,5 @@ CREATE TABLE `membert` (
   `memberphoto` varchar(30) DEFAULT NULL,
   `regdate` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 );
+
+alter table membert alter memberphoto set DEFAULT 'photo.jpg';
