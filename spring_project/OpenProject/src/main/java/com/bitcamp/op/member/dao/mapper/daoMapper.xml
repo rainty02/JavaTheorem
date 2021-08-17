@@ -33,6 +33,17 @@
 		select count(*) from membert where memberid=#{id}
 	</select>
 	
+	<select id="selectByIdx"
+			resultType="com.bitcamp.op.member.domain.Member">
+		select * from membert where idx=#{idx}
+	</select>
+	
+	
+	
+	
+	
+	
+	
 	<!-- 회원가입 -->
 	<!-- useGeneratedKeys : 자동 증가된 idx 값 처리 -->
 	<insert id="insertMember"
