@@ -17,8 +17,8 @@ public class Member {
 	private String password;
 	private String membername;
 	private String memberphoto;
-	@JsonFormat(shape = Shape.STRING) //iso-8601
-	//@JsonFormat(pattern = "yyyy.MM.dd HH:mm:ss")
+	//@JsonFormat(shape = Shape.STRING) //iso-8601
+	@JsonFormat(pattern = "yyyy.MM.dd. HH:mm")
 	private Timestamp regdate;
 
 	public Member(int idx, String memberid, String password, String username, String memberphoto, Timestamp regdate) {
