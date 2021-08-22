@@ -11,12 +11,22 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-datetimepicker/2.7.1/css/bootstrap-material-datetimepicker.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-datetimepicker/2.7.1/js/bootstrap-material-datetimepicker.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/locale/ja.js"></script>
+    
+
+
     <style>
          * {
         margin: 0;
         padding: 0;
         }
-        header {
+        .header {
             position: relative;
             z-index: 20;
             min-width: 980px;
@@ -28,15 +38,7 @@
         ul {
         list-style: none;
         }
-        header {
-            position: relative;
-            z-index: 20;
-            min-width: 980px;
-            width: 100%;
-            height: 140px;
-            background-color: rgb(66, 133, 244);
-            text-align: center;
-        }
+
         .MultiBar {
             display: inline-block;
             height: 30px;
@@ -104,21 +106,151 @@
 
 
         .cafe_wrap{
-            max-width: 1280px;
+            max-width: 950px;
             margin: 0 auto;
             padding: 20px 0;
         }
 
 
+        #carouselExampleControls{
+            margin: 10px;
+            max-width: 600px;
+            height: 310px;
+            display: inline-block;
+            float: left;
+        }
+        .basic_info{
+            margin: 10px;
+            padding: 10px;
+            max-width: 300px;
+            min-width: 300px;
+            height: 310px;
+            display: inline-block;
+        }
+        
+        .li_warp{
+            margin-top: 50px;
+        }
+
+        .info_menu{
+            margin-left: 10px;
+        }
+        .info{
+            margin: 50px auto;
+        }
+        .reservation{
+            max-width: 950px;
+            margin: 50px auto;
+        }
+
+        .review{
+            margin: 50px auto;
+        }
+
+        td>.btn{
+            margin: 10px 15px;
+            width: 150px;
+            height: 50px;   
+        }
+        .person4{
+            margin: 10px 0;
+        }
+        .person4>table{
+            margin: 0 auto;
+        }
+        .person8>table{
+            margin: 0 auto;
+        }
+
+        #id{
+            margin: 10px 10px;
+        }
+        #regdate{
+            float: right;
+            margin: 10px 10px;
+        }
+        #post{
+            margin: 10px 10px;
+        }
+        .pagination{
+            float: right;
+        }
+        .pagination>li{
+            margin-left: 10px;
+        }
+        .first_hr{
+            border: none;
+            height: 1px;
+            background-color: black;
+        }
+        #post{
+            margin: 10px 10px;
+        }
+        .form-group>.btn{
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
 
 
 
     </style>
+
+    <script>
+        $(document).ready(function(){
+            
+            var html = '<table>'+'\n'+'<tr>'+'\n';
+                for(var i=10; i<20; i++) {
+                     if(i==15){
+                        html += '</tr>'+'\n'+'<tr>'+'\n';
+                            var color_num = "color" + i;
+                    }
+                    html += '<td class="button_color"><button type="button" class="btn btn-outline-danger" value='+i+'>'+i+'시</button></td>'+'\n';
+                }
+                html += '</tr>' + '\n' + '</table>';
+                $('#person').append(html);
+
+            $('#per4').click(function(){
+                $('.button_color>button[type="button"]').removeClass();
+                $('.button_color>button[type="button"]').addClass('btn btn-outline-danger');
+            })
+
+            $('#per8').click(function(){
+                $('.button_color>button[type="button"]').removeClass();
+                $('.button_color>button[type="button"]').addClass('btn btn-outline-primary');
+            })
+
+
+
+
+            $(function () {
+                $('#date').bootstrapMaterialDatePicker({
+                time: false
+                });
+            });
+            $(function () {
+                $('#format').bootstrapMaterialDatePicker({
+                format: 'L'
+                });
+            });
+        });
+
+        
+        
+
+    </script>
+
+
+
+    
+
+
 </head>
 
 <body>
 
-    <header>
+    <header class="header">
         <div class="MultiBar">
             <ul class="area_gnb">
                 <li>시작페이지로</li>
@@ -153,8 +285,9 @@
         </div>
     </header>
 
-    <div class="cafe_wrap">
+    <div class="cafe_wrap">      
         <div class="info">
+            <h5 class="info_menu">카페 소개</h5>
             <!-- 사진영역 -->
             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
@@ -176,26 +309,92 @@
                   <span class="carousel-control-next-icon" aria-hidden="true"></span>
                   <span class="sr-only">Next</span>
                 </a>
-              </div>
+            </div>
             <!-- 기본정보 영역 -->
-              <h1>스타벅스</h1>
-
-
-        </div>
+            <div class="basic_info">
+                <h1>스타벅스</h1>
+                <h5>★ 4.7/5</h5>
+                <h5>서울 중구 충무로1가 24-1</h5>
+                <div class="li_warp">
+                    <ul>
+                        <li>요금 : 시간당 5,000</li>
+                        <li>테이블 정보 : 4인석, 8인석</li>
+                        <l1>영업시간 : 10:00 ~ 22:00</l1>
+                    </ul>
+                    <select class="btn btn-outline-primary my-2 my-sm-0">
+                        <option>보유게임 리스트</option>
+                        <option></option>
+                    </select>
+                </div>
+            </div>  
+        </div>   
+        
 
         <div class="reservation">
+            <h5 class="info_menu">예약</h5>
+            <table>
+                <tr>
+                    <td><button type="button" id="per4" class="btn btn-outline-danger">4인석</button></td>
+                    <td><button type="button" id="per8" class="btn btn-outline-primary">8인석</button></td>
+                    <td></td>
+                    <td></td>
+                    <td><input class="btn btn-outline-success" type="text" id="date" value="2021-08-22"></td>
+                </tr>
+            </table>
+            <div id="person"></div>
 
-
-        </div>
-
+        </div>   
+        
+        
         <div class="review">
-
-
+            <h5 class="info_menu">리뷰</h5>
+            <hr class="first_hr">
+            <span id="id">직쏘</span>
+            <span id="star">★★★★</span>
+            <span id="regdate">2021-08-22</span>
+            <p id="post">사장님이 친절해요</p>  
+            <div class="text-center">
+                <ul class="pagination">
+                    <li><a href="#">삭제</a></li>
+                    <li><a href="#">수정</a></li>
+                </ul>
+            </div>
+            <br>
+            <hr>
+            <form>
+                <label for="exampleFormControlTextarea1"></label>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1">
+                    <label class="form-check-label" for="inlineRadio1">1</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2">
+                    <label class="form-check-label" for="inlineRadio2">2</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="3">
+                    <label class="form-check-label" for="inlineRadio3">3</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="4">
+                    <label class="form-check-label" for="inlineRadio3">4</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio5" value="5">
+                    <label class="form-check-label" for="inlineRadio3">5</label>
+                  </div>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <input class="btn btn-primary" type="submit" value="글쓰기" style="float: right; margin-top: 10px;">
+            </form>
         </div>
+        
     </div>
 
 
 
 
 </body>
+
 </html>
+
+
