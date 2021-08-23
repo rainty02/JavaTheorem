@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 모바일 페이지 속성 -->
     <title>Cafe info</title> <!-- 문서 제목 -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -18,6 +18,9 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-datetimepicker/2.7.1/js/bootstrap-material-datetimepicker.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/locale/ja.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     
 
 
@@ -129,7 +132,7 @@
         }
         
         .li_warp{
-            margin-top: 50px;
+            margin-top: 30px;
         }
 
         .info_menu{
@@ -147,11 +150,7 @@
             margin: 50px auto;
         }
 
-        td>.btn{
-            margin: 10px 15px;
-            width: 150px;
-            height: 50px;   
-        }
+
         .person4{
             margin: 10px 0;
         }
@@ -186,65 +185,11 @@
         #post{
             margin: 10px 10px;
         }
-        .form-group>.btn{
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-        }
 
 
 
 
     </style>
-
-    <script>
-        $(document).ready(function(){
-            
-            var html = '<table>'+'\n'+'<tr>'+'\n';
-                for(var i=10; i<20; i++) {
-                     if(i==15){
-                        html += '</tr>'+'\n'+'<tr>'+'\n';
-                            var color_num = "color" + i;
-                    }
-                    html += '<td class="button_color"><button type="button" class="btn btn-outline-danger" value='+i+'>'+i+'시</button></td>'+'\n';
-                }
-                html += '</tr>' + '\n' + '</table>';
-                $('#person').append(html);
-
-            $('#per4').click(function(){
-                $('.button_color>button[type="button"]').removeClass();
-                $('.button_color>button[type="button"]').addClass('btn btn-outline-danger');
-            })
-
-            $('#per8').click(function(){
-                $('.button_color>button[type="button"]').removeClass();
-                $('.button_color>button[type="button"]').addClass('btn btn-outline-primary');
-            })
-
-
-
-
-            $(function () {
-                $('#date').bootstrapMaterialDatePicker({
-                time: false
-                });
-            });
-            $(function () {
-                $('#format').bootstrapMaterialDatePicker({
-                format: 'L'
-                });
-            });
-        });
-
-        
-        
-
-    </script>
-
-
-
-    
-
 
 </head>
 
@@ -287,7 +232,9 @@
 
     <div class="cafe_wrap">      
         <div class="info">
-            <h5 class="info_menu">카페 소개</h5>
+            <h5 class="info_menu" style="display: inline;">카페 소개</h5>
+            <button type="button" class="btn btn-primary" style="display: inline; float: right;" data-toggle="modal" data-target="#info_modify">수정</button>
+            <hr class="first_hr">
             <!-- 사진영역 -->
             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
@@ -319,78 +266,176 @@
                     <ul>
                         <li>요금 : 시간당 5,000</li>
                         <li>테이블 정보 : 4인석, 8인석</li>
-                        <l1>영업시간 : 10:00 ~ 22:00</l1>
+                        <li>영업시간 : 10:00 ~ 22:00</li>
+                        <li>연락처 : 00-0000-0000</li>
                     </ul>
-                    <select class="btn btn-outline-primary my-2 my-sm-0">
-                        <option>보유게임 리스트</option>
-                        <option></option>
-                    </select>
+                    <button class="btn btn-outline-primary my-2 my-sm-0" data-toggle="modal" data-target="#gamelist">보유게임 리스트</button>
                 </div>
             </div>  
-        </div>   
+        </div>
+        <hr>   
         
 
         <div class="reservation">
-            <h5 class="info_menu">예약</h5>
-            <table>
+            <h5 class="info_menu">예약 관리</h5>
+            <hr class="first_hr">
+
+            <table class="table table-striped" style="text-align: center; vertical-align: none;">
                 <tr>
-                    <td><button type="button" id="per4" class="btn btn-outline-danger">4인석</button></td>
-                    <td><button type="button" id="per8" class="btn btn-outline-primary">8인석</button></td>
-                    <td></td>
-                    <td></td>
-                    <td><input class="btn btn-outline-success" type="text" id="date" value="2021-08-22"></td>
+                    <th>No</th>
+                    <th>예약일</th>
+                    <th>시간</th>
+                    <th>예약자명</th>
+                    <th>확정여부</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>08-23</td>
+                    <td>18시</td>
+                    <td>성종원</td>
+                    <td><button class="btn btn-outline-danger my-2 my-sm-0">확정</button></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>08-24</td>
+                    <td>15시</td>
+                    <td>이재훈</td>
+                    <td><button class="btn btn-outline-danger my-2 my-sm-0">확정</button></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>08-25</td>
+                    <td>19시</td>
+                    <td>박상명</td>
+                    <td><button class="btn btn-outline-danger my-2 my-sm-0">확정</button></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>08-23</td>
+                    <td>14시</td>
+                    <td>이윤성</td>
+                    <td><button class="btn btn-outline-danger my-2 my-sm-0">확정</button></td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>08-24</td>
+                    <td>18시</td>
+                    <td>김은비</td>
+                    <td><button class="btn btn-outline-danger my-2 my-sm-0">확정</button></td>
                 </tr>
             </table>
-            <div id="person"></div>
 
-        </div>   
+
+        </div> 
+        <hr>   
         
         
         <div class="review">
             <h5 class="info_menu">리뷰</h5>
             <hr class="first_hr">
-            <span id="id">직쏘</span>
-            <span id="star">★★★★</span>
-            <span id="regdate">2021-08-22</span>
-            <p id="post">사장님이 친절해요</p>  
-            <div class="text-center">
-                <ul class="pagination">
-                    <li><a href="#">삭제</a></li>
-                    <li><a href="#">수정</a></li>
-                </ul>
+
+            <div class="post_wrap">
+                <div class="media">
+                    <div class="media-left">
+                      <img src="image/img_avatar1.png" class="media-object mr-3" style="width:45px">
+                    </div>
+                    <div class="media-body">
+                      <h4 class="media-heading">직쏘<small><i class="ml-3">★★★★★</i></small><small><i style="float: right;">2021-08-22</i></small></h4>
+                      <p>사장님이 친절해요</p>
+                      <hr>
+                    </div>
+                </div>
+
+                <div class="media">
+                    <div class="media-left">
+                      <img src="image/img_avatar1.png" class="media-object mr-3" style="width:45px">
+                    </div>
+                    <div class="media-body">
+                      <h4 class="media-heading">직쏘<small><i class="ml-3">★★★★★</i></small><small><i style="float: right;">2021-08-22</i></small></h4>
+                      <p>사장님이 친절해요</p>
+                      <hr>
+                    </div>
+                </div>
+
+
             </div>
-            <br>
-            <hr>
-            <form>
-                <label for="exampleFormControlTextarea1"></label>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1">
-                    <label class="form-check-label" for="inlineRadio1">1</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2">
-                    <label class="form-check-label" for="inlineRadio2">2</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="3">
-                    <label class="form-check-label" for="inlineRadio3">3</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="4">
-                    <label class="form-check-label" for="inlineRadio3">4</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio5" value="5">
-                    <label class="form-check-label" for="inlineRadio3">5</label>
-                  </div>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                <input class="btn btn-primary" type="submit" value="글쓰기" style="float: right; margin-top: 10px;">
-            </form>
-        </div>
         
+        </div>
+
+    <!-- 카페수정 Modal -->
+    <div class="modal fade" id="info_modify" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">카페정보 수정</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">카페 이름</label>
+                        <input type="text" class="form-control mb-2" id="exampleFormControlInput1" placeholder="카페 이름">
+    
+                        <label for="exampleFormControlInput2">카페 주소</label>
+                        <input type="text" class="form-control mb-2" id="exampleFormControlInput2" placeholder="카페 주소">
+
+                        <label for="exampleFormControlInput3">카페 정보</label>
+                        <textarea class="form-control mb-2" id="exampleFormControlTextarea1" rows="3" placeholder="카페 정보"></textarea>
+
+
+                        <input type="file" class="form-control-file mb-1" id="exampleFormControlFile1">
+                        <input type="file" class="form-control-file mb-1" id="exampleFormControlFile2">
+                        <input type="file" class="form-control-file mb-1" id="exampleFormControlFile3">
+
+                      </div>
+
+                  </form>
+
+
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-primary">저장</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+            </div>
+        </div>
+        </div>
     </div>
 
 
+
+    <!-- 게임리스트 Modal -->
+    <div class="modal fade" id="gamelist" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">보드게임 리스트</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+            
+                데이터 베이스에서 가져온 게임 리스트
+                검색도 가능하도록?
+
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+
+    <div>
+        <ul style="position: fixed; top: 40%; right: 5%;">
+            <li><button type="button" class="btn btn-outline-primary" style="width: 100px; height: 50px; margin: 5px;">카페정보</button></li>
+            <li><button type="button" class="btn btn-outline-primary" style="width: 100px; height: 50px; margin: 5px;">예약</button></li>
+            <li><button type="button" class="btn btn-outline-primary" style="width: 100px; height: 50px; margin: 5px;">리뷰</button></li>
+        </ul>
+    </div>
 
 
 </body>
