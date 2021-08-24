@@ -19,9 +19,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-datetimepicker/2.7.1/js/bootstrap-material-datetimepicker.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/locale/ja.js"></script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-    
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
 
 
     <style>
@@ -150,7 +148,11 @@
             margin: 50px auto;
         }
 
-
+        td>.btn{
+            margin: 10px 15px;
+            width: 150px;
+            height: 50px;   
+        }
         .person4{
             margin: 10px 0;
         }
@@ -187,9 +189,98 @@
         }
 
 
+        /* 버튼 회전 */
+        @-webkit-keyframes rotate-hor-center {
+        0% {
+            -webkit-transform: rotateX(0);
+                    transform: rotateX(0);
+        }
+        100% {
+            -webkit-transform: rotateX(-360deg);
+                    transform: rotateX(-360deg);
+        }
+        }
+        @keyframes rotate-hor-center {
+        0% {
+            -webkit-transform: rotateX(0);
+                    transform: rotateX(0);
+        }
+        100% {
+            -webkit-transform: rotateX(-360deg);
+                    transform: rotateX(-360deg);
+        }
+        }
+        .rotate-hor-center {
+            -webkit-animation: rotate-hor-center 0.5s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+                    animation: rotate-hor-center 0.5s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+        }        
 
 
     </style>
+
+<script>
+    $(document).ready(function(){
+        
+        // 리스트 출력
+        list();
+
+        // 4인석, 8인석에 따라 where의 값이 달라지도록 값 전달
+        $('#per4').click(function(){
+            list();
+            $('#person').removeClass('rotate-hor-center');
+            setTimeout(function() {
+                $('#person').addClass('rotate-hor-center');
+                }, 50);
+        })
+
+        $('#per8').click(function(){
+            list();
+            $('#person').removeClass('rotate-hor-center');
+            setTimeout(function() {
+                $('#person').addClass('rotate-hor-center');
+                }, 50);
+        })
+
+        // 예약 리스트 출력
+        function list(){
+            $('#person *').remove();
+            var html = '<table class="table table-striped" style="text-align: center; vertical-align: none;">'+'\n'+
+                    '<tr>'+'\n'+
+                    '<th>No</th>'+'\n'+
+                    '<th>예약일</th>'+'\n'+
+                    '<th>시간</th>'+'\n'+
+                    '<th>예약자명</th>'+'\n'+
+                    '<th>잔여 테이블</th>'+'\n'+
+                    '<th>확정여부</th>'+'\n'+
+                    '</tr>';
+            
+            for(var i=0; i<10; i++) {
+                html += '<tr>'+'\n'+
+                    '<td>'+i+'</td>'+'\n'+
+                    '<td>08-23</td>'+'\n'+
+                    '<td>18시</td>'+'\n'+
+                    '<td>성종원</td>'+'\n'+
+                    '<td>1/4</td>'+'\n'+
+                    '<td><button class="btn btn-outline-danger my-2 my-sm-0">확정</button></td>'+'\n'+      
+                    '</tr>';
+            }
+            html += '\n' + '</table>';
+            $('#person').append(html);
+        }
+               
+        $(function () {
+            $('#date').bootstrapMaterialDatePicker({
+            time: false
+            });
+        });
+        $(function () {
+            $('#format').bootstrapMaterialDatePicker({
+            format: 'L'
+            });
+        });
+    });
+</script>
+
 
 </head>
 
@@ -231,7 +322,7 @@
     </header>
 
     <div class="cafe_wrap">      
-        <div class="info">
+        <div class="info" id="first">
             <h5 class="info_menu" style="display: inline;">카페 소개</h5>
             <button type="button" class="btn btn-primary" style="display: inline; float: right;" data-toggle="modal" data-target="#info_modify">수정</button>
             <hr class="first_hr">
@@ -276,61 +367,29 @@
         <hr>   
         
 
-        <div class="reservation">
+        <div class="reservation" id="second">
             <h5 class="info_menu">예약 관리</h5>
             <hr class="first_hr">
 
-            <table class="table table-striped" style="text-align: center; vertical-align: none;">
+            <table>
                 <tr>
-                    <th>No</th>
-                    <th>예약일</th>
-                    <th>시간</th>
-                    <th>예약자명</th>
-                    <th>확정여부</th>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>08-23</td>
-                    <td>18시</td>
-                    <td>성종원</td>
-                    <td><button class="btn btn-outline-danger my-2 my-sm-0">확정</button></td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>08-24</td>
-                    <td>15시</td>
-                    <td>이재훈</td>
-                    <td><button class="btn btn-outline-danger my-2 my-sm-0">확정</button></td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>08-25</td>
-                    <td>19시</td>
-                    <td>박상명</td>
-                    <td><button class="btn btn-outline-danger my-2 my-sm-0">확정</button></td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>08-23</td>
-                    <td>14시</td>
-                    <td>이윤성</td>
-                    <td><button class="btn btn-outline-danger my-2 my-sm-0">확정</button></td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>08-24</td>
-                    <td>18시</td>
-                    <td>김은비</td>
-                    <td><button class="btn btn-outline-danger my-2 my-sm-0">확정</button></td>
+                    <td><button type="button" id="per4" class="btn btn-outline-danger">4인석</button></td>
+                    <td><button type="button" id="per8" class="btn btn-outline-primary">8인석</button></td>
+                    <td width=180 style="word-break:break-all"></td>
+                    <td width=180 style="word-break:break-all"></td>
+                    <td><input class="btn btn-outline-success" type="text" id="date" value="2021-08-24"></td>
                 </tr>
             </table>
+            <div id="person">
+            </div>
+
 
 
         </div> 
         <hr>   
         
         
-        <div class="review">
+        <div class="review" id="third">
             <h5 class="info_menu">리뷰</h5>
             <hr class="first_hr">
 
@@ -384,20 +443,20 @@
                         <label for="exampleFormControlInput3">카페 정보</label>
                         <textarea class="form-control mb-2" id="exampleFormControlTextarea1" rows="3" placeholder="카페 정보"></textarea>
 
-
-                        <input type="file" class="form-control-file mb-1" id="exampleFormControlFile1">
-                        <input type="file" class="form-control-file mb-1" id="exampleFormControlFile2">
-                        <input type="file" class="form-control-file mb-1" id="exampleFormControlFile3">
-
+                        <div clas ="form-group">
+                            <input type="file" name="upload" multiple="multiple" class="user_picked_files mb-2" />
+                            <br>
+                            <label for="exampleFormControlInput5 text-muted">이미지 미리보기</label>
+                            <div class="thumnail form-control mb-2">
+                                <ul class="cvf_uploaded_files"></ul>
+                            </div>
+                        </div>
                       </div>
-
                   </form>
-
-
             </div>
             <div class="modal-footer">
-            <button type="button" class="btn btn-primary">저장</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                <input type="submit" class="cvf_upload_btn btn btn-primary col text-center" value="등록" />
+                <input type="submit" class="btn btn-secondary col text-center" value="취소" />
             </div>
         </div>
         </div>
@@ -431,9 +490,9 @@
 
     <div>
         <ul style="position: fixed; top: 40%; right: 5%;">
-            <li><button type="button" class="btn btn-outline-primary" style="width: 100px; height: 50px; margin: 5px;">카페정보</button></li>
-            <li><button type="button" class="btn btn-outline-primary" style="width: 100px; height: 50px; margin: 5px;">예약</button></li>
-            <li><button type="button" class="btn btn-outline-primary" style="width: 100px; height: 50px; margin: 5px;">리뷰</button></li>
+            <li><a href="#first"><button type="button" class="btn btn-outline-primary" style="width: 100px; height: 50px; margin: 5px;">카페 소개</button></a></li>
+            <li><a href="#second"><button type="button" class="btn btn-outline-primary" style="width: 100px; height: 50px; margin: 5px;">예약</button></a></li>
+            <li><a href="#third"><button type="button" class="btn btn-outline-primary" style="width: 100px; height: 50px; margin: 5px;">리뷰</button></a></li>
         </ul>
     </div>
 
