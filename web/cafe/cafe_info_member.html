@@ -18,7 +18,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-datetimepicker/2.7.1/js/bootstrap-material-datetimepicker.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/locale/ja.js"></script>
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.kr.min.js"></script>
 
 
     <style>
@@ -255,50 +255,94 @@
     <script>
         $(document).ready(function(){
             
-            var html = '<table>'+'\n'+'<tr>'+'\n';
-                for(var i=10; i<20; i++) {
-                     if(i==15){
-                        html += '</tr>'+'\n'+'<tr>'+'\n';
-                    }
-                    html += '<td class="button_color"><button type="button" class="btn btn-outline-danger" value='+i+'>'+i+'시</button></td>'+'\n';
-                }
-                html += '</tr>' + '\n' + '</table>';
-                $('#person').append(html);
+            reservation_list(4);
 
-            $('#per4').click(function(){
-                $('.button_color>button[type="button"]').removeClass('btn-outline-primary');
-                $('.button_color>button[type="button"]').removeClass('rotate-hor-center');
-                setTimeout(function() {
-                    $('.button_color>button[type="button"]').addClass('btn-outline-danger');
-                    $('.button_color>button[type="button"]').addClass('rotate-hor-center');
-                    }, 50);
+            review();
+
+            // 4인석 버튼 클릭시 
+            $('#btn_reservation_4').click(function(){
+                reservation_list(4);
             })
-
-            $('#per8').click(function(){
-                $('.button_color>button[type="button"]').removeClass('btn-outline-danger');
-                $('.button_color>button[type="button"]').removeClass('rotate-hor-center');
-                setTimeout(function() {
-                    $('.button_color>button[type="button"]').addClass('btn-outline-primary');
-                    $('.button_color>button[type="button"]').addClass('rotate-hor-center');
-                    }, 50);
+            // 8인석 버튼 클릭시
+            $('#btn_reservation_8').click(function(){
+                reservation_list(8);
             })
             
-            
-
-            $(function () {
-                $('#date').bootstrapMaterialDatePicker({
-                time: false
-                });
-            });
-            $(function () {
-                $('#format').bootstrapMaterialDatePicker({
-                format: 'L'
-                });
-            });
         });
 
+        // 예약 버튼 동적 생성
+        // **DB에서 값을 가져올 때 예약이 불가한 시간은 비활성화 필요 - 분기처리 disabled?
+        function reservation_list(table_num){
+
+            // 날짜값
+            var date = $('#date').val();
+
+            // DB 조회 : date(날짜), table_num(몇인석) 활용
+
+            // 중복 생성 방지를 위한 자손 삭제
+            $('#person *').remove();
+            // 버튼 색상
+            var color = table_num == 4 ? 'btn-outline-danger' : 'btn-outline-primary';
+            // html 동적 생성
+            var html = '<table>'+'\n'+'<tr>'+'\n';
+            for(var i=10; i<20; i++) {
+                if(i==15){
+                    html += '</tr>'+'\n'+'<tr>'+'\n';
+                }
+                    html += '<td><button type="button" class="btn '+color+' rotate-hor-center" value='+i+'>'+i+'시</button></td>'+'\n';
+            }
+            html += '</tr>' + '\n' + '</table>';
+            $('#person').append(html);
+        }
+
+
+        $(function () {
+            // 달력 - 시간 제거, 출력 포맷,
+            $('#date').bootstrapMaterialDatePicker({
+                time: false,
+                minDate: moment()
+            });
+        });
         
-        
+
+        // 리뷰
+        function review(){
+            $('.post_wrap *').remove();
+            // DB에서 받을 값
+            var login_id = '직쏘';
+            var member_img = 'image/img_avatar1.png';
+            var member_id = '직쏘';
+            var review_star = '★★★★★';
+            var review_regdate = '2021-08-22';
+            var review_post = '사장님이 친절해요';
+
+            for(var i=0; i<5; i++){
+                var html = '<div class="media">'+'\n'+
+                            '<div class="media-left">'+'\n'+
+                            '<img src="'+member_img+'\n'+
+                            '" class="media-object mr-3" style="width:45px">'+'\n'+
+                            '</div>'+'\n'+
+                            '<div class="media-body">'+'\n'+
+                            '<h4 class="media-heading">'+'\n'+
+                            member_id+'\n'+
+                            '<small><i class="ml-3">'+'\n'+
+                            review_star+'\n'+
+                            '</i></small><small><i style="float: right;">'+'\n'+
+                            review_regdate+'\n'+
+                            '</i></small></h4>'+'\n'+
+                            '<p>'+'\n'+
+                            review_post+'\n'+
+                            '</p>'+'\n';
+                            // 작성자와 로그인 아이디가 같으면 수정/삭제 추가
+                            if(member_id == login_id){
+                            html += '<ul><li style="float: right; margin-left: 10px;"><a href="#">수정</a></li><li style="float: right; margin-left: 10px;"><a href="#">삭제</a></li>'+'\n';
+                            }
+                            html += '</div>'+'\n'+
+                            '</div>'+'\n'+
+                            '<hr>';
+                    $('.post_wrap').append(html);
+            }
+        }
 
     </script>
 
@@ -396,11 +440,11 @@
             <hr class="first_hr">
             <table>
                 <tr>
-                    <td><button type="button" id="per4" class="btn btn-outline-danger">4인석</button></td>
-                    <td><button type="button" id="per8" class="btn btn-outline-primary">8인석</button></td>
-                    <td width=180 style="word-break:break-all"></td>
-                    <td width=180 style="word-break:break-all"></td>
                     <td><input class="btn btn-outline-success" type="text" id="date" value="2021-08-24"></td>
+                </tr>
+                <tr>
+                    <td><button type="button" id="btn_reservation_4" class="btn btn-outline-danger">4인석</button></td>
+                    <td><button type="button" id="btn_reservation_8" class="btn btn-outline-primary">8인석</button></td>                    
                 </tr>
             </table>
             <div id="person"></div>
@@ -414,26 +458,6 @@
             <hr class="first_hr">
 
             <div class="post_wrap">
-                <div class="media">
-                    <div class="media-left">
-                      <img src="image/img_avatar1.png" class="media-object mr-3" style="width:45px">
-                    </div>
-                    <div class="media-body">
-                      <h4 class="media-heading">직쏘<small><i class="ml-3">★★★★★</i></small><small><i style="float: right;">2021-08-22</i></small></h4>
-                      <p>사장님이 친절해요</p>
-                      <hr>
-                    </div>
-                </div>
-                <div class="media">
-                    <div class="media-left">
-                      <img src="image/img_avatar1.png" class="media-object mr-3" style="width:45px">
-                    </div>
-                    <div class="media-body">
-                      <h4 class="media-heading">직쏘<small><i class="ml-3">★★★★★</i></small><small><i style="float: right;">2021-08-22</i></small></h4>
-                      <p>사장님이 친절해요</p>
-                      <hr>
-                    </div>
-                </div>
             </div>
 
             <form>              

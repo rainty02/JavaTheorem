@@ -149,7 +149,56 @@
 
 <script>
 
+  $(document).ready(function(){
+
+    // 카페 리스트 출력
+    cafe_list();
+
+    $('#btn_cafe_location_search').click(function(){
+      // sort 버튼 - 지역순으로 출력하기 위한 값 필수 전달
+      $('.card-deck *').remove(); // 테스트용 값삭제
+    })
+
+    $('#btn_cafe_star_search').click(function(){
+      // sort 버튼 - 평점순으로 출력하기 위한 값 필수 전달
+      cafe_list('#btn_cafe_star_search');
+    })
+
+  });
+
+  // 카페 리스트 출력을 위한 동적 html 생성
+  function cafe_list($name){
+      // DB에서 받아야할 데이터 - 카페 웹주소, 카페이미지, 카페명, 카페정보1, 카페정보2, 카페 위치
+      var cafe_web = 'cafe_info_member.html';
+      var cafe_img = 'image/cafe1.jpg';
+      var cafe_name = '스타벅스';
+      var cafe_info1 = '1시간 : 5,000';
+      var cafe_info2 = '추가 10분당 1,000원';
+      var cafe_addr = '신촌역 3번출구 도보 5분거리(600m)';
+
+      // 중복생성 방지를 위해 자손 삭제 - 페이징처리시 사용가능
+      // **스크롤에 따라 리스트가 추가적으로 생성된다면 다른 방법 필요
+      $('.card-deck *').remove();
+      // 리스트 html 동적 생성 
+      for(var i=0; i<9; i++){
+        var html = '<div class="card hvr-underline-from-center" onclick="location.href=\''+cafe_web+'\';">'+'\n'+
+                  '<img class="card-img-top" src="'+cafe_img+'" alt="Card image cap">'+'\n'+
+                  '<div class="card-body">'+'\n'+
+                  '<h5 class="card-title">'+cafe_name+'</h5>'+'\n'+
+                  '<p class="card-text" style="text-align: right;">'+'\n'+
+                  cafe_info1+'\n'+
+                  '<br>'+'\n'+
+                  cafe_info2+'\n'+
+                  '</p>'+'\n'+'</div>'+'\n'+'<div class="card-footer" style="text-align: center;">'+'\n'+
+                  '<small class="text-primary">'+cafe_addr+'</small>'+'\n'+
+                  '</div>'+'\n'+'</div>';
+                  $('.card-deck').append(html);
+      }
+    }
+
 </script>
+
+
 
 </head>
 
@@ -193,9 +242,9 @@
 
     <nav class="navbar navbar-light" style="background-color: #D6E9FF;">
     <ul class="nav-button">
-        <li><button type="button" class="btn btn-outline-danger">지역별</button></li>
-        <li><button type="button" class="btn btn-outline-success">평점순</button></li>
-        <li><button type="button" class="btn btn-outline-info">추천순</button></li>
+        <li><button type="button" id="btn_cafe_location_search" class="btn btn-outline-danger">지역별</button></li>
+        <li><button type="button" id="btn_cafe_star_search" class="btn btn-outline-success btn_cafe_star_search">평점순</button></li>
+        <li><button type="button" id="btn_cafe_star_search" class="btn btn-outline-info btn_cafe_star_search">추천순</button></li>
     </ul>
         <form class="form-inline">
             <select class="btn btn-outline-primary my-2 my-sm-0">
@@ -208,130 +257,7 @@
     </nav>
 
     <div class="card-deck">
-        <div class="card hvr-underline-from-center" onclick="location.href='cafe_info_member.html';">
-          <img class="card-img-top" src="image/cafe1.jpg" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title">스타벅스</h5>
-            <p class="card-text" style="text-align: right;">
-                1시간 : 5,000 <br>
-                추가 10분당 : 1,000
-            </p>
-          </div>
-          <div class="card-footer" style="text-align: center;">
-            <small class="text-primary">신촌역 3번출구 도보 5분거리(600m)</small>
-          </div>
-        </div>
-        <div class="card hvr-underline-from-center" onclick="location.href='cafe_info_member.html';">
-          <img class="card-img-top" src="image/cafe2.jpg" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title">블루보틀</h5>
-            <p class="card-text" style="text-align: right;">
-                1시간 : 5,000 <br>
-                추가 10분당 : 1,000
-            </p>
-          </div>
-          <div class="card-footer" style="text-align: center;">
-            <small class="text-primary">신촌역 3번출구 도보 5분거리(600m)</small>
-          </div>
-        </div>
-        <div class="card hvr-underline-from-center" onclick="location.href='cafe_info_member.html';">
-          <img class="card-img-top" src="image/cafe3.jpg" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title">투썸플레이스</h5>
-            <p class="card-text" style="text-align: right;">
-                1시간 : 5,000 <br>
-                추가 10분당 : 1,000
-            </p>
-          </div>
-          <div class="card-footer" style="text-align: center;">
-            <small class="text-primary">신촌역 3번출구 도보 5분거리(600m)</small>
-          </div>
-        </div>
-
-
-
-        <div class="card hvr-underline-from-center" onclick="location.href='cafe_info_member.html';">
-          <img class="card-img-top" src="image/cafe1.jpg" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title">스타벅스</h5>
-            <p class="card-text" style="text-align: right;">
-                1시간 : 5,000 <br>
-                추가 10분당 : 1,000
-            </p>
-          </div>
-          <div class="card-footer" style="text-align: center;">
-            <small class="text-primary">신촌역 3번출구 도보 5분거리(600m)</small>
-          </div>
-        </div>
-        <div class="card hvr-underline-from-center" onclick="location.href='cafe_info_member.html';">
-          <img class="card-img-top" src="image/cafe2.jpg" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title">블루보틀</h5>
-            <p class="card-text" style="text-align: right;">
-                1시간 : 5,000 <br>
-                추가 10분당 : 1,000
-            </p>
-          </div>
-          <div class="card-footer" style="text-align: center;">
-            <small class="text-primary">신촌역 3번출구 도보 5분거리(600m)</small>
-          </div>
-        </div>
-        <div class="card hvr-underline-from-center" onclick="location.href='cafe_info_member.html';">
-          <img class="card-img-top" src="image/cafe3.jpg" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title">투썸플레이스</h5>
-            <p class="card-text" style="text-align: right;">
-                1시간 : 5,000 <br>
-                추가 10분당 : 1,000
-            </p>
-          </div>
-          <div class="card-footer" style="text-align: center;">
-            <small class="text-primary">신촌역 3번출구 도보 5분거리(600m)</small>
-          </div>
-        </div>
-
-
-        <div class="card hvr-underline-from-center" onclick="location.href='cafe_info_member.html';"  >
-          <img class="card-img-top" src="image/cafe1.jpg" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title">스타벅스</h5>
-            <p class="card-text" style="text-align: right;">
-                1시간 : 5,000 <br>
-                추가 10분당 : 1,000
-            </p>
-          </div>
-          <div class="card-footer" style="text-align: center;">
-            <small class="text-primary">신촌역 3번출구 도보 5분거리(600m)</small>
-          </div>
-        </div>
-        <div class="card hvr-underline-from-center" onclick="location.href='cafe_info_member.html';">
-          <img class="card-img-top" src="image/cafe2.jpg" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title">블루보틀</h5>
-            <p class="card-text" style="text-align: right;">
-                1시간 : 5,000 <br>
-                추가 10분당 : 1,000
-            </p>
-          </div>
-          <div class="card-footer" style="text-align: center;">
-            <small class="text-primary">신촌역 3번출구 도보 5분거리(600m)</small>
-          </div>
-        </div>
-        <div class="card hvr-underline-from-center" onclick="location.href='cafe_info_member.html';">
-          <img class="card-img-top" src="image/cafe3.jpg" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title">투썸플레이스</h5>
-            <p class="card-text" style="text-align: right;">
-                1시간 : 5,000 <br>
-                추가 10분당 : 1,000
-            </p>
-          </div>
-          <div class="card-footer" style="text-align: center;">
-            <small class="text-primary">신촌역 3번출구 도보 5분거리(600m)</small>
-          </div>
-        </div>
-        
-      </div>
+    </div>
 
 </body>
 

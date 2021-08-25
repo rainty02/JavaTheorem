@@ -4,7 +4,7 @@
     <meta charset="UTF-8"> <!-- 출력 포맷 -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 모바일 페이지 속성 -->
-    <title>Cafe info</title> <!-- 문서 제목 -->
+    <title>Cafe Admin</title> <!-- 문서 제목 -->
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -221,31 +221,32 @@
 
 
 
-        /* 버튼 회전 */
-        @-webkit-keyframes rotate-hor-center {
-        0% {
-            -webkit-transform: rotateX(0);
-                    transform: rotateX(0);
-        }
-        100% {
-            -webkit-transform: rotateX(-360deg);
-                    transform: rotateX(-360deg);
-        }
-        }
-        @keyframes rotate-hor-center {
-        0% {
-            -webkit-transform: rotateX(0);
-                    transform: rotateX(0);
-        }
-        100% {
-            -webkit-transform: rotateX(-360deg);
-                    transform: rotateX(-360deg);
-        }
-        }
-        .rotate-hor-center {
-            -webkit-animation: rotate-hor-center 0.5s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
-                    animation: rotate-hor-center 0.5s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
-        }        
+        /* 예약 회전 */
+        @-webkit-keyframes flip-vertical-right {
+            0% {
+                -webkit-transform: rotateY(0);
+                        transform: rotateY(0);
+            }
+            100% {
+                -webkit-transform: rotateY(180deg);
+                        transform: rotateY(180deg);
+            }
+            }
+            @keyframes flip-vertical-right {
+            0% {
+                -webkit-transform: rotateY(0);
+                        transform: rotateY(0);
+            }
+            100% {
+                -webkit-transform: rotateY(180deg);
+                        transform: rotateY(180deg);
+            }
+        }   
+
+        .flip-vertical-right {
+	        -webkit-animation: flip-vertical-right 0.4s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+	        animation: flip-vertical-right 0.4s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+}
 
 
     </style>
@@ -254,29 +255,26 @@
     $(document).ready(function(){
         
         // 리스트 출력
-        list();
+        list(4);
+
+        review();
 
         // 4인석, 8인석에 따라 where의 값이 달라지도록 값 전달
         $('#per4').click(function(){
-            list();
-            $('#person').removeClass('rotate-hor-center');
-            setTimeout(function() {
-                $('#person').addClass('rotate-hor-center');
-                }, 50);
+            list(4);
         })
 
         $('#per8').click(function(){
-            list();
-            $('#person').removeClass('rotate-hor-center');
-            setTimeout(function() {
-                $('#person').addClass('rotate-hor-center');
-                }, 50);
+            list(8);
         })
 
         // 예약 리스트 출력
-        function list(){
+        function list(table_num){
             $('#person *').remove();
-            var html = '<table class="table table-striped" style="text-align: center; vertical-align: none;">'+'\n'+
+
+            var color = table_num == 4 ? 'btn-outline-danger' : 'btn-outline-primary';
+
+            var html = '<table class="table table-striped flip-vertical-right" style="text-align: center; vertical-align: none;">'+'\n'+
                     '<tr>'+'\n'+
                     '<th>No</th>'+'\n'+
                     '<th>예약일</th>'+'\n'+
@@ -293,24 +291,59 @@
                     '<td>18시</td>'+'\n'+
                     '<td>성종원</td>'+'\n'+
                     '<td>1/4</td>'+'\n'+
-                    '<td><button class="btn btn-outline-danger my-2 my-sm-0">확정</button></td>'+'\n'+      
+                    '<td><button class="btn '+color+' rotate-hor-center my-2 my-sm-0" value="'+i+'">확정</button></td>'+'\n'+      
                     '</tr>';
             }
             html += '\n' + '</table>';
             $('#person').append(html);
         }
-               
-        $(function () {
-            $('#date').bootstrapMaterialDatePicker({
-            time: false
-            });
-        });
-        $(function () {
-            $('#format').bootstrapMaterialDatePicker({
-            format: 'L'
-            });
-        });
+
     });
+               
+    $(function () {
+            // 달력 - 시간 제거, 출력 포맷,
+            $('#date').bootstrapMaterialDatePicker({
+                time: false,
+                minDate: moment()
+            });
+        });
+
+        
+     // 리뷰
+    function review(){
+    $('.post_wrap *').remove();
+        // DB에서 받을 값
+        var member_name = '직쏘';
+        var review_star = '★★★★★';
+        var review_regdate = '2021-08-22';
+        var review_post = '사장님이 친절해요';
+
+        for(var i=0; i<5; i++){
+            var html = '<div class="media">'+'\n'+
+                        '<div class="media-left">'+'\n'+
+                        '<img src="image/img_avatar1.png" class="media-object mr-3" style="width:45px">'+'\n'+
+                        '</div>'+'\n'+
+                        '<div class="media-body">'+'\n'+
+                        '<h4 class="media-heading">'+'\n'+
+                        member_name+'\n'+
+                        '<small><i class="ml-3">'+'\n'+
+                        review_star+'\n'+
+                        '</i></small><small><i style="float: right;">'+'\n'+
+                        review_regdate+'\n'+
+                        '</i></small></h4>'+'\n'+
+                        '<p>'+'\n'+
+                        review_post+'\n'+
+                        '</p>'+'\n'+
+                        '</div>'+'\n'+
+                        '</div>'+'\n'+
+                        '<hr>';
+            $('.post_wrap').append(html);
+        }
+    }
+
+
+
+    
 </script>
 
     <!-- 파일 미리보기 -->
@@ -541,13 +574,11 @@
             <h5 class="info_menu">예약 관리</h5>
             <hr class="first_hr">
 
-            <table>
+            <table style="margin-left: auto; margin-right: auto;">
                 <tr>
+                    <td><input class="btn btn-outline-success" type="text" id="date" value="2021-08-24"></td>
                     <td><button type="button" id="per4" class="btn btn-outline-danger">4인석</button></td>
                     <td><button type="button" id="per8" class="btn btn-outline-primary">8인석</button></td>
-                    <td width=180 style="word-break:break-all"></td>
-                    <td width=180 style="word-break:break-all"></td>
-                    <td><input class="btn btn-outline-success" type="text" id="date" value="2021-08-24"></td>
                 </tr>
             </table>
             <div id="person">
@@ -564,29 +595,6 @@
             <hr class="first_hr">
 
             <div class="post_wrap">
-                <div class="media">
-                    <div class="media-left">
-                      <img src="image/img_avatar1.png" class="media-object mr-3" style="width:45px">
-                    </div>
-                    <div class="media-body">
-                      <h4 class="media-heading">직쏘<small><i class="ml-3">★★★★★</i></small><small><i style="float: right;">2021-08-22</i></small></h4>
-                      <p>사장님이 친절해요</p>
-                      <hr>
-                    </div>
-                </div>
-
-                <div class="media">
-                    <div class="media-left">
-                      <img src="image/img_avatar1.png" class="media-object mr-3" style="width:45px">
-                    </div>
-                    <div class="media-body">
-                      <h4 class="media-heading">직쏘<small><i class="ml-3">★★★★★</i></small><small><i style="float: right;">2021-08-22</i></small></h4>
-                      <p>사장님이 친절해요</p>
-                      <hr>
-                    </div>
-                </div>
-
-
             </div>
         
         </div>
