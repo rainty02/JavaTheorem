@@ -277,7 +277,7 @@
             // 날짜값
             var date = $('#date').val();
 
-            // DB 조회 : date(날짜), table_num(몇인석) 활용
+            // DB 조회 : date(날짜), table_num(4인석,8인석) 활용
 
             // 중복 생성 방지를 위한 자손 삭제
             $('#person *').remove();
@@ -297,7 +297,7 @@
 
 
         $(function () {
-            // 달력 - 시간 제거, 출력 포맷,
+            // 달력 - 시간 제거, 오늘 이전 날짜 선택 불가
             $('#date').bootstrapMaterialDatePicker({
                 time: false,
                 minDate: moment()
@@ -495,8 +495,7 @@
             </div>
             <div class="modal-body">
             
-                데이터 베이스에서 가져온 게임 리스트
-                검색도 가능하도록?
+                보드게임리스트가 출력됩니다
 
             </div>
             <div class="modal-footer">

@@ -216,37 +216,35 @@
             overflow-y: scroll;
             padding-left: 20px;
         }
+        td{
+            font-size: 1.1em;
+            line-height: 3;
+        }
 
 
+        @-webkit-keyframes fade-in {
+          0% {
+            opacity: 0;
+          }
+          100% {
+            opacity: 1;
+          }
+        }
+        @keyframes fade-in {
+          0% {
+            opacity: 0;
+          }
+          100% {
+            opacity: 1;
+          }
+        }
+        
+        .fade-in {
+        -webkit-animation: fade-in 1.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+                animation: fade-in 1.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+        }
 
 
-
-        /* 예약 회전 */
-        @-webkit-keyframes flip-vertical-right {
-            0% {
-                -webkit-transform: rotateY(0);
-                        transform: rotateY(0);
-            }
-            100% {
-                -webkit-transform: rotateY(180deg);
-                        transform: rotateY(180deg);
-            }
-            }
-            @keyframes flip-vertical-right {
-            0% {
-                -webkit-transform: rotateY(0);
-                        transform: rotateY(0);
-            }
-            100% {
-                -webkit-transform: rotateY(180deg);
-                        transform: rotateY(180deg);
-            }
-        }   
-
-        .flip-vertical-right {
-	        -webkit-animation: flip-vertical-right 0.4s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
-	        animation: flip-vertical-right 0.4s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
-}
 
 
     </style>
@@ -272,9 +270,16 @@
         function list(table_num){
             $('#person *').remove();
 
+            // 예약일, 시간, 예약자명, 확정된 테이블 갯수, 등록된 테이블 총 갯수
+            var reservation_regdate = '08-23';
+            var reservation_regtime = '18시';
+            var member_name = '박지성';
+            var reservation_current = '1';
+            var reservation_max = '4';
+
             var color = table_num == 4 ? 'btn-outline-danger' : 'btn-outline-primary';
 
-            var html = '<table class="table table-striped flip-vertical-right" style="text-align: center; vertical-align: none;">'+'\n'+
+            var html = '<table class="table table-striped fade-in" style="text-align: center; vertical-align: none;">'+'\n'+
                     '<tr>'+'\n'+
                     '<th>No</th>'+'\n'+
                     '<th>예약일</th>'+'\n'+
@@ -287,10 +292,10 @@
             for(var i=0; i<10; i++) {
                 html += '<tr>'+'\n'+
                     '<td>'+i+'</td>'+'\n'+
-                    '<td>08-23</td>'+'\n'+
-                    '<td>18시</td>'+'\n'+
-                    '<td>성종원</td>'+'\n'+
-                    '<td>1/4</td>'+'\n'+
+                    '<td>'+reservation_regdate+'</td>'+'\n'+
+                    '<td>'+reservation_regtime+'</td>'+'\n'+
+                    '<td>'+member_name+'</td>'+'\n'+
+                    '<td><span style="color: blue;">'+reservation_current+'</span> / <span style="color: red;">'+reservation_max+'</span></td>'+'\n'+
                     '<td><button class="btn '+color+' rotate-hor-center my-2 my-sm-0" value="'+i+'">확정</button></td>'+'\n'+      
                     '</tr>';
             }
@@ -654,8 +659,7 @@
             </div>
             <div class="modal-body">
             
-                데이터 베이스에서 가져온 게임 리스트
-                검색도 가능하도록?
+                보드게임리스트가 출력됩니다
 
             </div>
             <div class="modal-footer">

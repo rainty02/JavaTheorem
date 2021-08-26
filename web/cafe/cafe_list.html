@@ -11,8 +11,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-    <link href="css/demo-page.css" rel="stylesheet" media="all">
-		<link href="css/hover.css" rel="stylesheet" media="all">
+    <!-- 카드 선택시 하단 줄 CSS -->
+	<link href="css/hover.css" rel="stylesheet" media="all">
+
     <style>
          * {
         margin: 0;
@@ -142,6 +143,27 @@
           font-weight: bold;
         }
 
+        @-webkit-keyframes fade-in {
+          0% {
+            opacity: 0;
+          }
+          100% {
+            opacity: 1;
+          }
+        }
+        @keyframes fade-in {
+          0% {
+            opacity: 0;
+          }
+          100% {
+            opacity: 1;
+          }
+        }
+        
+        .fade-in {
+        -webkit-animation: fade-in 1.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+                animation: fade-in 1.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+        }
 
         
 
@@ -156,18 +178,26 @@
 
     $('#btn_cafe_location_search').click(function(){
       // sort 버튼 - 지역순으로 출력하기 위한 값 필수 전달
-      $('.card-deck *').remove(); // 테스트용 값삭제
+      cafe_list(this);
     })
 
     $('#btn_cafe_star_search').click(function(){
       // sort 버튼 - 평점순으로 출력하기 위한 값 필수 전달
-      cafe_list('#btn_cafe_star_search');
+      cafe_list(this);
+    })
+
+    $('#btn_cafe_review_search').click(function(){
+      // sort 버튼 - 리뷰 갯수순으로 출력하기 위한 값 필수 전달
+      cafe_list(this);
     })
 
   });
 
   // 카페 리스트 출력을 위한 동적 html 생성
   function cafe_list($name){
+
+      // id를 매개변수로 받아 지역, 평점 기준으로 리스트 출력
+
       // DB에서 받아야할 데이터 - 카페 웹주소, 카페이미지, 카페명, 카페정보1, 카페정보2, 카페 위치
       var cafe_web = 'cafe_info_member.html';
       var cafe_img = 'image/cafe1.jpg';
@@ -179,9 +209,10 @@
       // 중복생성 방지를 위해 자손 삭제 - 페이징처리시 사용가능
       // **스크롤에 따라 리스트가 추가적으로 생성된다면 다른 방법 필요
       $('.card-deck *').remove();
+
       // 리스트 html 동적 생성 
       for(var i=0; i<9; i++){
-        var html = '<div class="card hvr-underline-from-center" onclick="location.href=\''+cafe_web+'\';">'+'\n'+
+        var html = '<div class="card hvr-underline-from-center fade-in" onclick="location.href=\''+cafe_web+'\';">'+'\n'+
                   '<img class="card-img-top" src="'+cafe_img+'" alt="Card image cap">'+'\n'+
                   '<div class="card-body">'+'\n'+
                   '<h5 class="card-title">'+cafe_name+'</h5>'+'\n'+
@@ -244,7 +275,7 @@
     <ul class="nav-button">
         <li><button type="button" id="btn_cafe_location_search" class="btn btn-outline-danger">지역별</button></li>
         <li><button type="button" id="btn_cafe_star_search" class="btn btn-outline-success btn_cafe_star_search">평점순</button></li>
-        <li><button type="button" id="btn_cafe_star_search" class="btn btn-outline-info btn_cafe_star_search">추천순</button></li>
+        <li><button type="button" id="btn_cafe_review_search" class="btn btn-outline-info btn_cafe_star_search">리뷰순</button></li>
     </ul>
         <form class="form-inline">
             <select class="btn btn-outline-primary my-2 my-sm-0">
