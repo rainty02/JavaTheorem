@@ -447,9 +447,10 @@
                     <td><button type="button" id="btn_reservation_8" class="btn btn-outline-primary">8인석</button></td>                    
                 </tr>
             </table>
-            <div id="person"></div>
 
-        </div> 
+            <!-- 예약 버튼 생성위치 -->
+            <div id="person"></div>
+            </div> 
         <hr>   
         
         
@@ -459,6 +460,22 @@
 
             <div class="post_wrap">
             </div>
+
+            <!-- 페이징 -->
+               <nav aria-label="Page navigation example">
+                   <ul class="pagination justify-content-center" style="float: none;">
+                     <li class="page-item disabled">
+                       <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                     </li>
+                     <li class="page-item"><a class="page-link" href="#">1</a></li>
+                     <li class="page-item"><a class="page-link" href="#">2</a></li>
+                     <li class="page-item"><a class="page-link" href="#">3</a></li>
+                     <li class="page-item">
+                       <a class="page-link" href="#">Next</a>
+                     </li>
+                   </ul>
+                 </nav>
+            <br>
 
             <form>              
                 <div id="star" class="star-rating space-x-4 mx-auto">                   
@@ -472,7 +489,6 @@
                     <label for="2-stars" class="star">★</label>
                     <input type="radio" id="1-star" name="rating" value="1" v-model="ratings" />
                     <label for="1-star" class="star">★</label>
-                    <span>평점</span>   
                 </div>
 
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
