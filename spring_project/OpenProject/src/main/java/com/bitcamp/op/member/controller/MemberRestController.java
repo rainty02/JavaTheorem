@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -71,6 +72,16 @@ public class MemberRestController {
 	public String regMember2(
 			@RequestBody MemberRegRequest regRequest,
 			HttpServletRequest request
+			) {
+		System.out.println(regRequest);
+		return Integer.toString(regService.memberReg(regRequest, request));
+	}
+	
+	@PostMapping("/members/reg3")
+	public String regMember3(
+			@RequestBody MemberRegRequest regRequest,
+			HttpServletRequest request,
+			HttpServletResponse reponse
 			) {
 		System.out.println(regRequest);
 		return Integer.toString(regService.memberReg(regRequest, request));
