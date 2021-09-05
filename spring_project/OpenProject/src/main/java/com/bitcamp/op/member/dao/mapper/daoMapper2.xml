@@ -20,8 +20,7 @@
 		select * from membert where memberid=#{param1} and password=#{param2}
 	</select>
 	
-	<!-- 매개변수가 하나일 경우 변수명은 마음대로 설정해도 됨 -->
-	<!-- 아이디 중복여부 확인 -->
+
 	<select id="selectById"
 			resultType="int">
 		select count(*) from membert where memberid=#{id}
