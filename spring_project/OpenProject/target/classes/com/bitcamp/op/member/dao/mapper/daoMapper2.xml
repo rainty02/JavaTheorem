@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 	
+<mapper namespace="com.bitcamp.op.member.dao.Dao">
+	
+	<resultMap id="memberListResult"
+			   type="com.bitcamp.op.member.domain.Member">
+		<id column="idx" property="idx" />   
+		<result column="memberid" property="memberid" />
+		<result column="membername" property="membername" />
+		<!--<result column="password" property="password" />-->
+		<result column="memberphoto" property="memberphoto" />
+		<result column="regdate" property="regdate" />	   
+	</resultMap>
+
+	<select id="selectByIdPw"
+			resultType="com.bitcamp.op.member.domain.Member">
+		select * from membert where memberid=#{param1} and password=#{param2}
+	</select>
+	
+	<!-- 매개변수가 하나일 경우 변수명은 마음대로 설정해도 됨 -->
+	<!-- 아이디 중복여부 확인 -->
+	<select id="selectById"
+			resultType="int">
+		select count(*) from membert where memberid=#{id}
+	</select>
+	
+	<select id="selectByIdx"
+			resultType="com.bitcamp.op.member.domain.Member">
+		select * from membert where idx=#{idx}
+	</select>
+	
+	<insert id="insertMember"
+			parameterType="com.bitcamp.op.member.domain.Member"
+			useGeneratedKeys="true"  
+			keyProperty="idx">
+		insert into membert (memberid,password,membername,memberphoto)
+		values (#{memberid}, #{password}, #{membername}, #{memberphoto}) 
+	</insert>
+
+	<update id="updateMember"
+			parameterType="com.bitcamp.op.member.domain.Member">
+		update membert set membername = #{membername}, password = #{password}
+		where idx=#{idx}
+	</update>
+	
+	<delete id="deleteMember">
+		delete from membert where idx = #{idx}
+	</delete>
+	
+	<select id="selectAll"
+			resultMap="memberListResult">
+		select * from membert order by idx
+	</select>
+	
+
+	<select id="selectList"
+			resultType="com.bitcamp.op.member.domain.Member">
+		select * from membert order by memberid limit #{param1}, #{param2}
+	</select>
+	
+
+	<select id="selectTotalCount" resultType="int">
+		select count(*) from membert
+	</select>
+
+
+	<select id="selectMember"
+			parameterType="com.bitcamp.op.member.domain.SearchType"
+			resultType="com.bitcamp.op.member.domain.Member">
+
+		select * from membert 
+		
+		<where>	
+			<if test="searchType == 'id'">
+				<include refid="searchId"></include>
+			</if>
+			<if test="searchType == 'name'">
+				<include refid="searchName"></include>
+			</if>
+			<if test="searchType == 'both'">
+				<include refid="searchId"></include>
+				<include refid="searchName"></include>
+			</if>	
+		</where>
+	
+	</select>
+	
+	<sql id="searchId">
+			or memberid like concat('%' , #{keyword}, '%')
+		</sql>
+		<sql id="searchName">
+			or membername like concat('%' , #{keyword}, '%')
+		</sql>
+	
+</mapper>
