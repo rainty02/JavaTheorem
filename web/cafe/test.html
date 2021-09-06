@@ -1,0 +1,59 @@
+<!DOCTYPE html>  <!-- 문서의 첫행 표시, 웹 브라우저에 HTML5 임을 알림 -->
+<html lang="ko"> <!-- 시작, lang 속성 입력(생략가능)-->
+<head> <!-- 페이지의 필요한 추가 속성 작성 -->
+    <meta charset="UTF-8"> <!-- 출력 포맷 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 모바일 페이지 속성 -->
+    <title>Cafe list</title> <!-- 문서 제목 -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+</head>
+
+<style>
+
+.pageTitle {position: fixed; left: 0; top: 0; width: 100%; height: 52px; line-height: 52px; color: #fff; text-align: center; background: #111;}
+article {padding: 52px 3% 0;}
+article .block {padding: 20px; min-height: 500px;}
+article .block p {line-height: 22px; color: #fff; font-size: 16px; font-weight: 600;}
+article .block:nth-child(2n+1) {background: #999;}
+article .block:nth-child(2n) {background: #222;}
+.box {overflow: hidden; overflow-y: scroll; height: 1500px;}
+
+</style>
+
+<body>
+
+    <header>                
+        <h1 class="pageTitle">Infinity scroll</h1>
+    </header>
+    <article class="box">
+        <div class="block">
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem mollitia accusamus sequi ipsa, rerum nam laboriosam, ipsam aperiam deleniti beatae expedita id quisquam veritatis corporis, voluptates ducimus molestiae eum adipisci.
+            </p>
+        </div>
+        <div class="block">
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem mollitia accusamus sequi ipsa, rerum nam laboriosam, ipsam aperiam deleniti beatae expedita id quisquam veritatis corporis, voluptates ducimus molestiae eum adipisci.
+            </p>
+        </div>
+        <!-- 반복 -->
+    </article>
+
+</body>
+
+<script>
+
+$(document).ready(function(){
+    //Javascript
+    var count = 0;
+    //스크롤 바닥 감지
+    $('.box').scroll(function() {
+        console.log('스크롤이동');
+    });
+});
+
+
+</script>
+
+
+</html>

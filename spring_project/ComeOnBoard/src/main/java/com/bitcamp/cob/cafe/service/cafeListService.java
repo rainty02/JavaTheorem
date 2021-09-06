@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.bitcamp.cob.cafe.dao.CafeDao;
 import com.bitcamp.cob.cafe.domain.Cafe;
+import com.bitcamp.cob.cafe.domain.CafePaging;
+import com.bitcamp.cob.cafe.domain.CafeSearchType;
 
 @Service
 public class cafeListService {
@@ -15,11 +17,17 @@ public class cafeListService {
 	@Autowired
 	private SqlSessionTemplate template;
 	
-	private CafeDao dao;
+	// 정렬방법 선택시
+	public List<Cafe> cafeListBySort(CafePaging cafePaging) {
+		return template.getMapper(CafeDao.class).cafeListBySort(cafePaging);
+	}
 	
-	public List<Cafe> cafeList(String type) {
-		
-		return template.getMapper(CafeDao.class).cafeList(type);
-		
+	// 검색어 입력시
+	public List<Cafe> cafeListByKeyword(CafeSearchType cafeSearchType) {
+		return template.getMapper(CafeDao.class).cafeListByKeyword(cafeSearchType);
+	}
+
+	public int getCafeTotalCnt() {
+		return template.getMapper(CafeDao.class).getCafeTotalCnt();
 	}
 }

@@ -1,13 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>  <!-- ¹®¼­ÀÇ Ã¹Çà Ç¥½Ã, À¥ ºê¶ó¿ìÀú¿¡ HTML5 ÀÓÀ» ¾Ë¸² -->
-<html lang="ko"> <!-- ½ÃÀÛ, lang ¼Ó¼º ÀÔ·Â(»ı·«°¡´É)-->
-<head> <!-- ÆäÀÌÁöÀÇ ÇÊ¿äÇÑ Ãß°¡ ¼Ó¼º ÀÛ¼º -->
-    <meta charset="UTF-8"> <!-- Ãâ·Â Æ÷¸Ë -->
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<!DOCTYPE html>  <!-- ë¬¸ì„œì˜ ì²«í–‰ í‘œì‹œ, ì›¹ ë¸Œë¼ìš°ì €ì— HTML5 ì„ì„ ì•Œë¦¼ -->
+<html lang="ko"> <!-- ì‹œì‘, lang ì†ì„± ì…ë ¥(ìƒëµê°€ëŠ¥)-->
+<head> <!-- í˜ì´ì§€ì˜ í•„ìš”í•œ ì¶”ê°€ ì†ì„± ì‘ì„± -->
+    <meta charset="UTF-8"> <!-- ì¶œë ¥ í¬ë§· -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- ¸ğ¹ÙÀÏ ÆäÀÌÁö ¼Ó¼º -->
-    <title>Cafe list</title> <!-- ¹®¼­ Á¦¸ñ -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- ëª¨ë°”ì¼ í˜ì´ì§€ ì†ì„± -->
+    <title>Cafe list</title> <!-- ë¬¸ì„œ ì œëª© -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
@@ -15,7 +16,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-    <!-- Ä«µå ¼±ÅÃ½Ã ÇÏ´Ü ÁÙ CSS -->
+    <!-- ì¹´ë“œ ì„ íƒì‹œ í•˜ë‹¨ ì¤„ CSS -->
 	<link href="<c:url value="/css/hover.css"/>" rel="stylesheet" media="all">
 
     <style>
@@ -131,11 +132,12 @@
             padding-bottom: 20px;
             max-width: 1280px;
             min-width: 980px;
-            max-height: 800px;
+            height: 800px;
             overflow: hidden;
             overflow-y: scroll;      
         }
         .card{
+        	max-width: 30%;
             min-width: 300px;
             margin: 30px;
             box-shadow: 5px 5px 5px rgb(214, 214, 214);
@@ -170,161 +172,118 @@
         }
 
         
+        
+        
+        .pageTitle {position: fixed; left: 0; top: 0; width: 100%; height: 52px; line-height: 52px; color: #fff; text-align: center; background: #111;}
+article {padding: 52px 3% 0;}
+article .block {padding: 20px; min-height: 500px;}
+article .block p {line-height: 22px; color: #fff; font-size: 16px; font-weight: 600;}
+article .block:nth-child(2n+1) {background: #999;}
+article .block:nth-child(2n) {background: #222;}
 
     </style>
 
+
 <script>
 
-/*    $(document).ready(function(){
-
-    // Ä«Æä ¸®½ºÆ® Ãâ·Â
-    cafe_list();
-
-    $('#btn_cafe_location_search').click(function(){
-      // sort ¹öÆ° - Áö¿ª¼øÀ¸·Î Ãâ·ÂÇÏ±â À§ÇÑ °ª ÇÊ¼ö Àü´Ş
-      cafe_list(this);
-    })
-
-    $('#btn_cafe_star_search').click(function(){
-      // sort ¹öÆ° - ÆòÁ¡¼øÀ¸·Î Ãâ·ÂÇÏ±â À§ÇÑ °ª ÇÊ¼ö Àü´Ş
-      cafe_list(this);
-    })
-
-    $('#btn_cafe_review_search').click(function(){
-      // sort ¹öÆ° - ¸®ºä °¹¼ö¼øÀ¸·Î Ãâ·ÂÇÏ±â À§ÇÑ °ª ÇÊ¼ö Àü´Ş
-      cafe_list(this);
-    })
-
-  });
-
-  // Ä«Æä ¸®½ºÆ® Ãâ·ÂÀ» À§ÇÑ µ¿Àû html »ı¼º
-  function cafe_list($name){
-
-      // id¸¦ ¸Å°³º¯¼ö·Î ¹Ş¾Æ Áö¿ª, ÆòÁ¡ ±âÁØÀ¸·Î ¸®½ºÆ® Ãâ·Â
-
-      // DB¿¡¼­ ¹Ş¾Æ¾ßÇÒ µ¥ÀÌÅÍ - Ä«Æä À¥ÁÖ¼Ò, Ä«ÆäÀÌ¹ÌÁö, Ä«Æä¸í, Ä«ÆäÁ¤º¸1, Ä«ÆäÁ¤º¸2, Ä«Æä À§Ä¡
-      var cafe_web = 'cafe_info_member.html';
-      var cafe_img = 'image/cafe1.jpg';
-      var cafe_name = '½ºÅ¸¹÷½º';
-      var cafe_info1 = '1½Ã°£ : 5,000';
-      var cafe_info2 = 'Ãß°¡ 10ºĞ´ç 1,000¿ø';
-      var cafe_addr = '½ÅÃÌ¿ª 3¹øÃâ±¸ µµº¸ 5ºĞ°Å¸®(600m)';
-
-      // Áßº¹»ı¼º ¹æÁö¸¦ À§ÇØ ÀÚ¼Õ »èÁ¦ - ÆäÀÌÂ¡Ã³¸®½Ã »ç¿ë°¡´É
-      // **½ºÅ©·Ñ¿¡ µû¶ó ¸®½ºÆ®°¡ Ãß°¡ÀûÀ¸·Î »ı¼ºµÈ´Ù¸é ´Ù¸¥ ¹æ¹ı ÇÊ¿ä
-      $('.card-deck *').remove();
-
-      // ¸®½ºÆ® html µ¿Àû »ı¼º 
-      for(var i=0; i<9; i++){
-        var html = '<div class="card hvr-underline-from-center fade-in" onclick="location.href=\''+cafe_web+'\';">'+'\n'+
-                  '<img class="card-img-top" src="'+cafe_img+'" alt="Card image cap">'+'\n'+
-                  '<div class="card-body">'+'\n'+
-                  '<h5 class="card-title">'+cafe_name+'</h5>'+'\n'+
-                  '<p class="card-text" style="text-align: right;">'+'\n'+
-                  cafe_info1+'\n'+
-                  '<br>'+'\n'+
-                  cafe_info2+'\n'+
-                  '</p>'+'\n'+'</div>'+'\n'+'<div class="card-footer" style="text-align: center;">'+'\n'+
-                  '<small class="text-primary">'+cafe_addr+'</small>'+'\n'+
-                  '</div>'+'\n'+'</div>';
-                  $('.card-deck').append(html);
-      }
-    } */
-    
-    $(document).ready(function(){
-    	
-    	
-	    $('#btn_cafe_cafeidx_search').click(function(){
-			$.ajax({
-				url : '<c:url value="/cafe/cafe_list"/>',
-				type : 'post',
-				data : {
-					searchType : $(this).val()
-				},
-				success : function(data){
-					
-					
-					
-					
-				// DB¿¡¼­ ¹Ş¾Æ¾ßÇÒ µ¥ÀÌÅÍ - Ä«Æä À¥ÁÖ¼Ò, Ä«ÆäÀÌ¹ÌÁö, Ä«Æä¸í, Ä«ÆäÁ¤º¸1, Ä«ÆäÁ¤º¸2, Ä«Æä À§Ä¡
-			      var cafe_web = 'cafe_info_member.html';
-			      var cafe_img = 'image/cafe1.jpg';
-			      var cafe_name = '½ºÅ¸¹÷½º';
-			      var cafe_info1 = '1½Ã°£ : 5,000';
-			      var cafe_info2 = 'Ãß°¡ 10ºĞ´ç 1,000¿ø';
-			      var cafe_addr = '½ÅÃÌ¿ª 3¹øÃâ±¸ µµº¸ 5ºĞ°Å¸®(600m)';
-
-			      // Áßº¹»ı¼º ¹æÁö¸¦ À§ÇØ ÀÚ¼Õ »èÁ¦ - ÆäÀÌÂ¡Ã³¸®½Ã »ç¿ë°¡´É
-			      // **½ºÅ©·Ñ¿¡ µû¶ó ¸®½ºÆ®°¡ Ãß°¡ÀûÀ¸·Î »ı¼ºµÈ´Ù¸é ´Ù¸¥ ¹æ¹ı ÇÊ¿ä
-			      $('.card-deck *').remove();
-				      // ¸®½ºÆ® html µ¿Àû »ı¼º 
-			      for(var i=0; i<9; i++){
-			        var html = '<div class="card hvr-underline-from-center fade-in" onclick="location.href=\''+cafe_web+'\';">'+'\n'+
-			                  '<img class="card-img-top" src="'+cafe_img+'" alt="Card image cap">'+'\n'+
-			                  '<div class="card-body">'+'\n'+
-			                  '<h5 class="card-title">'+cafe_name+'</h5>'+'\n'+
-			                  '<p class="card-text" style="text-align: right;">'+'\n'+
-			                  cafe_info1+'\n'+
-			                  '<br>'+'\n'+
-			                  cafe_info2+'\n'+
-			                  '</p>'+'\n'+'</div>'+'\n'+'<div class="card-footer" style="text-align: center;">'+'\n'+
-			                  '<small class="text-primary">'+cafe_addr+'</small>'+'\n'+
-			                  '</div>'+'\n'+'</div>';
-			                  $('.card-deck').append(html);
-				      }	
-					
-					
-				},
-				error : function(data){
-					alert('½ÇÆĞ');
-				},
-				complete : function(){	
-					alert('³¡');
-				}
-			});
-	    });
-    	
-    	
-	    $('#btn_cafe_rating_search').click(function(){
-			$.ajax({
-				url : '<c:url value="/cafe/cafe_list"/>',
-				type : 'post',
-				data : {
-					searchType : $(this).val()
-				},
-				success : function(data){
-					alert('rating ¼º°ø');
-				},
-				error : function(data){
-					alert('½ÇÆĞ');
-				},
-				complete : function(){	
-					alert('³¡');
-				}
-			});
-	    });
-    	
-    	
-	    $('#btn_cafe_address_search').click(function(){
-			$.ajax({
-				url : '<c:url value="/cafe/cafe_list"/>',
-				type : 'post',
-				data : {
-					searchType : $(this).val()
-				},
-				success : function(data){
-					alert('address ¼º°ø');
-				},
-				error : function(data){
-					alert('½ÇÆĞ');
-				},
-				complete : function(){	
-					alert('³¡');
-				}
-			});
-	    });
+$(document).ready(function(){
+	
+	getList(1, 'cafeIdx');
+	
+	let pageIdx = 1;
+	let pageRating = 1;
+	let pageAddress = 1;
+	
+    $('#btn_cafe_cafeidx_search').click(function(){
+    	pageRating = 1;
+    	pageAddress = 1;
+    	scrollPage(pageIdx, $(this).val());
     });
+    
+    $('#btn_cafe_rating_search').click(function(){
+    	pageIdx = 1;
+    	pageAddress = 1;
+    	scrollPage(pageRating, $(this).val());
+    });
+    
+    $('#btn_cafe_address_search').click(function(){;
+		pageIdx = 1;
+		pageRating = 1;
+    	scrollPage(pageAddress, $(this).val());
+    });
+	
+
+	// ìŠ¤í¬ë¡¤ í˜ì´ì§•
+    function scrollPage(page, search){
+    	$('.card-deck').scroll(function(){
+    		pageIdx++;
+    		pageRating++;
+    		pageAddress++;
+    	    var scrollTop = $(this).scrollTop(); // ìŠ¤í¬ë¡¤ í˜„ì¬ ìœ„ì¹˜
+    	    var innerHeight = $(this).innerHeight(); // ìš”ì†Œì˜ ë‚´ë¶€ë†’ì´
+    	    var scrollHeight = $(this).prop('scrollHeight'); // ìŠ¤í¬ë¡¤ì˜ ì „ì²´ ë†’ì´ 
+    	    //ìŠ¤í¬ë¡¤ í˜„ì¬ ìœ„ì¹˜ + ìš”ì†Œì˜ ë‚´ë¶€ ë†’ì´ê°€ ìŠ¤í¬ë¡¤ì˜ ì „ì²´ ë†’ì´ë³´ë‹¤ í¬ê±°ë‚˜ ê°™ìœ¼ë©´ ìŠ¤í¬ë¦½íŠ¸ ì‹¤í–‰
+    	    if (scrollTop + innerHeight >= scrollHeight) {
+    	    	//ì‹¤í–‰í•  ë¡œì§ (ì½˜í…ì¸  ì¶”ê°€)
+    	        getList(page, search);
+    	    }
+    	});
+    }
+});
+
+
+
+// ì¹´í˜ ë¦¬ìŠ¤íŠ¸
+function getList(page, search){
+	$.ajax({
+		url: '<c:url value="/cafe/cafe_listPaging"/>',
+		type: 'post',
+		data: {
+			page : page,
+			searchType : search
+		},
+		dataType: 'json',
+		success : function(returnData) {
+			console.log(returnData);
+			console.log(returnData.cafe);
+			var data = returnData.cafe;
+			var html = ''
+			if(page == 1){
+				$('.card-deck').html(""); 
+			}
+			if(returnData.startNum <= returnData.totalCnt){
+				$.each(data, function(idx, cafe) {
+					html += '<div class="card hvr-underline-from-center fade-in" onclick="location.href=\'<c:url value="/cafe/cafe_page/'+cafe.cafeIdx+'"/>\'">'+'\n'+
+					 	  '<img class="card-img-top" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FckSZmV%2FbtqLwLYTrGR%2FZkGjmqP0pHvzMkVK9b2pRk%2Fimg.png" alt="Card image cap">'+'\n'+
+		                  '<div class="card-body">'+'\n'+
+	    	              '<h5 class="card-title">'+cafe.cafeName+'</h5>'+'\n'+
+	        	          '<p class="card-text" style="text-align: right;">'+'\n'+
+	        	          cafe.stdFee+'\n'+
+	                	  '<br>'+'\n'+
+	                	  cafe.tenPerFee+'\n'+
+	        	          '</p>'+'\n'+'</div>'+'\n'+'<div class="card-footer" style="text-align: center;">'+'\n'+
+	            	      '<small class="text-primary">'+cafe.cafeAddress+'</small>'+'\n'+
+	                	  '</div>'+'\n'+'</div>';
+				});
+				if(page == 1){
+					$('.card-deck').html(html); 
+				} else {
+					$('.card-deck').append(html);
+				}
+			}
+		},
+		error : function(){
+			alert('ì‹¤íŒ¨');
+		},
+		complete : function(){	
+		}
+	});
+}
+
+
 </script>
+
+
 
 
 
@@ -335,10 +294,10 @@
     <header>
         <div class="MultiBar">
             <ul class="area_gnb">
-                <li>½ÃÀÛÆäÀÌÁö·Î</li>
-                <li>´ÙÅ©¸ğµå</li>
-                <li>¸¶ÀÌÆäÀÌÁö</li>
-                <li>·Î±×ÀÎ</li>
+                <li>ì‹œì‘í˜ì´ì§€ë¡œ</li>
+                <li>ë‹¤í¬ëª¨ë“œ</li>
+                <li>ë§ˆì´í˜ì´ì§€</li>
+                <li>ë¡œê·¸ì¸</li>
             </ul>
         </div>
 
@@ -349,9 +308,9 @@
         <div class="main_naviwrap">
             <div class="main_nav">
                 <ul class="left_ul">
-                    <li>È¸»ç¼Ò°³</li>
-                    <li>È¸»ç¼Ò°³</li>
-                    <li>È¸»ç¼Ò°³</li>    
+                    <li>íšŒì‚¬ì†Œê°œ</li>
+                    <li>íšŒì‚¬ì†Œê°œ</li>
+                    <li>íšŒì‚¬ì†Œê°œ</li>    
                 </ul>
             </div>
         </div>
@@ -359,10 +318,10 @@
         <div class="main_naviwrap">
             <div class="main_nav">
                 <ul class="right_ul">
-                    <li>¸ğÀÓ</li>
-                    <li>°Ô½ÃÆÇ</li>
-                    <li>Ä«Æä</li>
-                    <li>°ÔÀÓ</li>    
+                    <li>ëª¨ì„</li>
+                    <li>ê²Œì‹œíŒ</li>
+                    <li>ì¹´í˜</li>
+                    <li>ê²Œì„</li>    
                 </ul>
             </div>
         </div>
@@ -371,44 +330,51 @@
 
     <nav class="navbar navbar-light" style="background-color: #D6E9FF;">
     <ul class="nav-button">
-        <li><button type="button" id="btn_cafe_cafeidx_search" class="btn btn-outline-danger" value="cafeIdx">µî·Ï¼ø</button></li>
-        <li><button type="button" id="btn_cafe_rating_search" class="btn btn-outline-success btn_cafe_star_search" value="cafeRating">ÆòÁ¡¼ø</button></li>
-        <li><button type="button" id="btn_cafe_address_search" class="btn btn-outline-info btn_cafe_review_search" value="cafeAddress">Áö¿ª¼ø</button></li>
+        <li><button type="button" id="btn_cafe_cafeidx_search" class="btn btn-outline-danger" value="cafeIdx">ë“±ë¡ìˆœ</button></li>
+        <li><button type="button" id="btn_cafe_rating_search" class="btn btn-outline-success btn_cafe_star_search" value="cafeRating">í‰ì ìˆœ</button></li>
+        <li><button type="button" id="btn_cafe_address_search" class="btn btn-outline-info btn_cafe_review_search" value="cafeAddress">ì§€ì—­ìˆœ</button></li>
     </ul>
         <form class="form-inline">
-            <select class="btn btn-outline-primary my-2 my-sm-0">
-              <option>Ä«Æä¸í</option>
-              <option>Áö¿ª</option>
+            <select class="btn btn-outline-primary my-2 my-sm-0" name="searchType">
+              <option value="cafeName">ì¹´í˜ëª…</option>
+              <option value="cafeAdderss">ì§€ì—­</option>
+              <option value="both">ë‚œ ë‘˜ë‹¤</option>
             </select>
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+            <input type="text" class="form-control mr-sm-2" name="keyword" placeholder="keyword">
+            <input type="submit" class="btn btn-outline-primary my-2 my-sm-0" value="Search">
         </form>
     </nav>
 
 
+
+
+
     <div class="card-deck">
- 		<c:forEach items="${cafelist}" var="cafe">
-			<div class="card hvr-underline-from-center fade-in" <%--onclick="${Ä«Æä ÆäÀÌÁö °æ·Î}"--%>>
-				<img class="card-img-top" src="<%-- ${ÀÌ¹ÌÁö °æ·Î} --%>" alt="Card image cap">
+<%--     	    	<c:if test="${fn:length(list) > 0}">
+    	<c:forEach items="${list}" var="list" >
+			<div class="card hvr-underline-from-center fade-in">
+				<img class="card-img-top" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FckSZmV%2FbtqLwLYTrGR%2FZkGjmqP0pHvzMkVK9b2pRk%2Fimg.png" alt="Card image cap">
 				<div class="card-body">
-					<h5 class="card-title">${cafe.cafeName}</h5>
-					<p class="card-text" style="text-align: right;">${cafe.stdFee}<br>${cafe.tenPerFee}</p>
+					<h5 class="card-title">${list.cafeName}</h5>
+					<p class="card-text" style="text-align: right;">${list.stdFee}<br>${list.tenPerFee}</p>
 				</div>
 				<div class="card-footer" style="text-align: center;">
-					<small class="text-primary">${cafe.cafeAddress}</small>
+					<small class="text-primary">${list.cafeAddress}</small>
 				</div>
 			</div>
-    	</c:forEach>
+		</c:forEach>
+		</c:if>
+		
+ 		<c:if test="${fn:length(list) < 1}">
+			<h1>ê²€ìƒ‰ê²°ê³¼ : ${fn:length(list)}</h1>
+		</c:if> --%>
     </div>
 
-    
-    
+
 
 </body>
 
-<script>
 
 
-</script>
 
 </html>
