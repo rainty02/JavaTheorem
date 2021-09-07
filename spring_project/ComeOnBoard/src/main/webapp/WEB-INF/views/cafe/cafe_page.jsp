@@ -247,12 +247,14 @@
 
     </style>
 
-    <script>
+    <script type="text/javascript">
         $(document).ready(function(){
             
             reservation_list(4);
-
-            review();
+            
+            let page = 1;
+            review(page);
+            
 
             // 4인석 버튼 클릭시 
             $('#btn_reservation_4').click(function(){
@@ -338,13 +340,13 @@
             }
         } */
         
-function review(){
+function review(page){
        $.ajax({
-    	   url: '<c:url value="/cafe/cafe_page/'+idx+'"/>',
-    	   type: 'post',
+    	   url: '<c:url value="/cafe/cafe_review"/>',
+    	   type: 'get',
     	   data: { 
     		   page : page,
-		       cafeIdx : idx
+    		   cafeIdx : ${cafeInfo.cafeIdx}
     		},
     	   dataType: 'json',
     	   success: function(returnData){
@@ -353,18 +355,23 @@ function review(){
     		   var html = ''
     		   
    			   $.each(data, function(idx, review) {
-   				 var html = '<div class="media">'+'\n'+
+   				
+   				console.log(idx);
+   				var date = new Date(review.revRegDate);
+   				var commRegDate = date.getFullYear() + ". " + date.getMonth() + ". " + date.getDate() + ". " + date.getHours() + ":" + date.getMinutes(); 
+ 				
+   				html += '<div class="media">'+'\n'+
 			                 '<div class="media-left">'+'\n'+
-			                 '<img src="'+member_img+'\n'+
+			                 '<img src="https://www.w3schools.com/bootstrap4/img_avatar1.png"\n'+
 			                 '" class="media-object mr-3" style="width:45px">'+'\n'+
 			                 '</div>'+'\n'+
 			                 '<div class="media-body">'+'\n'+
 			                 '<h4 class="media-heading">'+'\n'+
-			                 review.memid+'\n'+
-			                 '<small><i class="ml-3">'+'\n'+
+			                 review.memIdx+'\n'+
+			                 '<small><i class="ml-3">★'+'\n'+
 			                 review.revRating+'\n'+
 			                 '</i></small><small><i style="float: right;">'+'\n'+
-			                 review.revRegDate+'\n'+
+			                 commRegDate+'\n'+	
 			                 '</i></small></h4>'+'\n'+
 			                 '<p>'+'\n'+
 			                 review.revContent+'\n'+
@@ -374,11 +381,17 @@ function review(){
 			         html += '</div>'+'\n'+
 			                 '</div>'+'\n'+
 			                 '<hr>';
-			});			   
-    		   
-    	   }
+			});	
+    		   $('.post_wrap').append(html);
+
+    	   },
+    	   error : function(){
+   				alert('실패');
+   		   },
+   		   complete : function(){	
+   		   }
        })
-       }
+}
         
         
         

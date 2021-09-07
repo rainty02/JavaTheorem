@@ -14,11 +14,10 @@ public class Cafe {
 	private String cafeTel;
 	private int cafeRating;
 	
-	public Cafe(){};
+	
 	
 	public Cafe(int cafeIdx, int memIdx, String cafeName, String cafeAddress, String cafeTime, int stdFee,
 			int tenPerFee, int fourTable, int grpTable, String cafeTel, int cafeRating) {
-		super();
 		this.cafeIdx = cafeIdx;
 		this.memIdx = memIdx;
 		this.cafeName = cafeName;
@@ -31,6 +30,8 @@ public class Cafe {
 		this.cafeTel = cafeTel;
 		this.cafeRating = cafeRating;
 	}
+
+	public Cafe(){};
 
 	public int getCafeIdx() {
 		return cafeIdx;

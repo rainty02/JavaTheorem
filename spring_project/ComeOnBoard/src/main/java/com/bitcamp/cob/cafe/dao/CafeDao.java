@@ -5,6 +5,7 @@ import java.util.List;
 import com.bitcamp.cob.cafe.domain.Cafe;
 import com.bitcamp.cob.cafe.domain.CafePaging;
 import com.bitcamp.cob.cafe.domain.CafeReview;
+import com.bitcamp.cob.cafe.domain.CafeReviewPaging;
 import com.bitcamp.cob.cafe.domain.CafeSearchType;
 
 public interface CafeDao {
@@ -18,9 +19,11 @@ public interface CafeDao {
 	// 카페 페이지
 	Cafe getCafeInfo(int idx);
 	// 리뷰 리스트 출력
-	List<CafeReview> getCafeReview(int idx);
+	List<CafeReview> getCafeReview(CafeReviewPaging cafeReviewPaging);
 	// 카페 리뷰 작성
 	int writeCafeReview(CafeReview cafeReview);
+	// 카페 정보 등
+	int cafeReg(Cafe cafe);
 
 
 }

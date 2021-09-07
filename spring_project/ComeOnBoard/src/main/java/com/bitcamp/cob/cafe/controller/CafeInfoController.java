@@ -1,5 +1,6 @@
 package com.bitcamp.cob.cafe.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,22 @@ public class CafeInfoController {
 		return "cafe/cafe_page";
 	}
 	
+	@RequestMapping(value = "/cafe/cafe_regForm", method = RequestMethod.GET)
+	public String cafeRegForm() {
+
+		return "cafe/cafe_regForm";
+	}
+	
+	@RequestMapping(value = "/cafe/cafe_regForm", method = RequestMethod.POST)
+	public String cafeReg(Cafe cafe, HttpServletRequest request, Model model) {
+		System.out.println("폼에서 전달된 데이터 : " + cafe);
+		int result = cafeInfoService.cafeReg(cafe, request);
+		System.out.println("DB에서 반환된 데이터 : " + result);
+		model.addAttribute("result", result);
+		
+		
+		return "";
+	}
 
 
 }

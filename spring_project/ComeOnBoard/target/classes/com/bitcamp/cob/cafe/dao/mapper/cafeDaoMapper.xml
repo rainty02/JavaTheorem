@@ -22,7 +22,21 @@
 	<result column="cafeTel" property="cafeTel" />
 	<result column="cafeRating" property="cafeRating" />
 </resultMap>
-
+<!--
+<parameterMap type="com.bitcamp.cob.cafe.domain.Cafe" id="cafeInfo">
+	<parameter property="cafeIdx" />
+	<parameter property="memIdx" />
+	<parameter property="cafeName" />
+	<parameter property="cafeAddress" />
+	<parameter property="cafeTime" />
+	<parameter property="stdFee" />
+	<parameter property="tenPerFee" />
+	<parameter property="fourTable" />
+	<parameter property="grpTable" />
+	<parameter property="cafeTel" />
+	<parameter property="cafeRating" />
+</parameterMap>
+-->
 <!-- sql tag 식별은 인터페이스 메소드명과 일치 -->
 <!-- 매개변수는 param1 param2로 구분, 매개변수가 많아지면 객체나 Map으로 -->
 <!-- 리스트 출력을 위한 select -->
@@ -80,8 +94,9 @@
 
 <!-- 카페 리뷰 리스트 -->
 <select id="getCafeReview"
+		parameterType="com.bitcamp.cob.cafe.domain.CafeReviewPaging"
 		resultType="com.bitcamp.cob.cafe.domain.CafeReview">
-	select * from cafereview where cafeIdx = #{cafeIdx}		
+	select * from cafereview where cafeIdx = #{cafeIdx}	
 </select>
 		
 <!-- 카페 리뷰 작성 -->
@@ -90,7 +105,13 @@
 	insert into cafereview (cafeIdx, memIdx, revContent, revRating) values (#{cafeIdx}, #{memIdx}, #{revContent}, #{revRating})
 </insert>
 
-
+<!-- 카페 정보 등록 -->
+<insert id="cafeReg"
+		parameterType="com.bitcamp.cob.cafe.domain.Cafe">
+	insert into boardgamecafe (cafeName, cafeAddress, cafeTime, stdFee, tenPerFee, fourTable, grpTable, cafeTel)
+	values (${cafeName}, ${cafeAddress}, ${cafeTime}, ${stdFee}, ${tenPerFee}, ${fourTable}, ${grpTable}, ${cafeTel})	
+</insert>
+		
 
 
 

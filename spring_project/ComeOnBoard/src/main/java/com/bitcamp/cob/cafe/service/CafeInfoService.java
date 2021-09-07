@@ -1,5 +1,7 @@
 package com.bitcamp.cob.cafe.service;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,14 @@ public class CafeInfoService {
 	
 	public Cafe getCafeInfo(int idx) {
 		return template.getMapper(CafeDao.class).getCafeInfo(idx);		
+	}
+
+	public int cafeReg(Cafe cafe, HttpServletRequest request) {
+		
+		int result = template.getMapper(CafeDao.class).cafeReg(cafe);
+		
+		
+		return 0;
 	}
 
 }
