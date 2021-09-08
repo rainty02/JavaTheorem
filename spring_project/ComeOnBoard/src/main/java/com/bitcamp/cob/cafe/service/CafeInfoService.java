@@ -21,11 +21,8 @@ public class CafeInfoService {
 	}
 
 	public int cafeReg(Cafe cafe, HttpServletRequest request) {
-		
-		int result = template.getMapper(CafeDao.class).cafeReg(cafe);
-		
-		
-		return 0;
+		System.out.println(cafe);
+		return template.getMapper(CafeDao.class).cafeReg(cafe);
 	}
 
 }

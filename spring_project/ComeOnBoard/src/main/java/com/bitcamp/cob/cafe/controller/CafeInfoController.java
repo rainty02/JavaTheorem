@@ -41,13 +41,13 @@ public class CafeInfoController {
 	
 	@RequestMapping(value = "/cafe/cafe_regForm", method = RequestMethod.POST)
 	public String cafeReg(Cafe cafe, HttpServletRequest request, Model model) {
+		cafe.setMemIdx(1);
 		System.out.println("폼에서 전달된 데이터 : " + cafe);
 		int result = cafeInfoService.cafeReg(cafe, request);
 		System.out.println("DB에서 반환된 데이터 : " + result);
 		model.addAttribute("result", result);
 		
-		
-		return "";
+		return "cafe/cafe_list";
 	}
 
 
