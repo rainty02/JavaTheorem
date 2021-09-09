@@ -34,5 +34,13 @@
     	<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
 	 -->
+	 
+	 	<!-- 파일을 받기위한 반드시 설정 -->
+	<beans:bean id="multipartResolver"
+				class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+				p:defaultEncoding="utf-8"
+				p:maxUploadSize="10000000"
+				>
+	</beans:bean>	
 	
 </beans:beans>

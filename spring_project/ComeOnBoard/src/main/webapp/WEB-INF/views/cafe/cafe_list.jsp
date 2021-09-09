@@ -188,7 +188,7 @@ article .block:nth-child(2n) {background: #222;}
 
 $(document).ready(function(){
 	
-	getList(1, 'cafeIdx');
+	//getList(1, 'cafeIdx');
 	
 	let pageIdx = 1;
 	let pageRating = 1;
@@ -350,9 +350,9 @@ function getList(page, search){
 
 
     <div class="card-deck">
-<%--     	    	<c:if test="${fn:length(list) > 0}">
-    	<c:forEach items="${list}" var="list" >
-			<div class="card hvr-underline-from-center fade-in">
+     	<c:if test="${fn:length(list) > 0}">
+    	<c:forEach items="${list}" var="list" >	<c:url value="/cafe/cafe_page/${list.cafeIdx}"/>
+			<div class="card hvr-underline-from-center fade-in" onclick="location.href="<c:url value="/cafe/cafe_page/${list.cafeIdx}"/>">
 				<img class="card-img-top" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FckSZmV%2FbtqLwLYTrGR%2FZkGjmqP0pHvzMkVK9b2pRk%2Fimg.png" alt="Card image cap">
 				<div class="card-body">
 					<h5 class="card-title">${list.cafeName}</h5>
@@ -367,7 +367,7 @@ function getList(page, search){
 		
  		<c:if test="${fn:length(list) < 1}">
 			<h1>검색결과 : ${fn:length(list)}</h1>
-		</c:if> --%>
+		</c:if>
     </div>
 
 

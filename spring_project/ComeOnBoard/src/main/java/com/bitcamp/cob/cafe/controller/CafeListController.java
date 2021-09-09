@@ -24,15 +24,15 @@ public class CafeListController {
 	// 검색어
 	@RequestMapping(value = "/cafe/cafe_list", method = RequestMethod.GET)
 	public String cafeList(Model model, CafeSearchType cafeSearchType) {
+		System.out.println("cafeList 메소드 실행");
 		List<Cafe> list = null;
-		System.out.println(list);
-		System.out.println(cafeSearchType);
+		System.out.println("cafeSearchType : "+cafeSearchType);
 		// 검색어 입력시 검색어의 유효성 처리
 		if (cafeSearchType.getKeyword() != null && cafeSearchType.getKeyword().trim().length() > 0) {
 			list = cafeListService.cafeListByKeyword(cafeSearchType);
 		}
 		model.addAttribute("list", list);
-		System.out.println(list);
+		System.out.println("list : "+list);
 		return "cafe/cafe_list";
 	}
 	

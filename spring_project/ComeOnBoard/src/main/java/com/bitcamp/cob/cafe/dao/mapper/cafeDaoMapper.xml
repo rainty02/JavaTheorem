@@ -107,7 +107,9 @@
 
 <!-- 카페 정보 등록 -->
 <insert id="cafeReg"
-		parameterType="com.bitcamp.cob.cafe.domain.Cafe">
+		parameterType="com.bitcamp.cob.cafe.domain.Cafe"
+		useGeneratedKeys="true"  
+		keyProperty="cafeIdx">
 	insert into boardgamecafe (memIdx, cafeName, cafeAddress, cafeTime, stdFee, tenPerFee, fourTable, grpTable, cafeTel)
 	values (#{memIdx}, #{cafeName}, #{cafeAddress}, #{cafeTime}, #{stdFee}, #{tenPerFee}, #{fourTable}, #{grpTable}, #{cafeTel})	
 </insert>

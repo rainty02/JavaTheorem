@@ -347,7 +347,7 @@ function review(page){
     	   data: { 
     		   page : page,
     		   cafeIdx : ${cafeInfo.cafeIdx}
-    		},
+    	   },
     	   dataType: 'json',
     	   success: function(returnData){
     		   console.log(returnData);

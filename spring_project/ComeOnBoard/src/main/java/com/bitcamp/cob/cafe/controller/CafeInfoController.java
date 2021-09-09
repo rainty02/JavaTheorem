@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.bitcamp.cob.cafe.domain.Cafe;
+import com.bitcamp.cob.cafe.domain.CafeImg;
 import com.bitcamp.cob.cafe.domain.CafeReview;
 import com.bitcamp.cob.cafe.service.CafeInfoService;
 import com.bitcamp.cob.cafe.service.CafeReviewService;
@@ -40,10 +41,11 @@ public class CafeInfoController {
 	}
 	
 	@RequestMapping(value = "/cafe/cafe_regForm", method = RequestMethod.POST)
-	public String cafeReg(Cafe cafe, HttpServletRequest request, Model model) {
+	public String cafeReg(Cafe cafe, CafeImg cafeImg, HttpServletRequest request, Model model) {
 		cafe.setMemIdx(1);
 		System.out.println("폼에서 전달된 데이터 : " + cafe);
-		int result = cafeInfoService.cafeReg(cafe, request);
+		System.out.println("폼에서 전달된 데이터 : " + cafeImg);
+		int result = cafeInfoService.cafeReg(cafe, cafeImg, request);
 		System.out.println("DB에서 반환된 데이터 : " + result);
 		model.addAttribute("result", result);
 		
