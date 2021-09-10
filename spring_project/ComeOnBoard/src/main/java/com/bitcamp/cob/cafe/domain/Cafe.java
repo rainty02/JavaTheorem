@@ -1,5 +1,7 @@
 package com.bitcamp.cob.cafe.domain;
 
+import java.text.DecimalFormat;
+
 public class Cafe {
 
 	private int cafeIdx;
@@ -14,22 +16,9 @@ public class Cafe {
 	private String cafeTel;
 	private int cafeRating;
 	
-	
-	
-	public Cafe(int cafeIdx, int memIdx, String cafeName, String cafeAddress, String cafeTime, int stdFee,
-			int tenPerFee, int fourTable, int grpTable, String cafeTel, int cafeRating) {
-		this.cafeIdx = cafeIdx;
-		this.memIdx = memIdx;
-		this.cafeName = cafeName;
-		this.cafeAddress = cafeAddress;
-		this.cafeTime = cafeTime;
-		this.stdFee = stdFee;
-		this.tenPerFee = tenPerFee;
-		this.fourTable = fourTable;
-		this.grpTable = grpTable;
-		this.cafeTel = cafeTel;
-		this.cafeRating = cafeRating;
-	}
+	// 천단위 , 변환
+	private String stdFeeComma;
+	private String tenPerFeeComma;
 
 	public Cafe(){};
 
@@ -119,6 +108,30 @@ public class Cafe {
 
 	public void setCafeRating(int cafeRating) {
 		this.cafeRating = cafeRating;
+	}
+
+	public String getStdFeeComma() {
+		
+		DecimalFormat df = new DecimalFormat("###,###");
+		String stdFeeComma = df.format(this.stdFee);
+		
+		return stdFeeComma;
+	}
+
+	public void setStdFeeComma(String stdFeeComma) {
+		this.stdFeeComma = stdFeeComma;
+	}
+
+	public String getTenPerFeeComma() {
+		
+		DecimalFormat df = new DecimalFormat("###,###");
+		String tenPerFeeComma = df.format(this.tenPerFee);
+		
+		return tenPerFeeComma;
+	}
+
+	public void setTenPerFeeComma(String tenPerFeeComma) {
+		this.tenPerFeeComma = tenPerFeeComma;
 	}
 
 	@Override

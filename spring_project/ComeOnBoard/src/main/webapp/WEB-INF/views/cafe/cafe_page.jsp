@@ -8,242 +8,20 @@
     <meta charset="UTF-8"> <!-- 출력 포맷 -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 모바일 페이지 속성 -->
-    <title>Cafe info</title> <!-- 문서 제목 -->
+    <title>Come On, Board : Cafe info</title> <!-- 문서 제목 -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
+	<%@ include file="/WEB-INF/views/frame/metaheader.jsp" %>
     <!-- 카드 선택시 하단 줄 CSS -->
 	<link href="<c:url value="/css/hover.css"/>" rel="stylesheet" media="all">
+	
+	<link rel="stylesheet" href="<c:url value="/css/cafe_page.css"/>" type="text/css">
 
     <style>
-         * {
-        margin: 0;
-        padding: 0;
-        }
-        .header {
-            position: relative;
-            z-index: 20;
-            min-width: 980px;
-            width: 100%;
-            height: 140px;
-            background-color: rgb(66, 133, 244);
-            text-align: center;
-        }
-        ul {
-        list-style: none;
-        }
-
-        .MultiBar {
-            display: inline-block;
-            height: 30px;
-            width: 100%;
-            max-width: 1280px;
-            padding: 12px 0px 5px;
-        } 
-        .area_gnb {
-            font-size: 12px;
-            width: 500px;
-            height: 30px;
-            float: right;
-            color: white;
-        }
-        .area_gnb>li {
-            float: right;
-            width: 75px;
-        }
-        .container {
-            display: inline-block;
-            height: 93px;
-            width: 100%;
-            max-width: 1280px;
-            position: relative;
-        }
-        .logo {
-            position: absolute;
-            left: 50%;
-            width: 180px;
-            margin-left: -90px;
-        }
-        .main_naviwrap {
-            display: block;
-            margin: 0 auto;
-            width: 100%;
-            max-width: 1280px;
-            height: 80px;
-            margin-top: -98px;
-            padding-bottom: 10px;
-        }
-        .main_nav {
-            padding-top: 45px;
-        }
-        .main_nav>.left_ul {
-            float: left;
-            overflow: hidden;
-        }
-        .main_nav>.right_ul {
-            float: right;
-            overflow: hidden;
-        }
-
-        .main_nav>ul>li {
-            color: white;
-            width: 85px;
-            float: left;
-        }
-
-
-
-
-
-        .cafe_wrap{
-            max-width: 950px;
-            margin: 0 auto;
-            padding: 20px 0;
-        }
-
-
-        #carouselExampleControls{
-            margin: 10px;
-            max-width: 600px;
-            height: 310px;
-            display: inline-block;
-            float: left;
-        }
-        .basic_info{
-            margin: 10px;
-            padding: 10px;
-            max-width: 300px;
-            min-width: 300px;
-            height: 380px;
-            display: inline-block;
-            overflow: hidden;
-        }
-        
-        .li_warp{
-            margin-top: 30px;
-        }
-
-        .info_menu{
-            margin-left: 10px;
-        }
-        .info{
-            margin: 50px auto;
-        }
-        .reservation{
-            max-width: 950px;
-            margin: 50px auto;
-        }
-
-        .review{
-            margin: 50px auto;
-        }
-
-        td>.btn{
-            margin: 10px 15px;
-            width: 150px;
-            height: 50px;   
-        }
-        .person4{
-            margin: 10px 0;
-        }
-        .person4>table{
-            margin: 0 auto;
-        }
-        .person8>table{
-            margin: 0 auto;
-        }
-
-        #id{
-            margin: 10px 10px;
-        }
-        #regdate{
-            float: right;
-            margin: 10px 10px;
-        }
-        #post{
-            margin: 10px 10px;
-        }
-        .pagination{
-            float: right;
-        }
-        .pagination>li{
-            margin-left: 10px;
-        }
-        .first_hr{
-            border: none;
-            height: 1px;
-            background-color: black;
-        }
-        #post{
-            margin: 10px 10px;
-        }
-
-
-        .star-rating {
-        display: flex;
-        flex-direction: row-reverse;
-        font-size: 1.25rem;
-        line-height: 2.5rem;
-        justify-content: space-around;
-        padding: 0 0.2em;
-        text-align: center; 
-        width: 10em;
-        margin-left: 5px;
-        }
-        
-        .star-rating input {
-        display: none;
-        }
-        
-        .star-rating label {
-        -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
-        -webkit-text-stroke-width: 1px;
-        -webkit-text-stroke-color: #000000;
-        cursor: pointer;
-        }
-        
-        .star-rating :checked ~ label {
-        -webkit-text-fill-color: gold;
-        }
-        
-        .star-rating label:hover,
-        .star-rating label:hover ~ label {
-        -webkit-text-fill-color: #fff370;
-        }
-
-
-
-        /* 버튼 회전 */
-        @-webkit-keyframes rotate-hor-center {
-        0% {
-            -webkit-transform: rotateX(0);
-                    transform: rotateX(0);
-        }
-        100% {
-            -webkit-transform: rotateX(-360deg);
-                    transform: rotateX(-360deg);
-        }
-        }
-        @keyframes rotate-hor-center {
-        0% {
-            -webkit-transform: rotateX(0);
-                    transform: rotateX(0);
-        }
-        100% {
-            -webkit-transform: rotateX(-360deg);
-                    transform: rotateX(-360deg);
-        }
-        }
-        .rotate-hor-center {
-            -webkit-animation: rotate-hor-center 0.5s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
-                    animation: rotate-hor-center 0.5s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
-        }
-
-
 
     </style>
 
@@ -357,9 +135,6 @@ function review(page){
    			   $.each(data, function(idx, review) {
    				
    				console.log(idx);
-   				var date = new Date(review.revRegDate);
-   				var commRegDate = date.getFullYear() + ". " + date.getMonth() + ". " + date.getDate() + ". " + date.getHours() + ":" + date.getMinutes(); 
- 				
    				html += '<div class="media">'+'\n'+
 			                 '<div class="media-left">'+'\n'+
 			                 '<img src="https://www.w3schools.com/bootstrap4/img_avatar1.png"\n'+
@@ -367,17 +142,19 @@ function review(page){
 			                 '</div>'+'\n'+
 			                 '<div class="media-body">'+'\n'+
 			                 '<h4 class="media-heading">'+'\n'+
-			                 review.memIdx+'\n'+
+			                 review.nickName+'\n'+
 			                 '<small><i class="ml-3">★'+'\n'+
 			                 review.revRating+'\n'+
 			                 '</i></small><small><i style="float: right;">'+'\n'+
-			                 commRegDate+'\n'+	
+			                 review.revRegTimestamp+'\n'+	
 			                 '</i></small></h4>'+'\n'+
 			                 '<p>'+'\n'+
 			                 review.revContent+'\n'+
 			                 '</p>'+'\n';
 			                 // 작성자와 로그인 아이디가 같으면 수정/삭제 추가
+			                 //if(${loginInfo.memIdx} == review.memIdx){
 			         html += '<ul><li style="float: right; margin-left: 10px;"><a href="#">수정</a></li><li style="float: right; margin-left: 10px;"><a href="#">삭제</a></li>'+'\n';
+   			   				//	}
 			         html += '</div>'+'\n'+
 			                 '</div>'+'\n'+
 			                 '<hr>';
@@ -418,7 +195,7 @@ function review(page){
         </div>
 
         <div class="container">
-            <img src="cob_white.png" class="logo">
+            <img src="<c:url value="/images/cob_white.png"/>" class="logo">
         </div>
         <div class="main_naviwrap">
             <div class="main_nav">
@@ -475,7 +252,8 @@ function review(page){
                 <h5>${cafeInfo.cafeAddress}</h5>
                 <div class="li_warp">
                     <ul>
-                        <li>요금 : 시간당 ${cafeInfo.stdFee}</li>
+                        <li>요금 : 시간당 ${cafeInfo.stdFeeComma}</li>
+                        <li>10분당 ${cafeInfo.tenPerFeeComma}</li>
                         <li>테이블 정보 : 4인석 - ${cafeInfo.fourTable}, 8인석 - ${cafeInfo.grpTable}</li>
                         <li>영업시간 : ${cafeInfo.cafeTime}</li>
                         <li>연락처 : ${cafeInfo.cafeTel}</li>
@@ -542,7 +320,8 @@ function review(page){
                     <input type="radio" id="1-star" name="revRating" value="1" v-model="ratings" />
                     <label for="1-star" class="star">★</label>
                 </div>
-
+				<input type="hidden" name="memIdx" value="${loginInfo.memIdx}">
+				<input type="hidden" name="nickName" value="${loginInfo.nickName}">
                 <textarea class="form-control" id="exampleFormControlTextarea1" name= "revContent" rows="3"></textarea>
                 <input class="btn btn-primary" type="submit" value="리뷰 작성" style="float: right; margin-top: 10px;">
             </form>
