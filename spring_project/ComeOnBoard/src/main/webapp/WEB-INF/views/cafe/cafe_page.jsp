@@ -222,6 +222,9 @@ function review(page){
     <div class="cafe_wrap">      
         <div class="info" id="first">
             <h5 class="info_menu">카페 소개</h5>
+            <c:if test="${loginInfo.memAuth == 'member'}">
+            	<button type="button" class="btn btn-primary" style="display: inline; float: right;" data-toggle="modal" data-target="#info_modify">수정</button>
+            </c:if>
             <hr class="first_hr">
             <!-- 사진영역 -->
             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
@@ -330,7 +333,51 @@ function review(page){
     </div>
 
 
-    <!-- Modal -->
+	 <!-- 카페수정 Modal -->
+    <div class="modal fade" id="info_modify" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">카페정보 수정</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">카페 이름</label>
+                        <input type="text" class="form-control mb-2" id="exampleFormControlInput1" placeholder="카페 이름">
+    
+                        <label for="exampleFormControlInput2">카페 주소</label>
+                        <input type="text" class="form-control mb-2" id="exampleFormControlInput2" placeholder="카페 주소">
+
+                        <label for="exampleFormControlInput3">카페 정보</label>
+                        <textarea class="form-control mb-2" id="exampleFormControlTextarea1" rows="3" placeholder="카페 정보"></textarea>
+
+                        <div clas ="form-group">
+                            <input type="file" name="upload" multiple="multiple" class="user_picked_files mb-2" />
+                            <br>
+                            <label for="exampleFormControlInput5 text-muted">이미지 미리보기</label>
+                            <div class="thumnail form-control mb-2">
+                                <ul class="cvf_uploaded_files"></ul>
+                            </div>
+                        </div>
+                      </div>
+                  </form>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" class="cvf_upload_btn btn btn-primary col text-center" value="등록" />
+                <input type="submit" class="btn btn-secondary col text-center" value="취소" />
+            </div>
+        </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- 보드게임 리스트 Modal -->
     <div class="modal fade" id="gamelist" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">

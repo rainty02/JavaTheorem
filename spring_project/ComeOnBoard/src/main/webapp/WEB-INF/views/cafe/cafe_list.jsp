@@ -127,9 +127,9 @@ function getList(cafePage){
 
     <nav class="navbar navbar-light" style="background-color: #D6E9FF;">
     <ul class="nav-button">
-        <li><button type="button" id="btn_cafe_cafeidx_search" class="btn btn-outline-danger" value="cafeIdx">등록순</button></li>
-        <li><button type="button" id="btn_cafe_rating_search" class="btn btn-outline-success btn_cafe_star_search" value="cafeRating">평점순</button></li>
-        <li><button type="button" id="btn_cafe_address_search" class="btn btn-outline-info btn_cafe_review_search" value="cafeAddress">지역순</button></li>
+        <li><button type="button" id="btn_cafe_cafeidx_search" class="btn btn-outline-danger" value="cafeIdx" onclick="location.href='<c:url value="/cafe/cafe_list?sortType=cafeIdx"/>'">등록순</button></li>
+        <li><button type="button" id="btn_cafe_rating_search" class="btn btn-outline-success" value="cafeRating" onclick="location.href='<c:url value="/cafe/cafe_list?sortType=cafeRating"/>'">평점순</button></li>
+        <li><button type="button" id="btn_cafe_address_search" class="btn btn-outline-info" value="cafeAddress" onclick="location.href='<c:url value="/cafe/cafe_list?sortType=cafeAddress"/>'">지역순</button></li>
     </ul>
         <form class="form-inline">
             <select class="btn btn-outline-primary my-2 my-sm-0" name="searchType">
