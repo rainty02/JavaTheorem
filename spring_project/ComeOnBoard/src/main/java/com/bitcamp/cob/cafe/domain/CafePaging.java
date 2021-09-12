@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-
-
 public class CafePaging {
 
 	private String searchType;

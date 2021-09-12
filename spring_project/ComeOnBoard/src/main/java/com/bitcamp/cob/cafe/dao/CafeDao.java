@@ -26,6 +26,8 @@ public interface CafeDao {
 	int writeCafeReview(CafeReview cafeReview);
 	// 카페 정보 등
 	int cafeReg(Cafe cafe);
+	// 카페 리뷰 수정
+	int updateCafeReview(CafeReview cafeReview);
 
 
 }

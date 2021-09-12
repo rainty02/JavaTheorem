@@ -85,7 +85,12 @@
 <select id="getCafeReview"
 		parameterType="com.bitcamp.cob.cafe.domain.CafeReviewPaging"
 		resultType="com.bitcamp.cob.cafe.domain.CafeReview">
-	select *, (select nickname from member1 m where m.memidx = c.memidx) as nickName  from cafereview c where cafeIdx = #{cafeIdx} order by revRegTimestamp desc
+	select *, (select nickname from member1 m where m.memidx = c.memidx) as nickName 
+	from cafereview c 
+	where cafeIdx = #{cafeIdx} 
+	order by revRegTimestamp desc
+	
+	
 </select>
 		
 <!-- 카페 리뷰 작성 -->
@@ -102,7 +107,12 @@
 	insert into boardgamecafe (memIdx, cafeName, cafeAddress, cafeTime, stdFee, tenPerFee, fourTable, grpTable, cafeTel)
 	values (#{memIdx}, #{cafeName}, #{cafeAddress}, #{cafeTime}, #{stdFee}, #{tenPerFee}, #{fourTable}, #{grpTable}, #{cafeTel})	
 </insert>
-		
+
+<!-- 카페 리뷰 수정 -->
+<update id="updateCafeReview"
+		parameterType="com.bitcamp.cob.cafe.domain.CafeReview">
+	update cafereview set revContent = #{revContent}, revRating = #{revRating} where revIdx = #{revIdx}
+</update>
 
 
 

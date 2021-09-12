@@ -20,160 +20,134 @@
 	<link href="<c:url value="/css/hover.css"/>" rel="stylesheet" media="all">
 	
 	<link rel="stylesheet" href="<c:url value="/css/cafe_page.css"/>" type="text/css">
+	<%@ include file="/WEB-INF/views/frame/metaheader.jsp" %>
 
-    <style>
+<script>
 
-    </style>
-
-    <script type="text/javascript">
-        $(document).ready(function(){
+$(document).ready(function(){
             
-            reservation_list(4);
+	reservation_list(4);
             
-            let page = 1;
-            review(page);
+	let page = 1;
+	review(page);
             
 
-            // 4인석 버튼 클릭시 
-            $('#btn_reservation_4').click(function(){
-                reservation_list(4);
-            })
-            // 8인석 버튼 클릭시
-            $('#btn_reservation_8').click(function(){
-                reservation_list(8);
-            })
+	// 4인석 버튼 클릭시 
+	$('#btn_reservation_4').click(function(){
+	    reservation_list(4);
+	})
+	// 8인석 버튼 클릭시
+	$('#btn_reservation_8').click(function(){
+	    reservation_list(8);
+	})
             
-        });
+});
 
-        // 예약 버튼 동적 생성
-        // **DB에서 값을 가져올 때 예약이 불가한 시간은 비활성화 필요 - 분기처리 disabled?
-        function reservation_list(table_num){
+// 예약 버튼 동적 생성
+// **DB에서 값을 가져올 때 예약이 불가한 시간은 비활성화 필요 - 분기처리 disabled?
+function reservation_list(table_num){
 
-            // 날짜값
-            var date = $('#date').val();
+    // 날짜값
+    var date = $('#date').val();
 
-            // DB 조회 : date(날짜), table_num(4인석,8인석) 활용
+    // DB 조회 : date(날짜), table_num(4인석,8인석) 활용
 
-            // 중복 생성 방지를 위한 자손 삭제
-            $('#person *').remove();
-            // 버튼 색상
-            var color = table_num == 4 ? 'btn-outline-danger' : 'btn-outline-primary';
-            // html 동적 생성
-            var html = '<table>'+'\n'+'<tr>'+'\n';
-            for(var i=10; i<20; i++) {
-                if(i==15){
-                    html += '</tr>'+'\n'+'<tr>'+'\n';
-                }
-                    html += '<td><button type="button" class="btn '+color+' rotate-hor-center" value='+i+'>'+i+'시</button></td>'+'\n';
-            }
-            html += '</tr>' + '\n' + '</table>';
-            $('#person').append(html);
+    // 중복 생성 방지를 위한 자손 삭제
+    $('#person *').remove();
+    // 버튼 색상
+    var color = table_num == 4 ? 'btn-outline-danger' : 'btn-outline-primary';
+    // html 동적 생성
+    var html = '<table>'+'\n'+'<tr>'+'\n';
+    for(var i=10; i<20; i++) {
+        if(i==15){
+            html += '</tr>'+'\n'+'<tr>'+'\n';
         }
-
-
-        $(function () {
-            // 달력 - 시간 제거, 오늘 이전 날짜 선택 불가
-            $('#date').bootstrapMaterialDatePicker({
-                time: false,
-                minDate: moment()
-            });
-        });
-     
-        // 리뷰
-/*         function review(){
-            $('.post_wrap *').remove();
-            // DB에서 받을 값
-            var login_id = '직쏘';
-            var member_img = 'image/img_avatar1.png';
-            var member_id = '직쏘';
-            var review_star = '★★★★★';
-            var review_regdate = '2021-08-22';
-            var review_post = '사장님이 친절해요';
-
-            for(var i=0; i<5; i++){
-                var html = '<div class="media">'+'\n'+
-                            '<div class="media-left">'+'\n'+
-                            '<img src="'+member_img+'\n'+
-                            '" class="media-object mr-3" style="width:45px">'+'\n'+
-                            '</div>'+'\n'+
-                            '<div class="media-body">'+'\n'+
-                            '<h4 class="media-heading">'+'\n'+
-                            member_id+'\n'+
-                            '<small><i class="ml-3">'+'\n'+
-                            review_star+'\n'+
-                            '</i></small><small><i style="float: right;">'+'\n'+
-                            review_regdate+'\n'+
-                            '</i></small></h4>'+'\n'+
-                            '<p>'+'\n'+
-                            review_post+'\n'+
-                            '</p>'+'\n';
-                            // 작성자와 로그인 아이디가 같으면 수정/삭제 추가
-                            if(member_id == login_id){
-                            html += '<ul><li style="float: right; margin-left: 10px;"><a href="#">수정</a></li><li style="float: right; margin-left: 10px;"><a href="#">삭제</a></li>'+'\n';
-                            }
-                            html += '</div>'+'\n'+
-                            '</div>'+'\n'+
-                            '<hr>';
-                    $('.post_wrap').append(html);
-            }
-        } */
-        
-function review(page){
-       $.ajax({
-    	   url: '<c:url value="/cafe/cafe_review"/>',
-    	   type: 'get',
-    	   data: { 
-    		   page : page,
-    		   cafeIdx : ${cafeInfo.cafeIdx}
-    	   },
-    	   dataType: 'json',
-    	   success: function(returnData){
-    		   console.log(returnData);
-    		   var data = returnData;
-    		   var html = ''
-    		   
-   			   $.each(data, function(idx, review) {
-   				
-   				console.log(idx);
-   				html += '<div class="media">'+'\n'+
-			                 '<div class="media-left">'+'\n'+
-			                 '<img src="https://www.w3schools.com/bootstrap4/img_avatar1.png"\n'+
-			                 '" class="media-object mr-3" style="width:45px">'+'\n'+
-			                 '</div>'+'\n'+
-			                 '<div class="media-body">'+'\n'+
-			                 '<h4 class="media-heading">'+'\n'+
-			                 review.nickName+'\n'+
-			                 '<small><i class="ml-3">★'+'\n'+
-			                 review.revRating+'\n'+
-			                 '</i></small><small><i style="float: right;">'+'\n'+
-			                 review.revRegTimestamp+'\n'+	
-			                 '</i></small></h4>'+'\n'+
-			                 '<p>'+'\n'+
-			                 review.revContent+'\n'+
-			                 '</p>'+'\n';
-			                 // 작성자와 로그인 아이디가 같으면 수정/삭제 추가
-			                 //if(${loginInfo.memIdx} == review.memIdx){
-			         html += '<ul><li style="float: right; margin-left: 10px;"><a href="#">수정</a></li><li style="float: right; margin-left: 10px;"><a href="#">삭제</a></li>'+'\n';
-   			   				//	}
-			         html += '</div>'+'\n'+
-			                 '</div>'+'\n'+
-			                 '<hr>';
-			});	
-    		   $('.post_wrap').append(html);
-
-    	   },
-    	   error : function(){
-   				alert('실패');
-   		   },
-   		   complete : function(){	
-   		   }
-       })
+            html += '<td><button type="button" class="btn '+color+' rotate-hor-center" value='+i+'>'+i+'시</button></td>'+'\n';
+    }
+    html += '</tr>' + '\n' + '</table>';
+    $('#person').append(html);
 }
-        
-        
-        
-        
-    </script>
+
+
+$(function () {
+    // 달력 - 시간 제거, 오늘 이전 날짜 선택 불가
+    $('#date').bootstrapMaterialDatePicker({
+        time: false,
+        minDate: moment()
+    });
+});
+     
+// 리뷰
+function review(page){
+	$.ajax({
+		url: '<c:url value="/cafe/cafe_review"/>',
+		type: 'get',
+		data: { 
+			page : page,
+			cafeIdx : ${cafeInfo.cafeIdx}
+		},
+		dataType: 'json',
+		success: function(returnData){
+			console.log(returnData);
+			var data = returnData;
+			var html = ''
+			$.each(data, function(idx, review) {	
+				html += '<div class="media" id="modify_rev">'+'\n'+
+						'<div class="media-left">'+'\n'+
+						'<img src="https://www.w3schools.com/bootstrap4/img_avatar1.png" class="media-object mr-3" style="width:45px">'+'\n'+
+						'</div>'+'\n'+
+						'<div class="media-body">'+'\n'+
+						'<h4 class="media-heading">'+'\n'+review.nickName+'\n'+
+						'<small><i class="ml-3">★'+'\n'+review.revRating+'</i></small>'+'\n'+
+						'<small><i style="float: right;">'+review.revRegTimestamp+'</i></small></h4>'+'\n'+
+						'<p>'+review.revContent+'</p>'+'\n';
+				
+				// 작성자와 로그인 아이디가 같으면 수정/삭제 추가
+				if(${loginInfo.memIdx} == review.memIdx){
+					html += '<ul><li style="float: right; margin-left: 10px;"><a>삭제</a></li><li style="float: right; margin-left: 10px;"><a value="#modify_rev_'+review.revIdx+'">수정</a></li>'+'\n';
+				}
+				html += '</div>'+'\n'+'</div>'+'\n';
+				// 리뷰 수정 폼  class="modify_rev_form"  
+				if(${loginInfo.memIdx} == review.memIdx){
+				html +=	'<form action="<c:url value="/cafe/cafe_modify_rev"/>" method="put" id="modify_rev_'+review.revIdx+'">'+'\n<hr>'+      
+						'<div id="star" class="star-rating space-x-4 mx-auto"> '+'\n'+                  
+						'<input type="radio" id="5-stars" name="revRating" value="5" v-model="ratings"/>'+'\n'+
+						'<label for="5-stars" class="star pr-4">★</label>'+'\n'+
+						'<input type="radio" id="4-stars" name="revRating" value="4" v-model="ratings"/>'+'\n'+
+						'<label for="4-stars" class="star">★</label>'+'\n'+
+						'<input type="radio" id="3-stars" name="revRating" value="3" v-model="ratings"/>'+'\n'+
+						'<label for="3-stars" class="star">★</label>'+'\n'+
+						'<input type="radio" id="2-stars" name="revRating" value="2" v-model="ratings"/>'+'\n'+
+						'<label for="2-stars" class="star">★</label>'+'\n'+
+						'<input type="radio" id="1-star" name="revRating" value="1" v-model="ratings" />'+'\n'+
+						'<label for="1-star" class="star">★</label>'+'\n'+
+						'</div>'+'\n'+
+						'<input type="hidden" name="_method" value="put">'+'\n'+
+						'<input type="hidden" name="revIdx" value="'+review.revIdx+'">'+'\n'+
+						'<textarea class="form-control" id="exampleFormControlTextarea1" name= "revContent" rows="3"></textarea>'+'\n'+
+						'<input class="btn btn-primary" type="submit" value="리뷰 작성" style="float: right; margin: 10px; 0px">'+'\n'+
+						'</form>'+'\n';
+				}
+				html += '<hr style="clear:both;">';
+			});
+			$('.post_wrap').append(html);
+		},
+		error : function(){
+			alert('실패');
+		},
+		complete : function(){	
+		}
+	});
+};
+    
+
+// 수정시 폼 생성
+function remove_class(val){
+	//$(val.val()).removeClass('modify_rev_form');
+}
+
+
+</script>
 
 
 
@@ -184,45 +158,12 @@ function review(page){
 
 <body>
 
-    <header class="header">
-        <div class="MultiBar">
-            <ul class="area_gnb">
-                <li>시작페이지로</li>
-                <li>다크모드</li>
-                <li>마이페이지</li>
-                <li>로그인</li>
-            </ul>
-        </div>
+	<%@ include file="/WEB-INF/views/frame/header.jsp" %>
 
-        <div class="container">
-            <img src="<c:url value="/images/cob_white.png"/>" class="logo">
-        </div>
-        <div class="main_naviwrap">
-            <div class="main_nav">
-                <ul class="left_ul">
-                    <li>회사소개</li>
-                    <li>회사소개</li>
-                    <li>회사소개</li>    
-                </ul>
-            </div>
-        </div>
-
-        <div class="main_naviwrap">
-            <div class="main_nav">
-                <ul class="right_ul">
-                    <li>모임</li>
-                    <li>게시판</li>
-                    <li>카페</li>
-                    <li>게임</li>    
-                </ul>
-            </div>
-        </div>
-    </header>
-
-    <div class="cafe_wrap">      
+    <div class="cafe_wrap"> 
         <div class="info" id="first">
-            <h5 class="info_menu">카페 소개</h5>
-            <c:if test="${loginInfo.memAuth == 'member'}">
+            <h5 class="info_menu" style="display: inline;">카페 소개</h5>
+            <c:if test="${loginInfo.memAuth == 'cafe'}">
             	<button type="button" class="btn btn-primary" style="display: inline; float: right;" data-toggle="modal" data-target="#info_modify">수정</button>
             </c:if>
             <hr class="first_hr">
@@ -310,6 +251,7 @@ function review(page){
                  </nav>
             <br>
 
+			<c:if test="${loginInfo.memAuth == 'member'}">
             <form method="post">              
                 <div id="star" class="star-rating space-x-4 mx-auto">                   
                     <input type="radio" id="5-stars" name="revRating" value="5" v-model="ratings"/>
@@ -328,12 +270,14 @@ function review(page){
                 <textarea class="form-control" id="exampleFormControlTextarea1" name= "revContent" rows="3"></textarea>
                 <input class="btn btn-primary" type="submit" value="리뷰 작성" style="float: right; margin-top: 10px;">
             </form>
+            </c:if>
         </div>
         
     </div>
 
 
 	 <!-- 카페수정 Modal -->
+	<c:if test="${loginInfo.memAuth == 'cafe'}">
     <div class="modal fade" id="info_modify" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -373,11 +317,13 @@ function review(page){
         </div>
         </div>
     </div>
+    </c:if>
 
 
 
 
     <!-- 보드게임 리스트 Modal -->
+    
     <div class="modal fade" id="gamelist" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -398,6 +344,7 @@ function review(page){
         </div>
         </div>
     </div>
+    
 
 
 

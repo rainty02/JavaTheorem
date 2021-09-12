@@ -161,6 +161,10 @@ td>.btn{
 #post{
     margin: 10px 10px;
 }
+.modify_rev_form{
+	display: none;
+}
+
 
 
 .star-rating {

@@ -46,6 +46,16 @@ public class CafeReviewController {
 		System.out.println(result);
 		return "redirect:"+idx;
 	}
+	
+	@RequestMapping(value= "/cafe/cafe_modify_rev", method = RequestMethod.PUT)
+	public String updateCafeReview(CafeReview cafeReview) {
+	
+		System.out.println("PUT 메소드 실행 : "+cafeReview);
+		
+		int result = cafeReviewService.updateCafeReview(cafeReview);
+		System.out.println(result);
+		return "redirect:"+cafeReview.getCafeIdx();
+	}
 }
 	
 	

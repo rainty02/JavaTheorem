@@ -25,4 +25,9 @@ public class CafeReviewService {
 	public int writeCafeReview(CafeReview cafeReview) {
 		return template.getMapper(CafeDao.class).writeCafeReview(cafeReview);
 	}
+
+	// 카페 리뷰 수정
+	public int updateCafeReview(CafeReview cafeReview) {
+		return template.getMapper(CafeDao.class).updateCafeReview(cafeReview);
+	}
 }
