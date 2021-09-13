@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -31,15 +31,32 @@ $(document).ready(function(){
 	let page = 1;
 	review(page);
             
+	
+	// 삭제 버튼 클릭시
+	$('#delete_btn').click(function(){
+		reservation_list(4);
+		//var asd = 'a';
+		//console.log('1');
+		//$('#method').attr("value", "delete");
+		//$('#modify_rev').submit();
+	})
 
 	// 4인석 버튼 클릭시 
 	$('#btn_reservation_4').click(function(){
+		$('#method').attr("value", "delete");
+		console.log($('#method').val());
+		$('#modify_rev').submit();
 	    reservation_list(4);
 	})
 	// 8인석 버튼 클릭시
 	$('#btn_reservation_8').click(function(){
 	    reservation_list(8);
 	})
+	
+	
+	
+	
+	
             
 });
 
@@ -91,6 +108,7 @@ function review(page){
 			console.log(returnData);
 			var data = returnData;
 			var html = ''
+			
 			$.each(data, function(idx, review) {	
 				html += '<div class="media" id="modify_rev">'+'\n'+
 						'<div class="media-left">'+'\n'+
@@ -103,13 +121,16 @@ function review(page){
 						'<p>'+review.revContent+'</p>'+'\n';
 				
 				// 작성자와 로그인 아이디가 같으면 수정/삭제 추가
+				
 				if(${loginInfo.memIdx} == review.memIdx){
-					html += '<ul><li style="float: right; margin-left: 10px;"><a>삭제</a></li><li style="float: right; margin-left: 10px;"><a value="#modify_rev_'+review.revIdx+'">수정</a></li>'+'\n';
+					html += '<ul><li style="float: right; margin-left: 10px;"><a><button type="button" id="delete_btn">삭제</button></a></li><li style="float: right; margin-left: 10px;"><a onclick="remove_class('+review.revIdx+');">수정</a></li>'+'\n';
 				}
+
 				html += '</div>'+'\n'+'</div>'+'\n';
 				// 리뷰 수정 폼  class="modify_rev_form"  
 				if(${loginInfo.memIdx} == review.memIdx){
-				html +=	'<form action="<c:url value="/cafe/cafe_modify_rev"/>" method="put" id="modify_rev_'+review.revIdx+'">'+'\n<hr>'+      
+				html +=	'<form method="post" class="modify_rev_form" id="modify_rev_'+review.revIdx+'">'+'\n<hr>'+      
+				//html += '<form method="post" id="modify_rev">'+'\n<hr>'+  
 						'<div id="star" class="star-rating space-x-4 mx-auto"> '+'\n'+                  
 						'<input type="radio" id="5-stars" name="revRating" value="5" v-model="ratings"/>'+'\n'+
 						'<label for="5-stars" class="star pr-4">★</label>'+'\n'+
@@ -122,9 +143,11 @@ function review(page){
 						'<input type="radio" id="1-star" name="revRating" value="1" v-model="ratings" />'+'\n'+
 						'<label for="1-star" class="star">★</label>'+'\n'+
 						'</div>'+'\n'+
-						'<input type="hidden" name="_method" value="put">'+'\n'+
+						'<input type="hidden" name="_method" value="put" id=delete">'+'\n'+
 						'<input type="hidden" name="revIdx" value="'+review.revIdx+'">'+'\n'+
+						'<input type="hidden" name="cafeIdx" value="'+review.cafeIdx+'">'+'\n'+
 						'<textarea class="form-control" id="exampleFormControlTextarea1" name= "revContent" rows="3"></textarea>'+'\n'+
+						'<button class="btn btn-primary" type="button" value="리뷰 작성" onclick="add_class('+review.revIdx+');" style="float: right; margin: 10px; 0px; width: 80px;">닫기</button>'+'\n'+
 						'<input class="btn btn-primary" type="submit" value="리뷰 작성" style="float: right; margin: 10px; 0px">'+'\n'+
 						'</form>'+'\n';
 				}
@@ -142,9 +165,14 @@ function review(page){
     
 
 // 수정시 폼 생성
-function remove_class(val){
-	//$(val.val()).removeClass('modify_rev_form');
+function remove_class(idx){
+	$('#modify_rev_'+idx+'').removeClass('modify_rev_form');
 }
+// 수정폼 닫
+function add_class(idx){
+	$('#modify_rev_'+idx+'').addClass('modify_rev_form');
+}
+
 
 
 </script>
@@ -299,7 +327,7 @@ function remove_class(val){
                         <label for="exampleFormControlInput3">카페 정보</label>
                         <textarea class="form-control mb-2" id="exampleFormControlTextarea1" rows="3" placeholder="카페 정보"></textarea>
 
-                        <div clas ="form-group">
+                        <div class ="form-group">
                             <input type="file" name="upload" multiple="multiple" class="user_picked_files mb-2" />
                             <br>
                             <label for="exampleFormControlInput5 text-muted">이미지 미리보기</label>

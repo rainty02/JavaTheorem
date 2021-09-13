@@ -114,6 +114,11 @@
 	update cafereview set revContent = #{revContent}, revRating = #{revRating} where revIdx = #{revIdx}
 </update>
 
+<!-- 카페 리뷰 삭제 -->
+<delete id="deleteCafeReview"
+		parameterType="int">
+	delete from cafereview where revIdx = #{revIdx}
+</delete>
 
 
 

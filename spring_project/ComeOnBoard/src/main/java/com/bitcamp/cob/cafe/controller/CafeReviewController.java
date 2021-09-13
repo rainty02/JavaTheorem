@@ -47,14 +47,24 @@ public class CafeReviewController {
 		return "redirect:"+idx;
 	}
 	
-	@RequestMapping(value= "/cafe/cafe_modify_rev", method = RequestMethod.PUT)
-	public String updateCafeReview(CafeReview cafeReview) {
+	@RequestMapping(value= "/cafe/cafe_page/{id}", method = RequestMethod.PUT)
+	public String updateCafeReview(CafeReview cafeReview, @PathVariable("id") int idx) {
 	
-		System.out.println("PUT 메소드 실행 : "+cafeReview);
+		System.out.println("수정 메소드 실행 : "+cafeReview);
 		
 		int result = cafeReviewService.updateCafeReview(cafeReview);
-		System.out.println(result);
-		return "redirect:"+cafeReview.getCafeIdx();
+		System.out.println("수정 결과 : " + result);
+		return "redirect:"+idx;
+	}
+	
+	@RequestMapping(value="/cafe/cafe_page/{id}", method = RequestMethod.DELETE)
+	public String deleteCafeReview(CafeReview cafeReview, @PathVariable("id") int idx) {
+		
+		System.out.println("삭제 메소드 실헹 : " + cafeReview);
+		
+		int result = cafeReviewService.deleteCafeRevie(cafeReview.getRevIdx());
+		System.out.println("삭제 결과 : " + result);
+		return "redirect:"+idx;
 	}
 }
 	

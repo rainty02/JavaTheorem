@@ -30,4 +30,9 @@ public class CafeReviewService {
 	public int updateCafeReview(CafeReview cafeReview) {
 		return template.getMapper(CafeDao.class).updateCafeReview(cafeReview);
 	}
+	
+	// 카페 리뷰 삭제
+	public int deleteCafeRevie(int revIdx) {
+		return template.getMapper(CafeDao.class).deleteCafeReview(revIdx);
+	}
 }

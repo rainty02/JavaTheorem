@@ -28,6 +28,8 @@ public interface CafeDao {
 	int cafeReg(Cafe cafe);
 	// 카페 리뷰 수정
 	int updateCafeReview(CafeReview cafeReview);
+	// 카페 리뷰 삭제
+	int deleteCafeReview(int revIdx);
 
 
 }
