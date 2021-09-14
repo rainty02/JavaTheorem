@@ -22,6 +22,8 @@ public interface CafeDao {
 	Cafe getCafeInfo(int idx);
 	// 리뷰 리스트 출력
 	List<CafeReview> getCafeReview(CafeReviewPaging cafeReviewPaging);
+	// 선택한 카페의 리뷰 갯수
+	int getTotalCafeReviewCnt(int cafeIdx);
 	// 카페 리뷰 작성
 	int writeCafeReview(CafeReview cafeReview);
 	// 카페 정보 등
@@ -30,6 +32,7 @@ public interface CafeDao {
 	int updateCafeReview(CafeReview cafeReview);
 	// 카페 리뷰 삭제
 	int deleteCafeReview(int revIdx);
+	
 
 
 }

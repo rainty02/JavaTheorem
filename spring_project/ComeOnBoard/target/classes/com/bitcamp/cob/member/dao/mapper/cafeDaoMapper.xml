@@ -89,10 +89,15 @@
 	from cafereview c 
 	where cafeIdx = #{cafeIdx} 
 	order by revRegTimestamp desc
-	
-	
+	limit #{startNum}, #{endNum}
 </select>
-		
+
+<!-- 선택한 카페의 리뷰 갯수 -->
+<select id="getTotalCafeReviewCnt"
+		resultType="int">
+	select count(*) from cafereview where cafeIdx = #{cafeIdx} 
+</select>
+
 <!-- 카페 리뷰 작성 -->
 <insert id="writeCafeReview"
 		parameterType="com.bitcamp.cob.cafe.domain.CafeReview">
@@ -115,8 +120,7 @@
 </update>
 
 <!-- 카페 리뷰 삭제 -->
-<delete id="deleteCafeReview"
-		parameterType="int">
+<delete id="deleteCafeReview">
 	delete from cafereview where revIdx = #{revIdx}
 </delete>
 

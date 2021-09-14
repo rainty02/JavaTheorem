@@ -2,6 +2,18 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+<c:if test="${empty loginChk}">
+<script>
+let loginmemidx = null;
+</script>
+</c:if>   
+<c:if test="${loginChk}">
+<script>
+let loginmemidx = ${loginInfo.memIdx};
+</script>
+</c:if>   
+
 <!DOCTYPE html>  <!-- 문서의 첫행 표시, 웹 브라우저에 HTML5 임을 알림 -->
 <html lang="ko"> <!-- 시작, lang 속성 입력(생략가능)-->
 <head> <!-- 페이지의 필요한 추가 속성 작성 -->
@@ -15,7 +27,7 @@
     <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-	<%@ include file="/WEB-INF/views/frame/metaheader.jsp" %>
+
     <!-- 카드 선택시 하단 줄 CSS -->
 	<link href="<c:url value="/css/hover.css"/>" rel="stylesheet" media="all">
 	
@@ -25,27 +37,15 @@
 <script>
 
 $(document).ready(function(){
-            
+
 	reservation_list(4);
             
 	let page = 1;
 	review(page);
             
-	
-	// 삭제 버튼 클릭시
-	$('#delete_btn').click(function(){
-		reservation_list(4);
-		//var asd = 'a';
-		//console.log('1');
-		//$('#method').attr("value", "delete");
-		//$('#modify_rev').submit();
-	})
 
 	// 4인석 버튼 클릭시 
 	$('#btn_reservation_4').click(function(){
-		$('#method').attr("value", "delete");
-		console.log($('#method').val());
-		$('#modify_rev').submit();
 	    reservation_list(4);
 	})
 	// 8인석 버튼 클릭시
@@ -54,10 +54,27 @@ $(document).ready(function(){
 	})
 	
 	
+	// 리뷰 작성시 빈값 체크
+	$('#btn_rev_submit').click(function(){
+
+		var content = $('#rev_textarea').val();
+		
+		// 점수 입력 확인
+		if(!$('#rev_form :input:radio:checked').val()) {   
+			alert('점수를 선택해 주세요.');
+			return;
+			}
+		// 내용 입력 확인
+		if(!content.trim().length){
+			alert('내용을 입력해주세요.');
+			$('#rev_textarea').focus();
+			return;
+		}
+		// 폼 서밋
+		$('#rev_form').submit();
+	});
 	
-	
-	
-            
+      
 });
 
 // 예약 버튼 동적 생성
@@ -86,13 +103,13 @@ function reservation_list(table_num){
 }
 
 
-$(function () {
+/* $(function () {
     // 달력 - 시간 제거, 오늘 이전 날짜 선택 불가
     $('#date').bootstrapMaterialDatePicker({
-        time: false,
-        minDate: moment()
+        time: false
+        //minDate: moment();
     });
-});
+}); */
      
 // 리뷰
 function review(page){
@@ -100,60 +117,82 @@ function review(page){
 		url: '<c:url value="/cafe/cafe_review"/>',
 		type: 'get',
 		data: { 
-			page : page,
+			currentPage : page,
 			cafeIdx : ${cafeInfo.cafeIdx}
 		},
 		dataType: 'json',
 		success: function(returnData){
 			console.log(returnData);
-			var data = returnData;
-			var html = ''
+			var paging = returnData;
+			var data = returnData.cafeReview;
+			var html = '';
+			var pagehtml = '';
 			
-			$.each(data, function(idx, review) {	
-				html += '<div class="media" id="modify_rev">'+'\n'+
-						'<div class="media-left">'+'\n'+
-						'<img src="https://www.w3schools.com/bootstrap4/img_avatar1.png" class="media-object mr-3" style="width:45px">'+'\n'+
-						'</div>'+'\n'+
-						'<div class="media-body">'+'\n'+
-						'<h4 class="media-heading">'+'\n'+review.nickName+'\n'+
-						'<small><i class="ml-3">★'+'\n'+review.revRating+'</i></small>'+'\n'+
-						'<small><i style="float: right;">'+review.revRegTimestamp+'</i></small></h4>'+'\n'+
-						'<p>'+review.revContent+'</p>'+'\n';
-				
-				// 작성자와 로그인 아이디가 같으면 수정/삭제 추가
-				
-				if(${loginInfo.memIdx} == review.memIdx){
-					html += '<ul><li style="float: right; margin-left: 10px;"><a><button type="button" id="delete_btn">삭제</button></a></li><li style="float: right; margin-left: 10px;"><a onclick="remove_class('+review.revIdx+');">수정</a></li>'+'\n';
-				}
-
-				html += '</div>'+'\n'+'</div>'+'\n';
-				// 리뷰 수정 폼  class="modify_rev_form"  
-				if(${loginInfo.memIdx} == review.memIdx){
-				html +=	'<form method="post" class="modify_rev_form" id="modify_rev_'+review.revIdx+'">'+'\n<hr>'+      
-				//html += '<form method="post" id="modify_rev">'+'\n<hr>'+  
-						'<div id="star" class="star-rating space-x-4 mx-auto"> '+'\n'+                  
-						'<input type="radio" id="5-stars" name="revRating" value="5" v-model="ratings"/>'+'\n'+
-						'<label for="5-stars" class="star pr-4">★</label>'+'\n'+
-						'<input type="radio" id="4-stars" name="revRating" value="4" v-model="ratings"/>'+'\n'+
-						'<label for="4-stars" class="star">★</label>'+'\n'+
-						'<input type="radio" id="3-stars" name="revRating" value="3" v-model="ratings"/>'+'\n'+
-						'<label for="3-stars" class="star">★</label>'+'\n'+
-						'<input type="radio" id="2-stars" name="revRating" value="2" v-model="ratings"/>'+'\n'+
-						'<label for="2-stars" class="star">★</label>'+'\n'+
-						'<input type="radio" id="1-star" name="revRating" value="1" v-model="ratings" />'+'\n'+
-						'<label for="1-star" class="star">★</label>'+'\n'+
-						'</div>'+'\n'+
-						'<input type="hidden" name="_method" value="put" id=delete">'+'\n'+
-						'<input type="hidden" name="revIdx" value="'+review.revIdx+'">'+'\n'+
-						'<input type="hidden" name="cafeIdx" value="'+review.cafeIdx+'">'+'\n'+
-						'<textarea class="form-control" id="exampleFormControlTextarea1" name= "revContent" rows="3"></textarea>'+'\n'+
-						'<button class="btn btn-primary" type="button" value="리뷰 작성" onclick="add_class('+review.revIdx+');" style="float: right; margin: 10px; 0px; width: 80px;">닫기</button>'+'\n'+
-						'<input class="btn btn-primary" type="submit" value="리뷰 작성" style="float: right; margin: 10px; 0px">'+'\n'+
-						'</form>'+'\n';
-				}
-				html += '<hr style="clear:both;">';
-			});
+			// 리뷰 출력
+			if(data.length){
+				$.each(data, function(idx, review) {	
+					html += '<div class="media" id="rev_'+review.revIdx+'">'+'\n'+
+							'<div class="media-left">'+'\n'+
+							'<img src="https://www.w3schools.com/bootstrap4/img_avatar1.png" class="media-object mr-3" style="width:45px">'+'\n'+
+							'</div>'+'\n'+
+							'<div class="media-body">'+'\n'+
+							'<h4 class="media-heading">'+'\n'+review.nickName+'\n'+
+							'<small><i class="ml-3">★'+'\n'+review.revRating+'</i></small>'+'\n'+
+							'<small><i style="float: right;">'+review.revRegTimestamp+'</i></small></h4>'+'\n'+
+							'<p>'+review.revContent+'</p>'+'\n';
+					// 작성자와 로그인 아이디가 같으면 수정/삭제 추가
+					if(loginmemidx == review.memIdx){
+						html += '<ul><li style="float: right; margin-left: 10px;"><a class="mod_del" onclick="rev_del('+review.revIdx+');">삭제</a></li><li style="float: right; margin-left: 10px;"><a class="mod_del" onclick="remove_class('+review.revIdx+');">수정</a></li>'+'\n';
+					}
+					html += '</div>'+'\n'+'</div>'+'\n';
+					// 리뷰 수정 폼  class="modify_rev_form"  
+					if(loginmemidx == review.memIdx){
+						html +=	'<form method="post" class="modify_rev_form" id="modify_rev_'+review.revIdx+'">'+'\n<hr>'+      
+								'<div id="star" class="star-rating space-x-4 mx-auto"> '+'\n'+                  
+								'<input type="radio" id="5-stars" name="revRating" value="5" v-model="ratings"/>'+'\n'+
+								'<label for="5-stars" class="star pr-4">★</label>'+'\n'+
+								'<input type="radio" id="4-stars" name="revRating" value="4" v-model="ratings"/>'+'\n'+
+								'<label for="4-stars" class="star">★</label>'+'\n'+
+								'<input type="radio" id="3-stars" name="revRating" value="3" v-model="ratings"/>'+'\n'+
+								'<label for="3-stars" class="star">★</label>'+'\n'+
+								'<input type="radio" id="2-stars" name="revRating" value="2" v-model="ratings"/>'+'\n'+
+								'<label for="2-stars" class="star">★</label>'+'\n'+
+								'<input type="radio" id="1-star" name="revRating" value="1" v-model="ratings" />'+'\n'+
+								'<label for="1-star" class="star">★</label>'+'\n'+
+								'</div>'+'\n'+
+								'<input type="hidden" name="_method" value="put" id="delete_'+review.revIdx+'">'+'\n'+
+								'<input type="hidden" name="revIdx" value="'+review.revIdx+'">'+'\n'+
+								'<input type="hidden" name="cafeIdx" value="'+review.cafeIdx+'">'+'\n'+
+								'<textarea class="form-control" id="rev_mod_textarea_'+review.revIdx+'" name= "revContent" rows="3"></textarea>'+'\n'+
+								'<button class="btn btn-primary" type="button" onclick="add_class('+review.revIdx+');" style="float: right; margin: 10px; 0px;">닫기</button>'+'\n'+
+								'<button class="btn btn-primary" type="button" onclick="rev_mod_submit('+review.revIdx+');" style="float: right; margin: 10px; 0px">작성</button>'+'\n'+
+								'</form>'+'\n';
+					}
+					html += '<hr style="clear:both;">';
+				});
+			}
+			if(!data.length){
+				html += '<br><h5 style="text-align: center;">현재 등록된 리뷰가 없습니다. 여러분의 리뷰를 기다리고 있습니다!</h5><br><hr>';
+			}
+			$('.post_wrap').empty();
 			$('.post_wrap').append(html);
+		
+			// 페이징
+			pagehtml += '<nav aria-label="Page navigation example">'+'\n'+
+						'<ul class="pagination justify-content-center" style="float: none;">'+'\n'+
+						//'<li class="page-item disabled">'+'\n'+
+						//'<a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>'+'\n'+
+						'</li>';
+			if(paging.totalPage > 0){
+				for(var i=1; i<=paging.totalPage; i++){
+					pagehtml += '<li class="page-item"><a class="page-link" onclick="review('+i+');">'+i+'</a></li>';
+				} 
+			}
+			//pagehtml += '<li class="page-item">'+'\n'+
+			//			'<a class="page-link" href="#">Next</a>'+'\n'+
+			//			'</li></ul></nav><br>';
+			$('.paging').empty();
+			$('.paging').append(pagehtml);
 		},
 		error : function(){
 			alert('실패');
@@ -167,12 +206,39 @@ function review(page){
 // 수정시 폼 생성
 function remove_class(idx){
 	$('#modify_rev_'+idx+'').removeClass('modify_rev_form');
-}
-// 수정폼 닫
+};
+// 수정폼 닫기
 function add_class(idx){
 	$('#modify_rev_'+idx+'').addClass('modify_rev_form');
-}
+};
 
+// 삭제 클릭시
+function rev_del(idx){
+	if(confirm('삭제하시겠습니까?')){
+		$('#delete_'+idx+'').attr("value", "delete");
+		$('#modify_rev_'+idx+'').submit();
+	}
+};
+
+// 리뷰 수정시 빈값 체크
+function rev_mod_submit(idx){
+
+	var revmodtext = $('#rev_mod_textarea_'+idx+'').val();
+
+	// 점수 입력 확인
+	if(!$('#modify_rev_'+idx+' :input:radio:checked').val()) {   
+		alert('점수를 선택해 주세요.');
+		return;
+	}
+	// 내용 입력 확인
+	if(!revmodtext.trim().length){
+		alert('내용을 입력해주세요.');
+		$('#rev_mod_textarea_'+idx+'').focus();
+		return;
+	}
+	// 폼 서밋
+	$('#modify_rev_'+idx+'').submit();	
+}
 
 
 </script>
@@ -189,7 +255,7 @@ function add_class(idx){
 	<%@ include file="/WEB-INF/views/frame/header.jsp" %>
 
     <div class="cafe_wrap"> 
-        <div class="info" id="first">
+        <div class="info" id="info">
             <h5 class="info_menu" style="display: inline;">카페 소개</h5>
             <c:if test="${loginInfo.memAuth == 'cafe'}">
             	<button type="button" class="btn btn-primary" style="display: inline; float: right;" data-toggle="modal" data-target="#info_modify">수정</button>
@@ -237,7 +303,7 @@ function add_class(idx){
         <hr>   
         
 
-        <div class="reservation" id="second">
+        <div class="reservation" id="reservation">
             <h5 class="info_menu">예약</h5>
             <hr class="first_hr">
             <table>
@@ -256,7 +322,7 @@ function add_class(idx){
         <hr>   
         
         
-        <div class="review" id="third">
+        <div class="review" id="review">
             <h5 class="info_menu">리뷰</h5>
             <hr class="first_hr">
 
@@ -264,43 +330,30 @@ function add_class(idx){
             </div>
 
             <!-- 페이징 -->
-               <nav aria-label="Page navigation example">
-                   <ul class="pagination justify-content-center" style="float: none;">
-                     <li class="page-item disabled">
-                       <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                     </li>
-                     <li class="page-item"><a class="page-link" href="#">1</a></li>
-                     <li class="page-item"><a class="page-link" href="#">2</a></li>
-                     <li class="page-item"><a class="page-link" href="#">3</a></li>
-                     <li class="page-item">
-                       <a class="page-link" href="#">Next</a>
-                     </li>
-                   </ul>
-                 </nav>
-            <br>
+            <div class="paging">
+            </div>
 
 			<c:if test="${loginInfo.memAuth == 'member'}">
-            <form method="post">              
-                <div id="star" class="star-rating space-x-4 mx-auto">                   
-                    <input type="radio" id="5-stars" name="revRating" value="5" v-model="ratings"/>
-                    <label for="5-stars" class="star pr-4">★</label>
-                    <input type="radio" id="4-stars" name="revRating" value="4" v-model="ratings"/>
-                    <label for="4-stars" class="star">★</label>
-                    <input type="radio" id="3-stars" name="revRating" value="3" v-model="ratings"/>
-                    <label for="3-stars" class="star">★</label>
-                    <input type="radio" id="2-stars" name="revRating" value="2" v-model="ratings"/>
-                    <label for="2-stars" class="star">★</label>
-                    <input type="radio" id="1-star" name="revRating" value="1" v-model="ratings" />
-                    <label for="1-star" class="star">★</label>
+            <form method="post" id="rev_form">              
+                <div id="star-rev" class="star-rating-rev space-x-4 mx-auto">                   
+                    <input type="radio" id="5-stars-rev" name="revRating" value="5"/>
+                    <label for="5-stars-rev" class="star-rev pr-4">★</label>
+                    <input type="radio" id="4-stars-rev" name="revRating" value="4"/>
+                    <label for="4-stars-rev" class="star-rev">★</label>
+                    <input type="radio" id="3-stars-rev" name="revRating" value="3"/>
+                    <label for="3-stars-rev" class="star-rev">★</label>
+                    <input type="radio" id="2-stars-rev" name="revRating" value="2"/>
+                    <label for="2-stars-rev" class="star-rev">★</label>
+                    <input type="radio" id="1-star-rev" name="revRating" value="1"/>
+                    <label for="1-star-rev" class="star-rev">★</label>
                 </div>
 				<input type="hidden" name="memIdx" value="${loginInfo.memIdx}">
 				<input type="hidden" name="nickName" value="${loginInfo.nickName}">
-                <textarea class="form-control" id="exampleFormControlTextarea1" name= "revContent" rows="3"></textarea>
-                <input class="btn btn-primary" type="submit" value="리뷰 작성" style="float: right; margin-top: 10px;">
+                <textarea class="form-control" id="rev_textarea" name="revContent" rows="3" wrap="hard"></textarea>
+                <button class="btn btn-primary" id="btn_rev_submit" type="button" style="float: right; margin-top: 10px;">작성</button>
             </form>
             </c:if>
         </div>
-        
     </div>
 
 
@@ -379,9 +432,9 @@ function add_class(idx){
 
     <div>
         <ul style="position: fixed; top: 40%; right: 5%;">
-            <li><a href="#first"><button type="button" class="btn btn-outline-primary" style="width: 100px; height: 50px; margin: 5px;">카페 소개</button></a></li>
-            <li><a href="#second"><button type="button" class="btn btn-outline-primary" style="width: 100px; height: 50px; margin: 5px;">예약</button></a></li>
-            <li><a href="#third"><button type="button" class="btn btn-outline-primary" style="width: 100px; height: 50px; margin: 5px;">리뷰</button></a></li>
+            <li><a href="#info"><button type="button" class="btn btn-outline-primary" style="width: 100px; height: 50px; margin: 5px;">카페 소개</button></a></li>
+            <li><a href="#reservation"><button type="button" class="btn btn-outline-primary" style="width: 100px; height: 50px; margin: 5px;">예약</button></a></li>
+            <li><a href="#review"><button type="button" class="btn btn-outline-primary" style="width: 100px; height: 50px; margin: 5px;">리뷰</button></a></li>
         </ul>
     </div>
 

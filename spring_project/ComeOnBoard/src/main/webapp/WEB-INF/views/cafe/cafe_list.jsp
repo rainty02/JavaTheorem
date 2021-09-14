@@ -9,10 +9,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 모바일 페이지 속성 -->
     <title>Come on, Board : Cafe list</title> <!-- 문서 제목 -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-    <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
@@ -23,26 +21,16 @@
 	<link rel="stylesheet" href="<c:url value="/css/cafe_list.css"/>" type="text/css">
     <%@ include file="/WEB-INF/views/frame/metaheader.jsp" %>
 
-<style>
-/* 
-.container {
-	padding : 0px;
-}
- */
-</style>
-
-
-
-
 
 <script>
 
 $(document).ready(function(){
 	
-	scrollPage()
+	scrollPage();
 
 	// 스크롤 페이징
     function scrollPage(){
+		
 		// 페이징을 위한 정보
 		var cafePage = {
 			'searchType' : '${cafePaging.searchType}',
@@ -50,7 +38,7 @@ $(document).ready(function(){
 			'keyword' : '${cafePaging.keyword}',
 			'page' : ${cafePaging.page}
 		}
-		console.log('스크롤 페이징 함수 : ' + cafePage.page);
+		//console.log('스크롤 페이징 함수 : ' + cafePage.page);
 		
     	$('.card-deck').scroll(function(){
     	    var scrollTop = $(this).scrollTop(); // 스크롤 현재 위치
@@ -60,9 +48,7 @@ $(document).ready(function(){
     	    if (scrollTop + innerHeight >= scrollHeight) {
     	    	//실행할 로직 (콘텐츠 추가)
     	        getList(cafePage);
-    	    	console.log(cafePage.page);
     	        cafePage.page++
-    	        console.log('스크롤 함수 : '+cafePage.page);
     	    }
     	});
     }
@@ -73,7 +59,7 @@ $(document).ready(function(){
 // 카페 리스트
 function getList(cafePage){
 	
-	console.log('비동기 : '+cafePage.searchType);
+	//console.log('getList : '+cafePage.searchType);
 	
 	$.ajax({
 		url: '<c:url value="/cafe/cafe_listPaging"/>',
@@ -143,9 +129,6 @@ function getList(cafePage){
     </nav>
 
 
-
-
-
     <div class="card-deck">
      	<c:if test="${fn:length(list) > 0}">
     	<c:forEach items="${list}" var="list" >
@@ -162,7 +145,7 @@ function getList(cafePage){
 		</c:forEach>
 		</c:if>
 		
- 		<c:if test="${fn:length(list) < 1}">
+ 		<c:if test="${fn:length(list) <= 0}">
 			<h1>검색결과가없습니다.</h1>
 		</c:if>
     </div>

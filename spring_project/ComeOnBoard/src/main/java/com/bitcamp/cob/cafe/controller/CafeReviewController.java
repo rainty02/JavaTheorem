@@ -2,8 +2,6 @@ package com.bitcamp.cob.cafe.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,17 +21,34 @@ public class CafeReviewController {
 
 	@RequestMapping(value= "/cafe/cafe_review", method = RequestMethod.GET)
 	@ResponseBody
-	public List<CafeReview> getCafeReview(CafeReviewPaging cafeReviewPaging) {
+	public CafeReviewPaging getCafeReview(CafeReviewPaging cafeReviewPaging) {
+
+		// 선택한 카페의 전체 리뷰 갯수
+		int reviewCnt = cafeReviewService.getTotalCafeReviewCnt(cafeReviewPaging.getCafeIdx());
+		cafeReviewPaging.setTotalReviewCnt(reviewCnt);
 		
-		List<CafeReview> reviewList = null;
+		// 시작 인덱스
+		int startIdx = (cafeReviewPaging.getCurrentPage()-1)*5;
+		cafeReviewPaging.setStartNum(startIdx);
 		
-		System.out.println("전달값" + cafeReviewPaging);
+		// 가져올 갯수
+		cafeReviewPaging.setEndNum(5);
+
+		// 페이지 총 갯수
+		if(cafeReviewPaging.getTotalReviewCnt() == 0) { // 리뷰가 없다면 0
+			cafeReviewPaging.setTotalPage(0);
+		} else {
+			cafeReviewPaging.setTotalPage(reviewCnt / 5); // 전체 리뷰 게시물 / 화면에 출력할 갯수
+			if(reviewCnt % 5 > 0) { // 나머지가 있다면 +1
+				cafeReviewPaging.setTotalPage(cafeReviewPaging.getTotalPage()+1);
+			}
+		}
 		
-		//페이징 처리
-		
-		reviewList = cafeReviewService.getCafeReview(cafeReviewPaging);
-		System.out.println("결과값" + reviewList);
-		return reviewList;
+		System.out.println("전달값" + cafeReviewPaging);	
+		List<CafeReview> list = cafeReviewService.getCafeReview(cafeReviewPaging);
+		cafeReviewPaging.setCafeReview(list);
+		System.out.println("결과값" + cafeReviewPaging);
+		return cafeReviewPaging;
 	}
 		
 	@RequestMapping(value= "/cafe/cafe_page/{id}", method = RequestMethod.POST)

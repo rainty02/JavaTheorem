@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bitcamp.cob.cafe.dao.CafeDao;
+import com.bitcamp.cob.cafe.domain.CafePaging;
 import com.bitcamp.cob.cafe.domain.CafeReview;
 import com.bitcamp.cob.cafe.domain.CafeReviewPaging;
 
@@ -19,6 +20,11 @@ public class CafeReviewService {
 	// 카페리뷰 출력
 	public List<CafeReview> getCafeReview(CafeReviewPaging cafeReviewPaging) {
 		return template.getMapper(CafeDao.class).getCafeReview(cafeReviewPaging);
+	}
+	
+	// 선택한 카페의 총 리뷰 갯수
+	public int getTotalCafeReviewCnt(int cafeIdx) {
+		return template.getMapper(CafeDao.class).getTotalCafeReviewCnt(cafeIdx);
 	}
 	
 	// 카페 리뷰 작성
@@ -35,4 +41,5 @@ public class CafeReviewService {
 	public int deleteCafeRevie(int revIdx) {
 		return template.getMapper(CafeDao.class).deleteCafeReview(revIdx);
 	}
+
 }

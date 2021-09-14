@@ -20,55 +20,13 @@
 	<link href="<c:url value="/css/hover.css"/>" rel="stylesheet" media="all">
 
 	<link rel="stylesheet" href="<c:url value="/css/cafe_regForm.css"/>" type="text/css">
-
-<style>
-
-     </style>
-
-    <!-- 파일 미리보기 -->
-
-   
-    
-
+	<%@ include file="/WEB-INF/views/frame/metaheader.jsp" %>
 
 </head>
 
 <body>
 
-    <header class="header">
-        <div class="MultiBar">
-            <ul class="area_gnb">
-                <li>시작페이지로</li>
-                <li>다크모드</li>
-                <li>마이페이지</li>
-                <li>로그인</li>
-            </ul>
-        </div>
-
-        <div class="container">
-            <img src="<c:url value="/images/cob_white.png"/>" class="logo">
-        </div>
-        <div class="main_naviwrap">
-            <div class="main_nav">
-                <ul class="left_ul">
-                    <li>회사소개</li>
-                    <li>회사소개</li>
-                    <li>회사소개</li>    
-                </ul>
-            </div>
-        </div>
-
-        <div class="main_naviwrap">
-            <div class="main_nav">
-                <ul class="right_ul">
-                    <li>모임</li>
-                    <li>게시판</li>
-                    <li>카페</li>
-                    <li>게임</li>    
-                </ul>
-            </div>
-        </div>
-    </header>
+	<%@ include file="/WEB-INF/views/frame/header.jsp" %>
 
     <div class="cafe_wrap">   
         <div class="info"> 

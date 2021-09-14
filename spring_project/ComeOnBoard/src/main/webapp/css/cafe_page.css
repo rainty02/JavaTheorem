@@ -165,6 +165,22 @@ td>.btn{
 	display: none;
 }
 
+.mod_del{
+	cursor: pointer;
+}
+
+.media p{
+	white-space: pre;
+}
+.media li{
+	color: #007bff;
+}
+.media li :hover{
+	text-decoration: underline;
+}
+
+
+
 
 
 .star-rating {
@@ -199,6 +215,43 @@ cursor: pointer;
 -webkit-text-fill-color: #fff370;
 }
 
+
+
+
+
+
+
+.star-rating-rev {
+display: flex;
+flex-direction: row-reverse;
+font-size: 1.25rem;
+line-height: 2.5rem;
+justify-content: space-around;
+padding: 0 0.2em;
+text-align: center; 
+width: 10em;
+margin-left: 5px;
+}
+
+.star-rating-rev input {
+display: none;
+}
+
+.star-rating-rev label {
+-webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+-webkit-text-stroke-width: 1px;
+-webkit-text-stroke-color: #000000;
+cursor: pointer;
+}
+
+.star-rating-rev :checked ~ label {
+-webkit-text-fill-color: gold;
+}
+
+.star-rating-rev label:hover,
+.star-rating-rev label:hover ~ label {
+-webkit-text-fill-color: #fff370;
+}
 
 
 /* 버튼 회전 */

@@ -41,7 +41,7 @@ public class CafeListController {
 			cafePaging.setSortType("cafeIdx");
 		}
 		
-		System.out.println("cafePaging : " + cafePaging);
+		//System.out.println("cafePaging : " + cafePaging);
 		
 		if(cafePaging.getKeyword() != null && cafePaging.getKeyword().trim().length() > 0) {
 			list = cafeListService.cafeListByKeyword(cafePaging);
@@ -93,8 +93,7 @@ public class CafeListController {
 	@ResponseBody
 	public CafePaging listPaging(@RequestBody CafePaging cafePaging, Model model){
 		
-		System.out.println("cafeList POST 메소드 실행");
-		System.out.println("cafeList POST : " + cafePaging);
+		//System.out.println("cafeList POST 메소드 실행" + cafePaging);
 		List<Cafe> list = null;
 		
 		if(cafePaging.getSortType() == null) {
@@ -102,25 +101,17 @@ public class CafeListController {
 		}
 		
 		if(cafePaging.getKeyword() != null && cafePaging.getKeyword().trim().length() > 0) {
-			System.out.println("키워드 설정시 실행");
+			//System.out.println("키워드 설정시 실행");
 			list = cafeListService.cafeListByKeyword(cafePaging);
-			System.out.println("컨트롤러 키워드 리스트 반환값 실행");
 		} else {
-			System.out.println("컨트롤러 정렬 설정시 실행");
+			//System.out.println("컨트롤러 정렬 설정시 실행");
 			list = cafeListService.cafeListBySort(cafePaging);
-			System.out.println("컨트롤러 정렬 리스트 반환값 실행");
 		}
 		cafePaging.setCafe(list);
 		cafePaging.setTotalCnt(cafeListService.getCafeTotalCnt());
-		System.out.println("cafePaging : " + cafePaging);
-		System.out.println("cafePaging.getCafe : " + cafePaging.getCafe());
 		
 		model.addAttribute("cafePaging", cafePaging);
 		return cafePaging;
-	
 	}
-	
-	
-
 	
 }
