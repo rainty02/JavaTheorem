@@ -99,6 +99,7 @@ function file(){
         <h5 class="info_menu">카페 정보 등록</h5>
         <hr class="first_hr">
 
+
             <form method="post" enctype="multipart/form-data">
             
                 <label for="exampleFormControlInput9">이미지 업로드</label>
