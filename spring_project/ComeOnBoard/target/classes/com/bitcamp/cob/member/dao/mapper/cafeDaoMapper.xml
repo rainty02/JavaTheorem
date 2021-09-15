@@ -105,7 +105,7 @@
 </insert>
 
 <!-- 카페 정보 등록 -->
-<insert id="cafeReg"
+<insert id="regCafe"
 		parameterType="com.bitcamp.cob.cafe.domain.Cafe"
 		useGeneratedKeys="true"  
 		keyProperty="cafeIdx">
@@ -124,7 +124,29 @@
 	delete from cafereview where revIdx = #{revIdx}
 </delete>
 
+<!-- 카페 썸네일 저장 -->
+<insert id="regCafeThumbnail">
+	insert into cafeimg (cafeIdx, cafeThumbnail) values (#{cafeIdx}, #{cafeThumbnail})
+</insert>
 
+<!-- 카페 이미지 저장 -->	
+<insert id="regCafeImg">
+	insert into cafeimg (cafeIdx, cafeImg) values (#{cafeIdx}, #{cafeImg})
+</insert>
+
+<!-- 카페 이미지 폴더 생성을 위한 idx값 반환 -->
+<select id="getCafeIdxName"
+		resultType="com.bitcamp.cob.cafe.domain.CafeImgInfo">
+	select cafeIdx, cafeName from boardgamecafe where memIdx = #{memIdx}
+</select>
+
+<!-- 카페 이미지 반환 -->
+<select id="getImgList"
+		resultType="com.bitcamp.cob.cafe.domain.CafeImgInfo"
+		parameterType="com.bitcamp.cob.cafe.domain.CafeImgInfo"
+		>
+	select cafeIdx, cafeName, cafeImg from cafeimg where cafeIdx = #{cafeIdx}
+</select>
 
 
 </mapper>

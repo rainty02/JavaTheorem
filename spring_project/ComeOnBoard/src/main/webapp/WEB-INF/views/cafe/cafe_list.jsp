@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>  <!-- 문서의 첫행 표시, 웹 브라우저에 HTML5 임을 알림 -->
 <html lang="ko"> <!-- 시작, lang 속성 입력(생략가능)-->
 <head> <!-- 페이지의 필요한 추가 속성 작성 -->
@@ -16,7 +17,7 @@
 
     <!-- 카드 선택시 하단 줄 CSS -->
 	<link href="<c:url value="/css/hover.css"/>" rel="stylesheet" media="all">
-
+	
 
 	<link rel="stylesheet" href="<c:url value="/css/cafe_list.css"/>" type="text/css">
     <%@ include file="/WEB-INF/views/frame/metaheader.jsp" %>
@@ -80,9 +81,9 @@ function getList(cafePage){
 		                  '<div class="card-body">'+'\n'+
 	    	              '<h5 class="card-title">'+cafe.cafeName+'</h5>'+'\n'+
 	        	          '<p class="card-text" style="text-align: right;">'+'\n'+
-	        	          cafe.stdFeeComma+'\n'+
+	        	          '1시간 : '+cafe.stdFeeComma+'\n'+
 	                	  '<br>'+'\n'+
-	                	  cafe.tenPerFeeComma+'\n'+
+	                	  '10분 초과시 : '+cafe.tenPerFeeComma+'\n'+
 	        	          '</p>'+'\n'+'</div>'+'\n'+'<div class="card-footer" style="text-align: center;">'+'\n'+
 	            	      '<small class="text-primary">'+cafe.cafeAddress+'</small>'+'\n'+
 	                	  '</div>'+'\n'+'</div>';
@@ -102,9 +103,6 @@ function getList(cafePage){
 </script>
 
 
-
-
-
 </head>
 
 <body>
@@ -113,7 +111,7 @@ function getList(cafePage){
 
     <nav class="navbar navbar-light" style="background-color: #D6E9FF;">
     <ul class="nav-button">
-        <li><button type="button" id="btn_cafe_cafeidx_search" class="btn btn-outline-danger" value="cafeIdx" onclick="location.href='<c:url value="/cafe/cafe_list?sortType=cafeIdx"/>'">등록순</button></li>
+        <li><button type="button" id="btn_cafe_cafeidx_search" class="btn btn-outline-danger" value="cafeIdx" onclick="location.href='<c:url value="/cafe/cafe_list?sortType=cafeIdx desc"/>'">등록순</button></li>
         <li><button type="button" id="btn_cafe_rating_search" class="btn btn-outline-success" value="cafeRating" onclick="location.href='<c:url value="/cafe/cafe_list?sortType=cafeRating"/>'">평점순</button></li>
         <li><button type="button" id="btn_cafe_address_search" class="btn btn-outline-info" value="cafeAddress" onclick="location.href='<c:url value="/cafe/cafe_list?sortType=cafeAddress"/>'">지역순</button></li>
     </ul>
@@ -149,7 +147,6 @@ function getList(cafePage){
 			<h1>검색결과가없습니다.</h1>
 		</c:if>
     </div>
-
 
 
 </body>

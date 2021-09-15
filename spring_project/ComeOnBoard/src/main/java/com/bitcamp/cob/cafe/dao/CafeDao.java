@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.bitcamp.cob.cafe.domain.Cafe;
+import com.bitcamp.cob.cafe.domain.CafeImgInfo;
 import com.bitcamp.cob.cafe.domain.CafePaging;
 import com.bitcamp.cob.cafe.domain.CafeReview;
 import com.bitcamp.cob.cafe.domain.CafeReviewPaging;
@@ -27,11 +28,19 @@ public interface CafeDao {
 	// 카페 리뷰 작성
 	int writeCafeReview(CafeReview cafeReview);
 	// 카페 정보 등
-	int cafeReg(Cafe cafe);
+	int regCafe(Cafe cafe);
 	// 카페 리뷰 수정
 	int updateCafeReview(CafeReview cafeReview);
 	// 카페 리뷰 삭제
 	int deleteCafeReview(int revIdx);
+	// 카페 썸네일 저장
+	int regCafeThumbnail(@Param("cafeThumbnail") String cafeThumbnail, @Param("cafeIdx") int cafeIdx);
+	// 카페 이미지 저장
+	int regCafeImg(@Param("cafeImg") String cafeImgs, @Param("cafeIdx") int cafeIdx);
+	// 카페 인덱스 반환
+	CafeImgInfo getCafeIdxName(int memIdx);
+	// 카페 이미지 리스트 반환
+	List<CafeImgInfo> getImgList(CafeImgInfo cafeImgInfo);
 	
 
 

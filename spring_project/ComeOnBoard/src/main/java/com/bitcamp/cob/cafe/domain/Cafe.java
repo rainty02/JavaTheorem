@@ -1,6 +1,10 @@
 package com.bitcamp.cob.cafe.domain;
 
 import java.text.DecimalFormat;
+import java.util.Arrays;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 public class Cafe {
 
@@ -15,12 +19,17 @@ public class Cafe {
 	private int grpTable;
 	private String cafeTel;
 	private int cafeRating;
+	private MultipartFile cafeThumbnailFile;
+	private List<MultipartFile> cafeImgFile;
+	
+	private String cafeThumbnail;
+	private List<String> cafeImg;
 	
 	// 천단위 , 변환
 	private String stdFeeComma;
 	private String tenPerFeeComma;
 
-	public Cafe(){};
+	public Cafe(){}
 
 	public int getCafeIdx() {
 		return cafeIdx;
@@ -110,7 +119,39 @@ public class Cafe {
 		this.cafeRating = cafeRating;
 	}
 
-	public String getStdFeeComma() {
+	public MultipartFile getCafeThumbnailFile() {
+		return cafeThumbnailFile;
+	}
+
+	public void setCafeThumbnailFile(MultipartFile cafeThumbnailFile) {
+		this.cafeThumbnailFile = cafeThumbnailFile;
+	}
+
+	public List<MultipartFile> getCafeImgFile() {
+		return cafeImgFile;
+	}
+
+	public void setCafeImgFile(List<MultipartFile> cafeImgFile) {
+		this.cafeImgFile = cafeImgFile;
+	}
+
+	public String getCafeThumbnail() {
+		return cafeThumbnail;
+	}
+
+	public void setCafeThumbnail(String cafeThumbnail) {
+		this.cafeThumbnail = cafeThumbnail;
+	}
+
+	public List<String> getCafeImg() {
+		return cafeImg;
+	}
+
+	public void setCafeImg(List<String> cafeImg) {
+		this.cafeImg = cafeImg;
+	}
+
+public String getStdFeeComma() {
 		
 		DecimalFormat df = new DecimalFormat("###,###");
 		String stdFeeComma = df.format(this.stdFee);
@@ -139,7 +180,9 @@ public class Cafe {
 		return "Cafe [cafeIdx=" + cafeIdx + ", memIdx=" + memIdx + ", cafeName=" + cafeName + ", cafeAddress="
 				+ cafeAddress + ", cafeTime=" + cafeTime + ", stdFee=" + stdFee + ", tenPerFee=" + tenPerFee
 				+ ", fourTable=" + fourTable + ", grpTable=" + grpTable + ", cafeTel=" + cafeTel + ", cafeRating="
-				+ cafeRating + "]";
+				+ cafeRating + ", cafeThumbnailFile=" + cafeThumbnailFile + ", cafeImgFile=" + cafeImgFile
+				+ ", cafeThumbnail=" + cafeThumbnail + ", cafeImg=" + cafeImg + ", stdFeeComma=" + stdFeeComma
+				+ ", tenPerFeeComma=" + tenPerFeeComma + "]";
 	}
 	
 }
