@@ -44,10 +44,10 @@ public class CafeReviewController {
 			}
 		}
 		
-		System.out.println("전달값" + cafeReviewPaging);	
+		//System.out.println("전달값" + cafeReviewPaging);	
 		List<CafeReview> list = cafeReviewService.getCafeReview(cafeReviewPaging);
 		cafeReviewPaging.setCafeReview(list);
-		System.out.println("결과값" + cafeReviewPaging);
+		//System.out.println("결과값" + cafeReviewPaging);
 		return cafeReviewPaging;
 	}
 		
@@ -58,6 +58,7 @@ public class CafeReviewController {
 		System.out.println(cafeReview);
 		
 		int result = cafeReviewService.writeCafeReview(cafeReview);
+
 		System.out.println(result);
 		return "redirect:"+idx;
 	}

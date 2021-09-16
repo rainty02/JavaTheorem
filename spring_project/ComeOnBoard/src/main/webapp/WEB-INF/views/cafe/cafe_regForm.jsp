@@ -3,18 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<c:if test="${empty loginChk}">
-<script>
-function makeRedirect(){
-	var redirectUri = window.location.href;
-	sessionStorage.setItem("redirectUri", redirectUri);
-	location.href= '<c:url value="/member/login"/>' ;
-}
-</script>
-<script>
-	alert('로그인 후 사용이 가능합니다.');
+<c:if test="${empty loginInfo || loginInfo.memAuth ne 'cafe'}">
 
-	makeRedirect();
+<script>
+	alert('카페 등록 권한이 없습니다.');
+	history.back();
 </script>
 
 </c:if> 
@@ -72,11 +65,7 @@ function makeRedirect(){
                 <input type="number" name="grpTable" class="form-control mb-2" id="grpTable" placeholder="8인석 수">
 				
 				<label for="cafeTel">카페 전화번호</label>
-                <input type="text" name="cafeTel" class="form-control mb-2" id="cafeTel" placeholder="000-0000-0000">
-				<!-- 	        
-				<label for="cafeIdx">카페 전화번호</label>
-                <input type="text" name="cafeIdx" class="form-control mb-2" id="cafeIdx" placeholder="000-0000-0000">
-				-->    
+                <input type="text" name="cafeTel" class="form-control mb-2" id="cafeTel" pattern="^\d{3}-\d{3,4}-\d{4}$" placeholder="000-0000-0000" required>
 				<!--                 
 				<label for="cafeThumbnail">썸네일 미리보기</label>
 				<input type="file" name="cafeThumbnail" id="cafeThumbnail">	
@@ -95,11 +84,10 @@ function makeRedirect(){
     </div>
 
 </body>
-	
+
 <script>
 
-
-// 정보 입력시 빈값 체크
+//정보 입력시 빈값 체크
 $('#btn_cafe_info_submit').click(function(){
 	
 	var cafeName = $('#cafeName').val();
@@ -110,6 +98,9 @@ $('#btn_cafe_info_submit').click(function(){
 	var fourTable = $('#fourTable').val();
 	var grpTable = $('#grpTable').val();
 	var cafeTel = $('#cafeTel').val();
+	
+	var timePattren = /^\d{2}:\d{2}~\d{2}:\d{2}/;
+	var telPattern = /^\d{3}-\d{3,4}-\d{4}$/;
 	
 	// 입력 확인
 	if(!cafeName.trim().length) {   
@@ -124,6 +115,11 @@ $('#btn_cafe_info_submit').click(function(){
 	}
 	if(!cafeTime.trim().length) {  
 		alert('운영시간을 입력해주세요.');
+		$('#cafeTime').focus();
+		return;
+	}
+	if(!timePattren.test(cafeTime.trim())){
+		alert('형식에 맞게 입력해주세요. (00:00~00:00)');
 		$('#cafeTime').focus();
 		return;
 	}
@@ -152,14 +148,16 @@ $('#btn_cafe_info_submit').click(function(){
 		$('#cafeTel').focus();
 		return;
 	}
+	if(!telPattern.test(cafeTel.trim())){
+		alert('형식에 맞게 입력해주세요. (000-0000-0000)');
+		$('#cafeTel').focus();
+		return;
+	}
 	// 폼 서밋
 	$('#cafeInfo').submit();	
 });
 
 
 </script>
-
-
-	
 
 </html>

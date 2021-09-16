@@ -26,16 +26,14 @@ public class CafeInfoController {
 	@RequestMapping(value = "/cafe/cafe_page/{id}", method = RequestMethod.GET)
 	public String cafeInfo(Model model, @PathVariable("id") int idx, HttpSession session) {
 		
-		Cafe cafe = null;
-		//session.getAttribute(name);
-		//if(loginChk) {}
-		
+		Cafe cafe = null;		
 		cafe = cafeInfoService.getCafeInfo(idx);
 		model.addAttribute("cafeInfo", cafe);
 		return "cafe/cafe_page";
 	}
 	
 	// 카페 정보 입력폼
+	
 	@RequestMapping(value = "/cafe/cafe_regForm", method = RequestMethod.GET)
 	public void cafeRegForm() {}
 	
@@ -44,13 +42,24 @@ public class CafeInfoController {
 	public String regCafe(Cafe cafe, Model model) {
 
 		model.addAttribute("cafeRegResult", cafeInfoService.regCafe(cafe));
-		System.out.println("생성된 IDX : " + cafe.getCafeIdx());
+		//System.out.println("생성된 IDX : " + cafe.getCafeIdx());
+		model.addAttribute("cafeIdx", cafe.getCafeIdx());
 		return "cafe/cafe_regResult";
 	}
 	
+	// 카페 정보 수정
+	@RequestMapping(value = "/cafe/cafe_info", method = RequestMethod.POST)
+	public String updateCafeInfo(Cafe cafe, Model model) {
+
+		model.addAttribute("cafeModifyResult", cafeInfoService.updateCafeInfo(cafe));
+		model.addAttribute("cafeIdx", cafe.getCafeIdx());
+		return "cafe/cafe_regResult";
+	}
+	
+	
 	// 이미지 저장폼
-	@RequestMapping(value = "/cafe/cafe_regImg", method = RequestMethod.GET)
-	public void cafeReg() {}
+	//@RequestMapping(value = "/cafe/cafe_regImg", method = RequestMethod.GET)
+	//public void cafeReg() {}
 	
 	// 이미지 저장
 	@RequestMapping(value = "/cafe/cafe_regImg", method = RequestMethod.POST)

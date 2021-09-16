@@ -36,11 +36,15 @@ public interface CafeDao {
 	// 카페 썸네일 저장
 	int regCafeThumbnail(@Param("cafeThumbnail") String cafeThumbnail, @Param("cafeIdx") int cafeIdx);
 	// 카페 이미지 저장
-	int regCafeImg(@Param("cafeImg") String cafeImgs, @Param("cafeIdx") int cafeIdx);
+	int regCafeImg(@Param("cafeImg") String cafeImgs, @Param("cafeIdx") int cafeIdx, @Param("memIdx") int memIdx);
 	// 카페 인덱스 반환
 	CafeImgInfo getCafeIdxName(int memIdx);
 	// 카페 이미지 리스트 반환
 	List<CafeImgInfo> getImgList(CafeImgInfo cafeImgInfo);
+	// 카페 이미지 삭제
+	int delImg(int cafeImgIdx);
+	// 카페 정보 수정
+	int updateCafeInfo(Cafe cafe);
 	
 
 

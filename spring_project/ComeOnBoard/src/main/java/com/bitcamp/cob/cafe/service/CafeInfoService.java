@@ -23,7 +23,7 @@ public class CafeInfoService {
 	@Autowired
 	private SqlSessionTemplate template;
 	
-	final String UPLOAD_URI = "/uploadfile/cafe";
+	final String UPLOAD_URI = "/uploadfile/cafe/";
 	
 	// 카페 정보 출력
 	public Cafe getCafeInfo(int idx) {
@@ -106,7 +106,7 @@ public class CafeInfoService {
 				for(int i=0; i<cafe.getCafeImgFile().size(); i++) {
 
 					// thumbnail.확장자
-					cafeImgs = "img_"+i+"."+chkFileType(cafe.getCafeImgFile().get(i));
+					cafeImgs = cafe.getCafeName()+System.currentTimeMillis()+"."+chkFileType(cafe.getCafeImgFile().get(i));
 					imgFiles.add(cafeImgs);
 					
 					// 새로운 File 객체
@@ -114,7 +114,7 @@ public class CafeInfoService {
 					cafe.getCafeImgFile().get(i).transferTo(newFile);
 	
 					// 변경된 파일 이름 DB 저장
-					if(template.getMapper(CafeDao.class).regCafeImg(cafeImgs, cafe.getCafeIdx()) == 1) {
+					if(template.getMapper(CafeDao.class).regCafeImg(cafeImgs, cafe.getCafeIdx(), cafe.getMemIdx()) == 1) {
 						result++;
 					}
 				}
@@ -221,7 +221,7 @@ public class CafeInfoService {
 
 		// 이미지 파일 이외의 파일 업로드 금지
 		// 파일 확장자 체크
-		if (!(extension.equals("jpg") || extension.equals("png") || extension.equals("gif"))) {
+		if (!(extension.equals("jpeg") || extension.equals("jpg") || extension.equals("png") || extension.equals("gif"))) {
 			throw new Exception("허용하지 않는 파일 확장자 타입 : " + contentType);
 		}
 
@@ -236,9 +236,9 @@ public class CafeInfoService {
 
 		// 폴더에 이미지가 있다면 전체 삭제
 		// 정보 수정시 일괄등록이 아닌 선택 삭제 후 등록이 가능하면 전체 삭제하지 않아도 됨
-		if(newDir.exists()) {
-			deleteDir(newDir);
-		}
+		//if(newDir.exists()) {
+		//	deleteDir(newDir);
+		//}
 		
 		// 카페별 폴더 생성
 		if (!newDir.exists()) {
@@ -258,16 +258,14 @@ public class CafeInfoService {
 				if(f.isFile() && f.getName().toLowerCase().startsWith("img")) {
 					f.delete(); //파일 삭제 
 					System.out.println(f.getName()+" 파일이 삭제되었습니다.");	
-					try {
-						Thread.sleep(1000);
-						System.out.println("1초 대기");
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} //1초 대기
 				}
 			}
 	    }	
+	}
+
+	// 카페 정보 수정
+	public int updateCafeInfo(Cafe cafe) {
+		return template.getMapper(CafeDao.class).updateCafeInfo(cafe);
 	}
 
 }

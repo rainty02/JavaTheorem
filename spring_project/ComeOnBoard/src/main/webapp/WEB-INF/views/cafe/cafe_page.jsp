@@ -44,6 +44,86 @@ $(document).ready(function(){
 	review(page);
             
 
+    var storedFiles = [];      
+    //$('.cvf_order').hide();
+   
+    // Apply sort function 
+    function cvf_reload_order() {
+        var order = $('.cvf_uploaded_files').sortable('toArray', {attribute: 'item'});
+        $('.cvf_hidden_field').val(order);
+    }
+   
+    function cvf_add_order() {
+        $('.cvf_uploaded_files li').each(function(n) {
+            $(this).attr('item', n);
+        });
+        console.log('test');
+    }
+   
+   	// 파일 미리보기
+    $(function() {
+        $('.cvf_uploaded_files').sortable({
+            cursor: 'move',
+            placeholder: 'highlight',
+            start: function (event, ui) {
+                ui.item.toggleClass('highlight');
+            },
+            stop: function (event, ui) {
+                ui.item.toggleClass('highlight');
+            },
+            update: function () {
+                //cvf_reload_order();
+            },
+            create:function(){
+                var list = this;
+                resize = function(){
+                    $(list).css('height','auto');
+                    $(list).height($(list).height());
+                };
+                $(list).height($(list).height());
+                $(list).find('img').load(resize).error(resize);
+            }
+        });
+        $('.cvf_uploaded_files').disableSelection();
+    });
+           
+    $('body').on('change', '.user_picked_files', function() {
+       
+        var files = this.files;
+        var i = 0;
+                   
+        for (i = 0; i < files.length; i++) {
+            var readImg = new FileReader();
+            var file = files[i];
+           
+            if (file.type.match('image.*')){
+                storedFiles.push(file);
+                readImg.onload = (function(file) {
+                    return function(e) {
+                    	$('.cvf_uploaded_files').empty();
+                        $('.cvf_uploaded_files').append(
+                        "<li file = '" + file.name + "'>" +                                
+                            "<img class = 'img-thumb' src = '" + e.target.result + "' />" +
+                        "</li>"
+                        );     
+                    };
+                })(file);
+                readImg.readAsDataURL(file);
+               
+            } else {
+                alert('the file '+ file.name + ' is not an image<br/>');
+            }
+           
+            if(files.length === (i+1)){
+                setTimeout(function(){
+                    cvf_add_order();
+                }, 1000);
+            }
+        }
+    });
+	
+	
+	
 	// 4인석 버튼 클릭시 
 	$('#btn_reservation_4').click(function(){
 	    reservation_list(4);
@@ -258,7 +338,8 @@ function rev_mod_submit(idx){
         <div class="info" id="info">
             <h5 class="info_menu" style="display: inline;">카페 소개</h5>
             <c:if test="${loginInfo.memAuth == 'cafe'}">
-            	<button type="button" class="btn btn-primary" style="display: inline; float: right;" data-toggle="modal" data-target="#info_modify">수정</button>
+            	<button type="button" class="btn btn-primary ml-2" style="display: inline; float: right;" data-toggle="modal" data-target="#info_image">이미지 등록</button>
+            	<button type="button" class="btn btn-primary ml-2" style="display: inline; float: right;" data-toggle="modal" data-target="#info_modify">정보 수정</button>
             </c:if>
             <hr class="first_hr">
             <!-- 사진영역 -->
@@ -286,7 +367,7 @@ function rev_mod_submit(idx){
             <!-- 기본정보 영역 -->
             <div class="basic_info">
                 <h1>${cafeInfo.cafeName}</h1>
-                <h5>★ ${cafeInfo.cafeRating}/5</h5>
+                <h5>★ ${Math.round(cafeInfo.cafeRating * 100) / 100}/5</h5>
                 <h5>${cafeInfo.cafeAddress}</h5>
                 <div class="li_warp">
                     <ul>
@@ -369,38 +450,108 @@ function rev_mod_submit(idx){
             </button>
             </div>
             <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="exampleFormControlInput1">카페 이름</label>
-                        <input type="text" class="form-control mb-2" id="exampleFormControlInput1" placeholder="카페 이름">
-    
-                        <label for="exampleFormControlInput2">카페 주소</label>
-                        <input type="text" class="form-control mb-2" id="exampleFormControlInput2" placeholder="카페 주소">
+                <form action="<c:url value='/cafe/cafe_info'/>" method="post" id="cafeInfo_modify">
+            	<input type="hidden" name="cafeIdx" value="${cafeInfo.cafeIdx}">
+            	<!-- <input type="hidden" name="_method" value="put"> -->
+                <label for="cafeName">카페 이름</label>
+                <input type="text" name="cafeName" class="form-control mb-2" id="cafeName" value="${cafeInfo.cafeName}" placeholder="카페 이름">
 
-                        <label for="exampleFormControlInput3">카페 정보</label>
-                        <textarea class="form-control mb-2" id="exampleFormControlTextarea1" rows="3" placeholder="카페 정보"></textarea>
+                <label for="cafeAddress">카페 주소</label>
+                <input type="text" name="cafeAddress" class="form-control mb-2" id="cafeAddress" value="${cafeInfo.cafeAddress}" placeholder="카페 주소">
 
-                        <div class ="form-group">
-                            <input type="file" name="upload" multiple="multiple" class="user_picked_files mb-2" />
-                            <br>
-                            <label for="exampleFormControlInput5 text-muted">이미지 미리보기</label>
-                            <div class="thumnail form-control mb-2">
-                                <ul class="cvf_uploaded_files"></ul>
-                            </div>
-                        </div>
-                      </div>
-                  </form>
+				<label for="cafeTime">영업시간</label>
+                <input type="text" name="cafeTime" class="form-control mb-2" id="cafeTime" value="${cafeInfo.cafeTime}" placeholder="00:00~00:00">
+				
+				<label for="stdFee">시간당 기본 요금</label>
+                <input type="number" name="stdFee" class="form-control mb-2" id="stdFee" value="${cafeInfo.stdFee}" placeholder="시간당 기본 요금">
+				
+				<label for="tenPerFee">10분당 추가 요금</label>
+                <input type="number" name="tenPerFee" class="form-control mb-2" id="tenPerFee" value="${cafeInfo.tenPerFee}" placeholder="10분당 추가 요금">
+				
+				<label for="fourTable">4인석 수</label>
+                <input type="number" name="fourTable" class="form-control mb-2" id="fourTable" value="${cafeInfo.fourTable}" placeholder="4인석 수">
+				
+				<label for="grpTable">8인석 수</label>
+                <input type="number" name="grpTable" class="form-control mb-2" id="grpTable" value="${cafeInfo.grpTable}" placeholder="8인석 수">
+				
+				<label for="cafeTel">카페 전화번호</label>
+                <input type="text" name="cafeTel" class="form-control mb-2" id="cafeTel" pattern="^\d{3}-\d{3,4}-\d{4}$" value="${cafeInfo.cafeTel}" placeholder="000-0000-0000" required>
+				<!--                 
+				<label for="cafeThumbnail">썸네일 미리보기</label>
+				<input type="file" name="cafeThumbnail" id="cafeThumbnail">	
+				<div id="thumbnail" class="form-control mb-2">
+				</div>
+				        				
+ 				<label for="cafeImg">이미지 미리보기</label>
+				<input type="file" multiple="multiple" name="cafeImg" id="cafeImg">
+				<div id="preview" class="form-control mb-2">
+				</div>
+ 				-->
+			    <button type="button" id="btn_cafe_info_modify_submit" class="btn btn-primary col text-center mb-2">등록</button>
+            </form>
             </div>
             <div class="modal-footer">
-                <input type="submit" class="cvf_upload_btn btn btn-primary col text-center" value="등록" />
-                <input type="submit" class="btn btn-secondary col text-center" value="취소" />
             </div>
         </div>
         </div>
     </div>
+    
+    
+    <div class="modal fade" id="info_image" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">카페정보 수정</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <form action="/cob/cafe/cafe_regImg" method="post" id="cafeImg_modify" enctype="multipart/form-data">
+            	<input type="hidden" name="cafeIdx" value="${cafeInfo.cafeIdx}">
+            	<input type="hidden" name="memIdx" value="${loginInfo.memIdx}">
+            	
+            	<input type="file" name="cafeThumbnailFile" id="cafeThumbnail"><br>
+            	<!-- <label for="cafeThumbnail">썸네일 미리보기</label>
+				<div id="thumbnail" class="form-control mb-2" style="height: 60px">
+				</div> -->
+				
+				<input type="file" multiple="multiple" name="cafeImg" id="cafeImg"><br>
+				<!-- <label for="cafeImg">이미지 미리보기</label>
+				<div id="preview" class="form-control mb-2" style="height: 60px">
+            	</div> -->
+            	
+<!--             	
+            	<div class ="form-group">
+                    <input type="file" name="upload" multiple="multiple" class="user_picked_files mb-2" />
+                    <br>
+                    <label for="exampleFormControlInput10 text-muted">이미지 미리보기</label><br>
+                    <div class="thumnail form-control mb-2">
+                        <ul class="cvf_uploaded_files"></ul>
+                    </div>
+                </div>
+            	
+            	<div class ="form-group">
+                    <input type="file" name="upload" multiple="multiple" class="user_picked_files mb-2" />
+                    <br>
+                    <label for="exampleFormControlInput10 text-muted">이미지 미리보기</label><br>
+                    <div class="thumnail form-control mb-2">
+                        <ul class="cvf_uploaded_files"></ul>
+                    </div>
+                </div>
+            	 -->
+            	
+            	<!-- <input type="submit" id="btn_cafe_img_submit" class="btn btn-primary col text-center mb-2" value="등록">  -->      	
+			     <button type="button" id="btn_cafe_img_submit" class="btn btn-primary col text-center mb-2">등록</button>
+            </form>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+        </div>
+    </div>
+    
     </c:if>
-
-
 
 
     <!-- 보드게임 리스트 Modal -->
@@ -427,9 +578,6 @@ function rev_mod_submit(idx){
     </div>
     
 
-
-
-
     <div>
         <ul style="position: fixed; top: 40%; right: 5%;">
             <li><a href="#info"><button type="button" class="btn btn-outline-primary" style="width: 100px; height: 50px; margin: 5px;">카페 소개</button></a></li>
@@ -437,6 +585,87 @@ function rev_mod_submit(idx){
             <li><a href="#review"><button type="button" class="btn btn-outline-primary" style="width: 100px; height: 50px; margin: 5px;">리뷰</button></a></li>
         </ul>
     </div>
+
+<script>
+
+//정보 입력시 빈값 체크
+$('#btn_cafe_img_submit').click(function(){
+
+	// 폼 서밋
+	$('#cafeImg_modify').submit();	
+});
+//정보 입력시 빈값 체크
+$('#btn_cafe_info_modify_submit').click(function(){
+	
+	var cafeName = $('#cafeName').val();
+	var cafeAddress = $('#cafeAddress').val();
+	var cafeTime = $('#cafeTime').val();
+	var stdFee = $('#stdFee').val();
+	var tenPerFee = $('#tenPerFee').val();
+	var fourTable = $('#fourTable').val();
+	var grpTable = $('#grpTable').val();
+	var cafeTel = $('#cafeTel').val();
+	
+	var timePattren = /^\d{2}:\d{2}~\d{2}:\d{2}/;
+	var telPattern = /^\d{3}-\d{3,4}-\d{4}$/;
+	
+	// 입력 확인
+	if(!cafeName.trim().length) {   
+		alert('카페이름을 입력해주세요.');
+		$('#cafeName').focus();
+		return;
+	}
+	if(!cafeAddress.trim().length) { 
+		alert('주소을 입력해주세요.');
+		$('#cafeAddress').focus();
+		return;
+	}
+	if(!cafeTime.trim().length) {  
+		alert('운영시간을 입력해주세요.');
+		$('#cafeTime').focus();
+		return;
+	}
+	if(!timePattren.test(cafeTime.trim())){
+		alert('형식에 맞게 입력해주세요. (00:00~00:00)');
+		$('#cafeTime').focus();
+		return;
+	}
+	if(!stdFee.trim().length) {  
+		alert('이용요금을 입력해주세요.');
+		$('#stdFee').focus();
+		return;
+	}
+	if(!tenPerFee.trim().length) { 
+		alert('추가요금을 입력해주세요.');
+		$('#tenPerFee').focus();
+		return;
+	}
+	if(!fourTable.trim().length) { 
+		alert('보유하고 있는 4인석을 입력해주세요.');
+		$('#fourTable').focus();
+		return;
+	}
+	if(!grpTable.trim().length) { 
+		alert('보유하고 있는 8인석을 입력해주세요.');
+		$('#grpTable').focus();
+		return;
+	}
+	if(!cafeTel.trim().length) {
+		alert('전화번호을 입력해주세요.');
+		$('#cafeTel').focus();
+		return;
+	}
+	if(!telPattern.test(cafeTel.trim())){
+		alert('형식에 맞게 입력해주세요. (000-0000-0000)');
+		$('#cafeTel').focus();
+		return;
+	}
+	// 폼 서밋
+	$('#cafeInfo_modify').submit();	
+});
+
+
+</script>
 
 
 </body>

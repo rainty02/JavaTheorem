@@ -18,7 +18,7 @@ public class Cafe {
 	private int fourTable;
 	private int grpTable;
 	private String cafeTel;
-	private int cafeRating;
+	private double cafeRating;
 	private MultipartFile cafeThumbnailFile;
 	private List<MultipartFile> cafeImgFile;
 	
@@ -111,11 +111,11 @@ public class Cafe {
 		this.cafeTel = cafeTel;
 	}
 
-	public int getCafeRating() {
+	public double getCafeRating() {
 		return cafeRating;
 	}
 
-	public void setCafeRating(int cafeRating) {
+	public void setCafeRating(double cafeRating) {
 		this.cafeRating = cafeRating;
 	}
 

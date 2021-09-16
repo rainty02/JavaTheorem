@@ -34,7 +34,7 @@ public class CafeListController {
 		System.out.println("정렬타입 : "+cafePaging.getSortType());
 		// 디폴트 페이지를 위한 분기		
 		if(cafePaging.getSortType() == null) {
-			cafePaging.setSortType("cafeIdx desc");
+			cafePaging.setSortType("cafeIdx");
 		}
 		
 		if(cafePaging.getKeyword() != null && cafePaging.getKeyword().trim().length() > 0) {
