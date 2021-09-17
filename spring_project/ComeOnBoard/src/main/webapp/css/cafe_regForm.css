@@ -90,6 +90,16 @@
         .info_menu{
             margin-top: 50px;
         }
+        
+        #thumbnail>img, #imgs>img {
+			height: 200px;
+			width: 400px;
+		}
+		
+		#thumbnail, #imgs{
+			overflow: hidden;
+			overflow-y: scroll;
+		}
 
  		#preview{
 			height: 200px;

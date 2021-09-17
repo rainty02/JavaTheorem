@@ -26,12 +26,12 @@ public class CafeListController {
 	@RequestMapping(value = "/cafe/cafe_list", method = RequestMethod.GET)
 	public String cafeList(Model model, CafePaging cafePaging) {
 		
-		System.out.println("cafeList GET 메소드 실행");
+		//System.out.println("cafeList GET 메소드 실행");
 		
 		List<Cafe> list = null;
 		
 		cafePaging.setPage(1);
-		System.out.println("정렬타입 : "+cafePaging.getSortType());
+		//System.out.println("정렬타입 : "+cafePaging.getSortType());
 		// 디폴트 페이지를 위한 분기		
 		if(cafePaging.getSortType() == null) {
 			cafePaging.setSortType("cafeIdx");

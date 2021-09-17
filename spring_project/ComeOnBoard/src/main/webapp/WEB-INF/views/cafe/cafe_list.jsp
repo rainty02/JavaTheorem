@@ -76,8 +76,9 @@ function getList(cafePage){
 			var html = ''
 			if(returnData.startNum <= returnData.totalCnt){
 				$.each(data, function(idx, cafe) {
+					var path = '<c:url value="/uploadfile/cafe/"/>'+cafe.cafeIdx+'.'+cafe.cafeName+'/'+cafe.cafeThumbnail;
 					html += '<div class="card hvr-underline-from-center fade-in" onclick="location.href=\'<c:url value="/cafe/cafe_page/'+cafe.cafeIdx+'"/>\'">'+'\n'+
-					 	  '<img class="card-img-top" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FckSZmV%2FbtqLwLYTrGR%2FZkGjmqP0pHvzMkVK9b2pRk%2Fimg.png" alt="Card image cap">'+'\n'+
+					 	  '<img class="card-img-top" src="'+path+'" alt="Card image cap">'+'\n'+
 		                  '<div class="card-body">'+'\n'+
 	    	              '<h5 class="card-title">'+cafe.cafeName+'</h5>'+'\n'+
 	        	          '<p class="card-text" style="text-align: right;">'+'\n'+
@@ -130,9 +131,9 @@ function getList(cafePage){
 
     <div class="card-deck">
      	<c:if test="${fn:length(list) > 0}">
-    	<c:forEach items="${list}" var="list" >
+    	<c:forEach items="${list}" var="list" >		
 			<div class="card hvr-underline-from-center fade-in" onclick="location.href='<c:url value="/cafe/cafe_page/${list.cafeIdx}"/>'">
-				<img class="card-img-top" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FckSZmV%2FbtqLwLYTrGR%2FZkGjmqP0pHvzMkVK9b2pRk%2Fimg.png" alt="Card image cap">
+				<img class="card-img-top" src="<c:url value="/uploadfile/cafe/"/>${list.cafeIdx}.${list.cafeName}/${list.cafeThumbnail}" alt="Card image cap">
 				<div class="card-body">
 					<h5 class="card-title">${list.cafeName}</h5>
 					<p class="card-text" style="text-align: right;">1시간 : ${list.stdFeeComma}<br>10분 초과시 : ${list.tenPerFeeComma}</p>

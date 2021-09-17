@@ -88,7 +88,8 @@
 <!-- 카페 페이지 -->
 <select id="getCafeInfo"
 		resultMap="cafeListResult">
-	select bc.*, (select AVG(revRating) from cafereview cr where cr.cafeIdx = bc.cafeIdx group by cafeIdx) as cafeRating from boardgamecafe bc where cafeIdx = #{cafeIdx}		
+	select bc.*, (select AVG(revRating) from cafereview cr where cr.cafeIdx = bc.cafeIdx group by cafeIdx) as cafeRating
+	 from boardgamecafe bc where cafeIdx = #{cafeIdx}		
 </select>
 
 
@@ -136,9 +137,9 @@
 </delete>
 
 <!-- 카페 썸네일 저장 -->
-<insert id="regCafeThumbnail">
-	insert into boardgamecafe cafeThumbnail values #{cafeIdx}, #{cafeThumbnail} where cafeIdx = #{cafeIdx}
-</insert>
+<update id="regCafeThumbnail">
+	update boardgamecafe set cafeThumbnail = #{cafeThumbnail} where cafeIdx = #{cafeIdx}
+</update>
 
 <!-- 카페 이미지 저장 -->	
 <insert id="regCafeImg">
@@ -167,8 +168,14 @@
 <!-- 카페 정보 수정 -->
 <update id="updateCafeInfo"
 		parameterType="com.bitcamp.cob.cafe.domain.Cafe">
-	update boardgamecafe set cafeName = #{cafeName}, cafeAddress = #{cafeAddress}, cafeTime = #{cafeTime}, stdFee = #{stdFee},
+	update boardgamecafe set cafeAddress = #{cafeAddress}, cafeTime = #{cafeTime}, stdFee = #{stdFee},
 							tenPerFee = #{tenPerFee}, fourTable = #{fourTable}, grpTable = #{grpTable}, cafeTel = #{cafeTel} where cafeIdx = #{cafeIdx}
 </update>
+
+<!-- 카페 정보에 담을 이미지 출력 -->
+<select id="getCafeImg"
+		resultType="String">
+	select cafeImg from cafeimg where cafeIdx = #{cafeIdx}		
+</select>
 
 </mapper>

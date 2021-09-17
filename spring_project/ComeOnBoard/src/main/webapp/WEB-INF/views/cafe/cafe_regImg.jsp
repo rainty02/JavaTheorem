@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+-<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<c:if test="${empty loginChk}">
+<c:if test="${empty loginInfo}">
 <script>
 function makeRedirect(){
 	var redirectUri = window.location.href;
@@ -38,6 +38,19 @@ function makeRedirect(){
 
 </head>
 
+<script>
+
+$(document).ready(function(){
+	
+	
+	
+	
+});
+
+
+</script>
+
+
 <body>
 
 	<%@ include file="/WEB-INF/views/frame/header.jsp" %>
@@ -45,84 +58,86 @@ function makeRedirect(){
     <div class="cafe_wrap">   
         <div class="info"> 
         
-        <h5 class="info_menu">카페 정보 등록</h5>
+        <h5 class="info_menu">카페 이미지 등록</h5>
         <hr class="first_hr">
-			<!-- 이미지를 제외한 기본 정보 등록  enctype="multipart/form-data" -->
-<%--             <form method="post" enctype="multipart/form-data" id="cafeInfo">
+             <form action="<c:url value='/cafe/cafe_regImg'/>" method="post" enctype="multipart/form-data" id="regCafeImg">
+            	<input type="hidden" name="cafeIdx" value="${cafeIdx}">
             	<input type="hidden" name="memIdx" value="${loginInfo.memIdx}">
+
+            	<input type="file" name="cafeThumbnailFile" id="cafeThumbnailFile" onchange="setThumbnail(event);"><br>
+            	<br>
+				
+				<input type="file" multiple="multiple" name="cafeImgFile" id="cafeImgFile" onchange="setImg(event);"><br>
+				<br>
  
-				                
-				<label for="cafeThumbnail">썸네일 미리보기</label>
-				<input type="file" name="cafeThumbnailFile" id="cafeThumbnail">	
-				<div id="thumbnail" class="form-control mb-2">
-				</div>
-				 <!--        				
- 				<label for="cafeImg">이미지 미리보기</label>
-				<input type="file" multiple="multiple" name="cafeImg" id="cafeImg">
-				<div id="preview" class="form-control mb-2">
-				</div>
- 				 -->
 			    <button type="button" id="btn_cafe_info_submit" class="btn btn-primary col text-center mb-2">등록</button>
             </form>
-             --%>
-             <form method="post" enctype="multipart/form-data" id="cafeInfo2">
-            	<input type="hidden" name="memIdx" value="${loginInfo.memIdx}">
- 
-				                
-				<!-- <label for="cafeThumbnail">썸네일 미리보기</label>
-				<input type="file" name="cafeThumbnail" id="cafeThumbnail">	
-				<div id="thumbnail" class="form-control mb-2">
-				</div> -->
-				      				
- 				<!-- <label for="cafeImg">이미지 미리보기</label> -->
-				<input type="file" multiple="multiple" name="cafeImgFile" id="cafeImg">
-				<!-- <div id="preview" class="form-control mb-2">
-				</div> -->
- 				 
-			    <button type="button" id="btn_cafe_info_submit2" class="btn btn-primary col text-center mb-2">등록</button>
-            </form>
             
+            <label for="cafeThumbnail">썸네일 미리보기</label>
+				<div id="thumbnail" class="form-control mb-2" style="height: 160px">
+				</div>
+			<label for="cafeImg">이미지 미리보기</label>
+				<div id="imgs" class="form-control mb-2" style="height: 160px">
+            	</div>
+
             <hr>
         </div>  
     </div>
 
 </body>
+
+<script>
+// 썸네일 미리보기
+function setThumbnail(event){
+	
+	var reader = new FileReader();
+	
+	reader.onload = function(event){
+		var img = document.createElement("img");
+		img.setAttribute("src", event.target.result);
+		document.querySelector("div#thumbnail").appendChild(img);
+	};
+	reader.readAsDataURL(event.target.files[0]);
+}
+// 카페 이미지 미리보기
+function setImg(event){
+	for (var image of event.target.files){
+		var reader = new FileReader();
+		reader.onload = function(event){
+		var img = document.createElement("img");
+		img.setAttribute("src", event.target.result);
+		document.querySelector("div#imgs").appendChild(img);
+	};
+		console.log(image);
+		reader.readAsDataURL(image);
+	}
+}
+
+</script>
+
 	
 <script>
 
-
-// 정보 입력시 빈값 체크
-$('#btn_cafe_info_submit2').click(function(){
-	
-	var cafeThumbnail = $('#cafeImg').val();
-	
-	// 입력 확인
-	if(!cafeThumbnail.trim().length) {   
-		alert('이미지를 첨부해주세요.');
-		$('#cafeName').focus();
-		return;
-	}
-	// 폼 서밋
-	$('#cafeInfo2').submit();	
-	
-});
-/* 
 //정보 입력시 빈값 체크
 $('#btn_cafe_info_submit').click(function(){
 	
-	var cafeThumbnail = $('#cafeThumbnail').val();
-	
+/* 	var cafeThumbnail = $('#cafeThumbnail').val();
+	var cafeImg = $('#cafeImg').val();
+
 	// 입력 확인
-	if(!cafeThumbnail.trim().length) {   
-		alert('이미지를 첨부해주세요.');
-		$('#cafeName').focus();
+	if(!cafeThumbnail.size) {   
+		alert('썸네일를 첨부해주세요.');
 		return;
 	}
-	// 폼 서밋
-	$('#cafeInfo').submit();	
-	
+
+	if(!cafeImg.size) {   
+		alert('카페 사진을 첨부해주세요.');
+		return;
+	} */
+	//폼 서밋
+	$('#regCafeImg').submit();	
 });
- */
+
 
 </script>
 

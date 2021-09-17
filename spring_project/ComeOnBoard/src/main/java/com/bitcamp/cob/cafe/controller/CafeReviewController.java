@@ -19,6 +19,7 @@ public class CafeReviewController {
 	@Autowired
 	private CafeReviewService cafeReviewService;
 
+	// 리뷰 리스트 반환
 	@RequestMapping(value= "/cafe/cafe_review", method = RequestMethod.GET)
 	@ResponseBody
 	public CafeReviewPaging getCafeReview(CafeReviewPaging cafeReviewPaging) {
@@ -50,36 +51,39 @@ public class CafeReviewController {
 		//System.out.println("결과값" + cafeReviewPaging);
 		return cafeReviewPaging;
 	}
-		
+	
+	// 리뷰 작성
 	@RequestMapping(value= "/cafe/cafe_page/{id}", method = RequestMethod.POST)
 	public String writeCafeReview(CafeReview cafeReview, @PathVariable("id") int idx) {
 	
 		cafeReview.setCafeIdx(idx);
-		System.out.println(cafeReview);
+		//System.out.println(cafeReview);
 		
 		int result = cafeReviewService.writeCafeReview(cafeReview);
 
-		System.out.println(result);
+		//System.out.println(result);
 		return "redirect:"+idx;
 	}
 	
+	// 리뷰 수정
 	@RequestMapping(value= "/cafe/cafe_page/{id}", method = RequestMethod.PUT)
 	public String updateCafeReview(CafeReview cafeReview, @PathVariable("id") int idx) {
 	
-		System.out.println("수정 메소드 실행 : "+cafeReview);
+		//System.out.println("수정 메소드 실행 : "+cafeReview);
 		
 		int result = cafeReviewService.updateCafeReview(cafeReview);
-		System.out.println("수정 결과 : " + result);
+		//System.out.println("수정 결과 : " + result);
 		return "redirect:"+idx;
 	}
 	
+	// 리뷰 삭제
 	@RequestMapping(value="/cafe/cafe_page/{id}", method = RequestMethod.DELETE)
 	public String deleteCafeReview(CafeReview cafeReview, @PathVariable("id") int idx) {
 		
-		System.out.println("삭제 메소드 실헹 : " + cafeReview);
+		//System.out.println("삭제 메소드 실헹 : " + cafeReview);
 		
 		int result = cafeReviewService.deleteCafeRevie(cafeReview.getRevIdx());
-		System.out.println("삭제 결과 : " + result);
+		//System.out.println("삭제 결과 : " + result);
 		return "redirect:"+idx;
 	}
 }

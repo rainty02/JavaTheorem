@@ -77,6 +77,11 @@ list-style: none;
 
 
 
+.carousel-inner > .carousel-item > img {
+	min-width: 100%;
+	min-height: 100%;
+} 
+
 
 
 .cafe_wrap{
@@ -88,16 +93,19 @@ list-style: none;
 
 #carouselExampleControls{
     margin: 10px;
-    max-width: 600px;
-    height: 310px;
+    max-width: 65%;
+    height: 380px;
     display: inline-block;
     float: left;
+}
+.carousel-item{
+	width: 600px;
+    height: 310px;
 }
 .basic_info{
     margin: 10px;
     padding: 10px;
-    max-width: 300px;
-    min-width: 300px;
+    max-width: 30%;
     height: 380px;
     display: inline-block;
     overflow: hidden;

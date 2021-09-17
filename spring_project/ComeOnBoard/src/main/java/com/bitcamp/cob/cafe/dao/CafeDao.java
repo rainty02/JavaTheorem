@@ -45,6 +45,8 @@ public interface CafeDao {
 	int delImg(int cafeImgIdx);
 	// 카페 정보 수정
 	int updateCafeInfo(Cafe cafe);
+	// 카페 이미지 반
+	List<String> getCafeImg(int idx);
 	
 
 

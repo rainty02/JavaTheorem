@@ -11,12 +11,14 @@
 <c:if test="${cafeRegResult == 1}">
 <script>
 	alert('등록되었습니다.');
-	alert('카페 페이지에 접속해 카페 이미지를 등록해주세요.')
+	alert('카페 이미지를 등록해주세요.')
 	//var idx = '/cafe/cafe_page/{${cafeIdx}}';
 	//alert(idx);
-	location.href='<c:url value="/cafe/cafe_page/'+${cafeIdx}+'"/>'; 
+	location.href='<c:url value="/cafe/cafe_regImg"/>'; 
 </script>
 </c:if>  
+
+
 <c:if test="${cafeModifyResult == 0}">
 <script>
 	alert('서버의 오류가 생겨 등록에 실패했습니다.\n잠시 후 다시 시도해주세요.');

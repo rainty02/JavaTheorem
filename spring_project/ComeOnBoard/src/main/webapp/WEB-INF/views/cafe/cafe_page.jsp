@@ -3,12 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<c:if test="${empty loginChk}">
+<c:if test="${empty loginInfo}">
 <script>
 let loginmemidx = null;
 </script>
 </c:if>   
-<c:if test="${loginChk}">
+<c:if test="${!empty loginInfo}">
 <script>
 let loginmemidx = ${loginInfo.memIdx};
 </script>
@@ -42,87 +42,6 @@ $(document).ready(function(){
             
 	let page = 1;
 	review(page);
-            
-
-    var storedFiles = [];      
-    //$('.cvf_order').hide();
-   
-    // Apply sort function 
-    function cvf_reload_order() {
-        var order = $('.cvf_uploaded_files').sortable('toArray', {attribute: 'item'});
-        $('.cvf_hidden_field').val(order);
-    }
-   
-    function cvf_add_order() {
-        $('.cvf_uploaded_files li').each(function(n) {
-            $(this).attr('item', n);
-        });
-        console.log('test');
-    }
-   
-   	// 파일 미리보기
-    $(function() {
-        $('.cvf_uploaded_files').sortable({
-            cursor: 'move',
-            placeholder: 'highlight',
-            start: function (event, ui) {
-                ui.item.toggleClass('highlight');
-            },
-            stop: function (event, ui) {
-                ui.item.toggleClass('highlight');
-            },
-            update: function () {
-                //cvf_reload_order();
-            },
-            create:function(){
-                var list = this;
-                resize = function(){
-                    $(list).css('height','auto');
-                    $(list).height($(list).height());
-                };
-                $(list).height($(list).height());
-                $(list).find('img').load(resize).error(resize);
-            }
-        });
-        $('.cvf_uploaded_files').disableSelection();
-    });
-           
-    $('body').on('change', '.user_picked_files', function() {
-       
-        var files = this.files;
-        var i = 0;
-                   
-        for (i = 0; i < files.length; i++) {
-            var readImg = new FileReader();
-            var file = files[i];
-           
-            if (file.type.match('image.*')){
-                storedFiles.push(file);
-                readImg.onload = (function(file) {
-                    return function(e) {
-                    	$('.cvf_uploaded_files').empty();
-                        $('.cvf_uploaded_files').append(
-                        "<li file = '" + file.name + "'>" +                                
-                            "<img class = 'img-thumb' src = '" + e.target.result + "' />" +
-                        "</li>"
-                        );     
-                    };
-                })(file);
-                readImg.readAsDataURL(file);
-               
-            } else {
-                alert('the file '+ file.name + ' is not an image<br/>');
-            }
-           
-            if(files.length === (i+1)){
-                setTimeout(function(){
-                    cvf_add_order();
-                }, 1000);
-            }
-        }
-    });
-	
-	
 	
 	// 4인석 버튼 클릭시 
 	$('#btn_reservation_4').click(function(){
@@ -320,6 +239,52 @@ function rev_mod_submit(idx){
 	$('#modify_rev_'+idx+'').submit();	
 }
 
+// 이미지 수정시 미리보기
+function file(){
+	$.ajax({
+		url: '<c:url value="/cafe/fileDel"/>',
+		type: 'post',
+		data: {
+			cafeIdx : ${cafeInfo.cafeIdx},
+			memIdx : ${cafeInfo.memIdx}
+		},
+		dataType: 'json',
+		success: function(imgData){
+			//alert('성공');
+			console.log(imgData);
+			var list = imgData;
+			var html = '';
+
+			if(list.length != 0){
+				$.each(list, function(idx, cafe){
+					var cafeImgIdx = cafe.cafeImgIdx;
+					var cafeIdx = cafe.cafeIdx;
+					var cafeName = cafe.cafeName;
+					var cafeImg = cafe.cafeImg;
+						
+					var path = cafe.cafeIdx+'.'+cafe.cafeName+'/'+cafe.cafeImg;
+					
+					html += '<li file='+cafe.cafeImg+'>'+'\n'+
+							'<img class=img-thumb src="<c:url value="/uploadfile/cafe/"/>'+path+'"/>'+'\n'+
+							'<button class="delete-btn btn btn-danger" onclick="delimg('+cafeImgIdx+', '+cafeIdx+', \''+cafeName+'\', \''+cafeImg+'\');">X</button>'+'\n'+
+							'</li>';
+				})
+				$('.uploaded_files').empty();
+				$('.uploaded_files').append(html);
+			}
+			if(list.length == 0){
+				$('.uploaded_files').empty();
+			}
+		},
+		error: function(e){
+			alert('실패');
+			console.log(e);
+		},
+		complete : function(){	
+		}
+	});
+}
+
 
 </script>
 
@@ -338,22 +303,23 @@ function rev_mod_submit(idx){
         <div class="info" id="info">
             <h5 class="info_menu" style="display: inline;">카페 소개</h5>
             <c:if test="${loginInfo.memAuth == 'cafe'}">
-            	<button type="button" class="btn btn-primary ml-2" style="display: inline; float: right;" data-toggle="modal" data-target="#info_image">이미지 등록</button>
+            	<button type="button" class="btn btn-primary ml-2" style="display: inline; float: right;" data-toggle="modal" data-target="#info_image" onclick="file();">이미지 수정</button>
             	<button type="button" class="btn btn-primary ml-2" style="display: inline; float: right;" data-toggle="modal" data-target="#info_modify">정보 수정</button>
             </c:if>
             <hr class="first_hr">
             <!-- 사진영역 -->
             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
-                  <div class="carousel-item active">
-                    <img class="d-block w-100" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FckSZmV%2FbtqLwLYTrGR%2FZkGjmqP0pHvzMkVK9b2pRk%2Fimg.png" alt="First slide">
-                  </div>
-                  <div class="carousel-item">
-                    <img class="d-block w-100" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FckSZmV%2FbtqLwLYTrGR%2FZkGjmqP0pHvzMkVK9b2pRk%2Fimg.png" alt="Second slide">
-                  </div>
-                  <div class="carousel-item">
-                    <img class="d-block w-100" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FckSZmV%2FbtqLwLYTrGR%2FZkGjmqP0pHvzMkVK9b2pRk%2Fimg.png" alt="Third slide">
-                  </div>
+                <c:forEach var="cafeImg" items="${cafeImg}" varStatus="cnt">
+                <c:if test="${cnt.first}">
+                	<div class="carousel-item active">
+                		<img class="d-block w-100" src='<c:url value="/uploadfile/cafe/"/>${cafeInfo.cafeIdx}.${cafeInfo.cafeName}/<c:out value="${cafeImg}"/>' alt="${cnt.count}">
+                	</div>
+                </c:if>
+                	<div class="carousel-item">
+                		<img class="d-block w-100" src='<c:url value="/uploadfile/cafe/"/>${cafeInfo.cafeIdx}.${cafeInfo.cafeName}/<c:out value="${cafeImg}"/>' alt="${cnt.count}">
+                	</div>
+                </c:forEach>
                 </div>
                 <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
                   <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -414,7 +380,7 @@ function rev_mod_submit(idx){
             <div class="paging">
             </div>
 
-			<c:if test="${loginInfo.memAuth == 'member'}">
+			<c:if test="${loginInfo.memAuth != 'cafe'}">
             <form method="post" id="rev_form">              
                 <div id="star-rev" class="star-rating-rev space-x-4 mx-auto">                   
                     <input type="radio" id="5-stars-rev" name="revRating" value="5"/>
@@ -453,9 +419,6 @@ function rev_mod_submit(idx){
                 <form action="<c:url value='/cafe/cafe_info'/>" method="post" id="cafeInfo_modify">
             	<input type="hidden" name="cafeIdx" value="${cafeInfo.cafeIdx}">
             	<!-- <input type="hidden" name="_method" value="put"> -->
-                <label for="cafeName">카페 이름</label>
-                <input type="text" name="cafeName" class="form-control mb-2" id="cafeName" value="${cafeInfo.cafeName}" placeholder="카페 이름">
-
                 <label for="cafeAddress">카페 주소</label>
                 <input type="text" name="cafeAddress" class="form-control mb-2" id="cafeAddress" value="${cafeInfo.cafeAddress}" placeholder="카페 주소">
 
@@ -501,49 +464,36 @@ function rev_mod_submit(idx){
         <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">카페정보 수정</h5>
+            <h5 class="modal-title" id="exampleModalLabel">카페 이미 수정</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
             </div>
             <div class="modal-body">
-                <form action="/cob/cafe/cafe_regImg" method="post" id="cafeImg_modify" enctype="multipart/form-data">
-            	<input type="hidden" name="cafeIdx" value="${cafeInfo.cafeIdx}">
-            	<input type="hidden" name="memIdx" value="${loginInfo.memIdx}">
-            	
-            	<input type="file" name="cafeThumbnailFile" id="cafeThumbnail"><br>
-            	<!-- <label for="cafeThumbnail">썸네일 미리보기</label>
-				<div id="thumbnail" class="form-control mb-2" style="height: 60px">
-				</div> -->
-				
-				<input type="file" multiple="multiple" name="cafeImg" id="cafeImg"><br>
-				<!-- <label for="cafeImg">이미지 미리보기</label>
-				<div id="preview" class="form-control mb-2" style="height: 60px">
-            	</div> -->
-            	
-<!--             	
+                
+                <form action="<c:url value='/cafe/cafe_regImg'/>" method="post" enctype="multipart/form-data" id="regCafeImg">
+                	<input type="hidden" name="_method" value="put">
+                	<input type="hidden" name="cafeIdx" value="${cafeInfo.cafeIdx}">
+            		<input type="hidden" name="memIdx" value="${cafeInfo.memIdx}">
+            		
+            		<label for="thumbnail_modify">썸네일 수정</label>
+            		<input type="file" id="thumbnail_modify" name="cafeThumbnailFile" id="cafeThumbnailFile">
+            		<br><br>
+                	<label for="img_modify">이미지 수정</label>
+					<input type="file" id="img_modify" name="cafeImgFile" multiple="multiple" class="mb-2" />
+					<br><br>
+               	 <input type="submit" class="btn btn-primary col text-center mb-2" value="등록" />
+            	</form>
             	<div class ="form-group">
-                    <input type="file" name="upload" multiple="multiple" class="user_picked_files mb-2" />
-                    <br>
-                    <label for="exampleFormControlInput10 text-muted">이미지 미리보기</label><br>
-                    <div class="thumnail form-control mb-2">
-                        <ul class="cvf_uploaded_files"></ul>
-                    </div>
-                </div>
-            	
-            	<div class ="form-group">
-                    <input type="file" name="upload" multiple="multiple" class="user_picked_files mb-2" />
-                    <br>
-                    <label for="exampleFormControlInput10 text-muted">이미지 미리보기</label><br>
-                    <div class="thumnail form-control mb-2">
-                        <ul class="cvf_uploaded_files"></ul>
-                    </div>
-                </div>
-            	 -->
-            	
-            	<!-- <input type="submit" id="btn_cafe_img_submit" class="btn btn-primary col text-center mb-2" value="등록">  -->      	
-			     <button type="button" id="btn_cafe_img_submit" class="btn btn-primary col text-center mb-2">등록</button>
-            </form>
+	                <br>
+	                <label for="exampleFormControlInput10 text-muted">이미지 삭제</label>
+	                <div class="thumnail form-control mb-2">
+	                	<ul class="uploaded_files"></ul>
+                	</div>
+            	</div>
+            	<!-- <button class="btn btn-secondary col text-center" value="취소" /></button> -->
+            	<hr>
+
             </div>
             <div class="modal-footer">
             </div>
@@ -597,7 +547,6 @@ $('#btn_cafe_img_submit').click(function(){
 //정보 입력시 빈값 체크
 $('#btn_cafe_info_modify_submit').click(function(){
 	
-	var cafeName = $('#cafeName').val();
 	var cafeAddress = $('#cafeAddress').val();
 	var cafeTime = $('#cafeTime').val();
 	var stdFee = $('#stdFee').val();
@@ -610,11 +559,6 @@ $('#btn_cafe_info_modify_submit').click(function(){
 	var telPattern = /^\d{3}-\d{3,4}-\d{4}$/;
 	
 	// 입력 확인
-	if(!cafeName.trim().length) {   
-		alert('카페이름을 입력해주세요.');
-		$('#cafeName').focus();
-		return;
-	}
 	if(!cafeAddress.trim().length) { 
 		alert('주소을 입력해주세요.');
 		$('#cafeAddress').focus();
@@ -665,6 +609,37 @@ $('#btn_cafe_info_modify_submit').click(function(){
 });
 
 
+</script>
+
+<script>
+function delimg(cafeImgIdx, cafeIdx, cafeName, cafeImg){
+	console.log('delimg 함수 실행');
+	console.log(cafeName);
+ 		$.ajax({
+		url: '<c:url value="/cafe/fileDel1"/>',
+		type: 'post',
+		data: {
+			cafeImgIdx: cafeImgIdx,
+			cafeIdx: cafeIdx,
+			cafeName: cafeName,
+			cafeImg: cafeImg
+		},
+		success: function(result){
+			if(result == '1'){
+				alert('이미지를 삭제했습니다.');
+				file();
+			} else {
+				alert('오류가 발생하여 삭제되지 않았습니다. 잠시 후 다시 시도해주세요.');
+			}
+		},
+		error: function(e){
+			alert('실패');
+			console.log(e);
+		},
+		complete : function(){	
+		}
+	});
+}	
 </script>
 
 
