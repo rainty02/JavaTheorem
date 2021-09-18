@@ -47,6 +47,8 @@ public interface CafeDao {
 	int updateCafeInfo(Cafe cafe);
 	// 카페 이미지 반
 	List<String> getCafeImg(int idx);
+	// 카페 등록 여부
+	int checkCafe(int attribute);
 	
 
 

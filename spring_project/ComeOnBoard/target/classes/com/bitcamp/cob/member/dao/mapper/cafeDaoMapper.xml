@@ -178,4 +178,9 @@
 	select cafeImg from cafeimg where cafeIdx = #{cafeIdx}		
 </select>
 
+<!-- 카페 등록 여부 -->
+<select id="checkCafe">
+	select cafeIdx from boardgamecafe where memIdx = #{memIdx} 
+</select>
+
 </mapper>
