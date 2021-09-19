@@ -36,7 +36,8 @@ public class CafeInfoController {
 		int cafeIdx = 0;
 		// 카페 등록 여부
 		cafeIdx = cafeInfoService.checkCafe(session);
-		model.addAttribute("cafeCheck", cafeIdx);
+		
+		model.addAttribute("checkCafe", cafeIdx);
 	}
 	
 	// 카페 정보 입력

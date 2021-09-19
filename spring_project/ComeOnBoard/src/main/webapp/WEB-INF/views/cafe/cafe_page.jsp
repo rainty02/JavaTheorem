@@ -4,14 +4,14 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <c:if test="${empty loginInfo}">
-<script>
-let loginmemidx = null;
-</script>
+	<script>
+	let loginmemidx = null;
+	</script>
 </c:if>   
 <c:if test="${!empty loginInfo}">
-<script>
-let loginmemidx = ${loginInfo.memIdx};
-</script>
+	<script>
+	let loginmemidx = ${loginInfo.memIdx};
+	</script>
 </c:if>   
 
 <!DOCTYPE html>  <!-- 문서의 첫행 표시, 웹 브라우저에 HTML5 임을 알림 -->
@@ -21,17 +21,22 @@ let loginmemidx = ${loginInfo.memIdx};
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 모바일 페이지 속성 -->
     <title>Come On, Board : Cafe info</title> <!-- 문서 제목 -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script> -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-    <!-- 카드 선택시 하단 줄 CSS -->
-	<link href="<c:url value="/css/hover.css"/>" rel="stylesheet" media="all">
-	
 	<link rel="stylesheet" href="<c:url value="/css/cafe_page.css"/>" type="text/css">
+	
+	<!-- 에어 데이터피커-->
+    <script type="text/javascript" src="<c:url value="/js/datepicker.min.js"/>"></script>
+	<link rel="stylesheet" href="<c:url value="/css/datepicker.min.css"/>" type="text/css">
+    <!-- Include korean language -->
+    <script src="<c:url value="/js/datepicker.kr.js"/>"></script>
+
+	
+	
 	<%@ include file="/WEB-INF/views/frame/metaheader.jsp" %>
 
 <script>
@@ -84,7 +89,10 @@ function reservation_list(table_num){
     var date = $('#date').val();
 
     // DB 조회 : date(날짜), table_num(4인석,8인석) 활용
-
+	$.ajax({
+		url: 
+	})
+    
     // 중복 생성 방지를 위한 자손 삭제
     $('#person *').remove();
     // 버튼 색상
@@ -105,8 +113,8 @@ function reservation_list(table_num){
 /* $(function () {
     // 달력 - 시간 제거, 오늘 이전 날짜 선택 불가
     $('#date').bootstrapMaterialDatePicker({
-        time: false
-        //minDate: moment();
+        time: false,
+        minDate: new Date()
     });
 }); */
      
@@ -302,7 +310,7 @@ function file(){
     <div class="cafe_wrap"> 
         <div class="info" id="info">
             <h5 class="info_menu" style="display: inline;">카페 소개</h5>
-            <c:if test="${loginInfo.memAuth == 'cafe'}">
+            <c:if test="${loginInfo.memIdx == cafeInfo.memIdx}">
             	<button type="button" class="btn btn-primary ml-2" style="display: inline; float: right;" data-toggle="modal" data-target="#info_image" onclick="file();">이미지 수정</button>
             	<button type="button" class="btn btn-primary ml-2" style="display: inline; float: right;" data-toggle="modal" data-target="#info_modify">정보 수정</button>
             </c:if>
@@ -316,9 +324,11 @@ function file(){
                 		<img class="d-block w-100" src='<c:url value="/uploadfile/cafe/"/>${cafeInfo.cafeIdx}.${cafeInfo.cafeName}/<c:out value="${cafeImg}"/>' alt="${cnt.count}">
                 	</div>
                 </c:if>
+                <c:if test="${!cnt.first}">
                 	<div class="carousel-item">
                 		<img class="d-block w-100" src='<c:url value="/uploadfile/cafe/"/>${cafeInfo.cafeIdx}.${cafeInfo.cafeName}/<c:out value="${cafeImg}"/>' alt="${cnt.count}">
                 	</div>
+                </c:if>
                 </c:forEach>
                 </div>
                 <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
@@ -355,7 +365,7 @@ function file(){
             <hr class="first_hr">
             <table>
                 <tr>
-                    <td><input class="btn btn-outline-success" type="text" id="date" value="2021-08-24"></td>
+                    <td><input class="btn btn-outline-success datepicker-here" data-language="kr" type="text" id="date" placeholder="날짜 선택"></td>
                 </tr>
                 <tr>
                     <td><button type="button" id="btn_reservation_4" class="btn btn-outline-danger">4인석</button></td>
@@ -379,8 +389,7 @@ function file(){
             <!-- 페이징 -->
             <div class="paging">
             </div>
-
-			<c:if test="${loginInfo.memAuth != 'cafe'}">
+			<c:if test="${(loginInfo.memIdx != cafeInfo.memIdx) && (loginInfo.memAuth != 'ban')}">
             <form method="post" id="rev_form">              
                 <div id="star-rev" class="star-rating-rev space-x-4 mx-auto">                   
                     <input type="radio" id="5-stars-rev" name="revRating" value="5"/>
@@ -405,7 +414,7 @@ function file(){
 
 
 	 <!-- 카페수정 Modal -->
-	<c:if test="${loginInfo.memAuth == 'cafe'}">
+	<c:if test="${loginInfo.memIdx == cafeInfo.memIdx}">
     <div class="modal fade" id="info_modify" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">

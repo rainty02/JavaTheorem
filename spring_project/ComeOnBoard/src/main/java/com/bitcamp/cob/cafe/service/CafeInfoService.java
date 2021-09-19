@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.bitcamp.cob.cafe.dao.CafeDao;
 import com.bitcamp.cob.cafe.domain.Cafe;
+import com.bitcamp.cob.member.domain.LoginInfo;
 
 @Service
 public class CafeInfoService {
@@ -34,7 +35,8 @@ public class CafeInfoService {
 
 	// 카페 등록 여부
 	public int checkCafe(HttpSession session) {
-		return template.getMapper(CafeDao.class).checkCafe((int)session.getAttribute("memIdx"));
+		LoginInfo loginInfo = (LoginInfo)session.getAttribute("loginInfo");
+		return template.getMapper(CafeDao.class).checkCafe(loginInfo.getMemIdx());
 	}
 
 }

@@ -179,8 +179,18 @@
 </select>
 
 <!-- 카페 등록 여부 -->
-<select id="checkCafe">
-	select cafeIdx from boardgamecafe where memIdx = #{memIdx} 
+<select id="checkCafe"
+		resultType="int">
+	select count(*) from boardgamecafe where memIdx = #{memIdx} 
 </select>
+
+<!-- 카페 예약리스트 반환 -->
+<select id="getReservList"
+		parameterType="com.bitcamp.cob.cafe.domain.CafeReservation"
+		resultType="com.bitcamp.cob.cafe.domain.CafeReservation"
+>
+	
+</select>
+
 
 </mapper>

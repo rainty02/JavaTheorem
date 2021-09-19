@@ -100,7 +100,7 @@ list-style: none;
 }
 .carousel-item{
 	width: 600px;
-    height: 310px;
+    height: 350px;
 }
 .basic_info{
     margin: 10px;
@@ -186,6 +186,10 @@ td>.btn{
 .media li :hover{
 	text-decoration: underline;
 }
+#date::placeholder{
+	color: #28a745;
+}
+
 
 
 
