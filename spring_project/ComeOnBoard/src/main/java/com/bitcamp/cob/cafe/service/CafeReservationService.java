@@ -15,8 +15,18 @@ public class CafeReservationService {
 	@Autowired
 	private SqlSessionTemplate template;
 	
+	// 예약 테이블 반환
+	public List<CafeReservation> getReservButton(CafeReservation cafeReservation) {
+		return template.getMapper(CafeDao.class).getReservButton(cafeReservation);
+	}
+
+	// 예약
+	public int regReserv(CafeReservation cafeReservation) {
+		return template.getMapper(CafeDao.class).regReserv(cafeReservation);
+	}
+
+	// 예약 확인 리스트
 	public List<CafeReservation> getReservList(CafeReservation cafeReservation) {
-		List<CafeReservation> getList = null;
 		return template.getMapper(CafeDao.class).getReservList(cafeReservation);
 	}
 

@@ -51,6 +51,10 @@ public interface CafeDao {
 	// 카페 등록 여부
 	int checkCafe(int attribute);
 	// 카페 예약 리스트 반환
+	List<CafeReservation> getReservButton(CafeReservation cafeReservation);
+	// 카페 예약
+	int regReserv(CafeReservation cafeReservation);
+	// 카페 예약 확인 리스트
 	List<CafeReservation> getReservList(CafeReservation cafeReservation);
 	
 

@@ -21,40 +21,46 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 모바일 페이지 속성 -->
     <title>Come On, Board : Cafe info</title> <!-- 문서 제목 -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-    <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script> -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-	<link rel="stylesheet" href="<c:url value="/css/cafe_page.css"/>" type="text/css">
-	
 	<!-- 에어 데이터피커-->
     <script type="text/javascript" src="<c:url value="/js/datepicker.min.js"/>"></script>
 	<link rel="stylesheet" href="<c:url value="/css/datepicker.min.css"/>" type="text/css">
     <!-- Include korean language -->
     <script src="<c:url value="/js/datepicker.kr.js"/>"></script>
 
-	
-	
-	<%@ include file="/WEB-INF/views/frame/metaheader.jsp" %>
+	<link rel="stylesheet" href="<c:url value="/css/cafe_page.css"/>" type="text/css">
+	<link rel="stylesheet" href="/cob/css/default.css">
+	<link rel="icon" href="/cob/images/simple_logo.png">
+	<%-- <%@ include file="/WEB-INF/views/frame/metaheader.jsp" %> --%>
 
 <script>
 
 $(document).ready(function(){
-
-	reservation_list(4);
-            
+	
+	let four = 'four';
+	let grp = 'grp';
 	let page = 1;
 	review(page);
 	
+	// 날짜 선택시 예약버튼 리셋
+	$('#date').datepicker({
+	    minDate: new Date(), // Now can select only dates, which goes after today
+	    onSelect: function() {
+	    	reservation_button(four);	
+	     }
+	})
+
 	// 4인석 버튼 클릭시 
 	$('#btn_reservation_4').click(function(){
-	    reservation_list(4);
+		reservation_button(four);
 	})
 	// 8인석 버튼 클릭시
 	$('#btn_reservation_8').click(function(){
-	    reservation_list(8);
+		reservation_button(grp);
 	})
 	
 	
@@ -78,45 +84,146 @@ $(document).ready(function(){
 		$('#rev_form').submit();
 	});
 	
-      
+
 });
 
 // 예약 버튼 동적 생성
-// **DB에서 값을 가져올 때 예약이 불가한 시간은 비활성화 필요 - 분기처리 disabled?
-function reservation_list(table_num){
+function reservation_button(table){
 
     // 날짜값
     var date = $('#date').val();
 
     // DB 조회 : date(날짜), table_num(4인석,8인석) 활용
 	$.ajax({
-		url: 
-	})
-    
-    // 중복 생성 방지를 위한 자손 삭제
-    $('#person *').remove();
-    // 버튼 색상
-    var color = table_num == 4 ? 'btn-outline-danger' : 'btn-outline-primary';
-    // html 동적 생성
-    var html = '<table>'+'\n'+'<tr>'+'\n';
-    for(var i=10; i<20; i++) {
-        if(i==15){
-            html += '</tr>'+'\n'+'<tr>'+'\n';
-        }
-            html += '<td><button type="button" class="btn '+color+' rotate-hor-center" value='+i+'>'+i+'시</button></td>'+'\n';
-    }
-    html += '</tr>' + '\n' + '</table>';
-    $('#person').append(html);
+		url: '<c:url value="/cafe/cafe_reserv"/>',
+		type: 'get',
+		data: {
+			reservDate: date,
+			cafeIdx: ${cafeInfo.cafeIdx},
+			requestTable: table
+		},
+		dataType: 'json',
+		success: function(list){
+			console.log(list);
+			// 중복 생성 방지를 위한 자손 삭제
+		    $('#person *').remove();
+		    // 버튼 색상
+	  		var color = table == 'four' ? 'btn-outline-danger' : 'btn-outline-primary';
+		    var html = '<table>'+'\n'+'<tr>'+'\n';
+		    loop:
+		    for(var i=10; i<20; i++) {
+		    	if(i==15){
+		            html += '</tr>'+'\n'+'<tr>'+'\n';
+		        }
+				if(list.length){
+					for(var j=0; j<list.length; j++){
+						if(i==list[j].reservTime && list[j].reservTable==list[j].fixedTable) {
+							html += '<td><button type="button" class="btn btn-secondary rotate-hor-center" value='+i+' onclick="reservation('+i+', \''+table+'\');" disabled="disabled">'+i+'시</button></td>'+'\n';
+							continue loop;
+						}
+					}
+					html += '<td><button type="button" class="btn '+color+' rotate-hor-center" value='+i+' onclick="reservation('+i+', \''+table+'\');">'+i+'시</button></td>'+'\n';
+				} else {
+					html += '<td><button type="button" class="btn '+color+' rotate-hor-center" value='+i+' onclick="reservation('+i+', \''+table+'\');">'+i+'시</button></td>'+'\n';
+				}
+			}
+		    html += '</tr>' + '\n' + '</table>';
+		    $('#person').append(html);	
+		}
+	});
 }
 
 
-/* $(function () {
-    // 달력 - 시간 제거, 오늘 이전 날짜 선택 불가
-    $('#date').bootstrapMaterialDatePicker({
-        time: false,
-        minDate: new Date()
-    });
-}); */
+// 예약 리스트 생성
+function reservation_list(table){
+
+    // 날짜값
+    var date = $('#date').val();
+
+    // DB 조회 : date(날짜), table_num(4인석,8인석) 활용
+	$.ajax({
+		url: '<c:url value="/cafe/cafe_reserv_list"/>',
+		type: 'post',
+		data: {
+			reservDate: date,
+			cafeIdx: ${cafeInfo.cafeIdx},
+			requestTable: table
+		},
+		dataType: 'json',
+		success: function(list){
+			console.log(list);
+			// 중복 생성 방지를 위한 자손 삭제
+		    $('#person *').remove();
+		    // 버튼 색상
+	  		var color = table == 'four' ? 'btn-outline-danger' : 'btn-outline-primary';
+
+            var html = '<table class="table table-striped fade-in" style="text-align: center; vertical-align: none;">'+'\n'+
+            '<tr>'+'\n'+
+            '<th>등록순서</th>'+'\n'+
+            '<th>예약일</th>'+'\n'+
+            '<th>시간</th>'+'\n'+
+            '<th>예약자명</th>'+'\n'+
+            '<th>잔여 테이블</th>'+'\n'+
+            '<th>확정여부</th>'+'\n'+
+            '</tr>';
+    
+		    for(var i=0; i<10; i++) {
+		        html += '<tr>'+'\n'+
+		            '<td>'+i+'</td>'+'\n'+
+		            '<td>'+reservation_regdate+'</td>'+'\n'+
+		            '<td>'+reservation_regtime+'</td>'+'\n'+
+		            '<td>'+member_name+'</td>'+'\n'+
+		            '<td><span style="color: blue;">'+reservation_current+'</span> / <span style="color: red;">'+reservation_max+'</span></td>'+'\n'+
+		            '<td><button class="btn '+color+' rotate-hor-center my-2 my-sm-0" value="'+i+'">확정</button></td>'+'\n'+      
+		            '</tr>';
+		    }
+		    
+    		html += '\n' + '</table>';
+
+		    $('#person').append(html);	
+		}
+	});
+}
+
+
+
+// 예약
+function reservation(time, table){
+	
+	// 날짜 입력 확인
+	if(!$('#date').val().trim().length) { 
+		alert('날짜를 선택하세요.');
+		$('#date').click();
+		return;
+	}
+	 
+	// 전달값 : 카페번호, 날짜, 시간, 인원, 멤버넘버
+	if(confirm('예약하시겠습니까?')){
+		$.ajax({
+			url: '<c:url value="/cafe/cafe_reserv"/>',
+			type: 'post',
+			data: {
+				cafeIdx: ${cafeInfo.cafeIdx},
+				memIdx: 9,
+				reservDate: $('#date').val(),
+				reservTime: time,
+				requestTable: table
+			},
+			success: function(Data){
+				if(data = 1){
+					alert('예약되었습니다.');
+				} else {
+					alert('오류가 발생하여 예약되지 않았습니다.\n잠시후 다시 시도해주세요.');
+				}
+				reservation_list(table);
+			}
+		})
+	} else {
+		alert('취소하였습니다.');
+	}
+ }
+ 
+
      
 // 리뷰
 function review(page){
@@ -389,7 +496,7 @@ function file(){
             <!-- 페이징 -->
             <div class="paging">
             </div>
-			<c:if test="${(loginInfo.memIdx != cafeInfo.memIdx) && (loginInfo.memAuth != 'ban')}">
+			<c:if test="${(empty loginInfo) && (loginInfo.memIdx != cafeInfo.memIdx) && (loginInfo.memAuth != 'ban')}">
             <form method="post" id="rev_form">              
                 <div id="star-rev" class="star-rating-rev space-x-4 mx-auto">                   
                     <input type="radio" id="5-stars-rev" name="revRating" value="5"/>
@@ -649,6 +756,8 @@ function delimg(cafeImgIdx, cafeIdx, cafeName, cafeImg){
 		}
 	});
 }	
+
+
 </script>
 
 

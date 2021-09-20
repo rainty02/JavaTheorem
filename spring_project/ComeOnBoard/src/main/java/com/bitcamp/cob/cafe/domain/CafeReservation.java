@@ -6,11 +6,16 @@ public class CafeReservation {
 
 	private int reservIdx;
 	private int cafeIdx;
+	private int memIdx;
+	private String memName;
 	private String reservDate;
 	private int reservTime;
 	private int reservTable;
-	private int fourTable;
-	private int grpTable;
+	private int reservFourTable;
+	private int reservGrpTable;
+	private String requestTable;
+	private int fixedFourTable;
+	private int fixedGrpTable;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	private int regDate;
 
@@ -31,6 +36,22 @@ public class CafeReservation {
 
 	public void setCafeIdx(int cafeIdx) {
 		this.cafeIdx = cafeIdx;
+	}
+
+	public int getMemIdx() {
+		return memIdx;
+	}
+
+	public void setMemIdx(int memIdx) {
+		this.memIdx = memIdx;
+	}
+
+	public String getMemName() {
+		return memName;
+	}
+
+	public void setMemName(String memName) {
+		this.memName = memName;
 	}
 
 	public String getReservDate() {
@@ -57,22 +78,46 @@ public class CafeReservation {
 		this.reservTable = reservTable;
 	}
 
-	public int getFourTable() {
-		return fourTable;
+	public int getReservFourTable() {
+		return reservFourTable;
 	}
 
-	public void setFourTable(int fourTable) {
-		this.fourTable = fourTable;
+	public void setReservFourTable(int reservFourTable) {
+		this.reservFourTable = reservFourTable;
 	}
 
-	public int getGrpTable() {
-		return grpTable;
+	public int getReservGrpTable() {
+		return reservGrpTable;
 	}
 
-	public void setGrpTable(int grpTable) {
-		this.grpTable = grpTable;
+	public void setReservGrpTable(int reservGrpTable) {
+		this.reservGrpTable = reservGrpTable;
 	}
-	
+
+	public String getRequestTable() {
+		return requestTable;
+	}
+
+	public void setRequestTable(String requestTable) {
+		this.requestTable = requestTable;
+	}
+
+	public int getFixedFourTable() {
+		return fixedFourTable;
+	}
+
+	public void setFixedFourTable(int fixedFourTable) {
+		this.fixedFourTable = fixedFourTable;
+	}
+
+	public int getFixedGrpTable() {
+		return fixedGrpTable;
+	}
+
+	public void setFixedGrpTable(int fixedGrpTable) {
+		this.fixedGrpTable = fixedGrpTable;
+	}
+
 	public int getRegDate() {
 		return regDate;
 	}
@@ -83,10 +128,12 @@ public class CafeReservation {
 
 	@Override
 	public String toString() {
-		return "CafeReservation [reservIdx=" + reservIdx + ", cafeIdx=" + cafeIdx + ", reservDate=" + reservDate
-				+ ", reservTime=" + reservTime + ", reservTable=" + reservTable + ", fourTable=" + fourTable
-				+ ", grpTable=" + grpTable + ", regDate=" + regDate + "]";
+		return "CafeReservation [reservIdx=" + reservIdx + ", cafeIdx=" + cafeIdx + ", memIdx=" + memIdx + ", memName="
+				+ memName + ", reservDate=" + reservDate + ", reservTime=" + reservTime + ", reservTable=" + reservTable
+				+ ", reservFourTable=" + reservFourTable + ", reservGrpTable=" + reservGrpTable + ", requestTable="
+				+ requestTable + ", fixedFourTable=" + fixedFourTable + ", fixedGrpTable=" + fixedGrpTable
+				+ ", regDate=" + regDate + "]";
 	}
 
-
+	
 }

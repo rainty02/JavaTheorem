@@ -184,13 +184,50 @@
 	select count(*) from boardgamecafe where memIdx = #{memIdx} 
 </select>
 
-<!-- 카페 예약리스트 반환 -->
+<!-- 카페 예약 버튼 반환 -->
+<select id="getReservButton"
+		parameterType="com.bitcamp.cob.cafe.domain.CafeReservation"
+		resultType="com.bitcamp.cob.cafe.domain.CafeReservation">
+	select cr.reservDate, cr.reservTime,
+ 	<if test='requestTable == "four"'>
+		count(cr.reservFourTable) as reservTable, bgc.FourTable as fixedTable
+	</if>	
+	<if test='requestTable == "grp"'>
+		count(cr.reservGrpTable) as reservTable, bgc.GrpTable as fixedTable	
+	</if>
+	from cafereservation cr, boardgamecafe bgc 
+	where cr.cafeIdx = bgc.cafeIdx and cr.cafeIdx= #{cafeIdx} and cr.reservDate=#{reservDate} 
+	group by reservTime
+</select>
+
+<!-- 카페 예약 -->
+<insert id="regReserv"
+		parameterType="com.bitcamp.cob.cafe.domain.CafeReservation">
+	insert into cafereservation (cafeIdx, memIdx, reservDate, reservTime, 
+	<if test='requestTable == "four"'>
+		reservFourTable)	
+	</if>	
+	<if test='requestTable == "grp"'>
+		reservgrpTable)	
+	</if>
+	values (#{cafeIdx}, #{memIdx}, #{reservDate}, #{reservTime}, 1);
+</insert>
+
+<!-- 카페 예약 버튼 반환 -->
 <select id="getReservList"
 		parameterType="com.bitcamp.cob.cafe.domain.CafeReservation"
-		resultType="com.bitcamp.cob.cafe.domain.CafeReservation"
->
-	
+		resultType="com.bitcamp.cob.cafe.domain.CafeReservation">
+	select cr.reservDate, cr.reservTime,
+ 	<if test='requestTable == "four"'>
+		cr.reservFourTable as reservTable, bgc.FourTable as fixedTable
+	</if>	
+	<if test='requestTable == "grp"'>
+		cr.reservGrpTable as reservTable, bgc.GrpTable as fixedTable 
+	</if>
+	from cafereservation cr, boardgamecafe bgc 
+	where cr.cafeIdx = bgc.cafeIdx and cr.cafeIdx= #{cafeIdx} and cr.reservDate=#{reservDate} 
 </select>
+
 
 
 </mapper>
