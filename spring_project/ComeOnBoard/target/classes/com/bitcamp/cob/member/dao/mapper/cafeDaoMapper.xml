@@ -213,20 +213,28 @@
 	values (#{cafeIdx}, #{memIdx}, #{reservDate}, #{reservTime}, 1);
 </insert>
 
-<!-- 카페 예약 버튼 반환 -->
+<!-- 카페 예약 리스트 반환 -->
 <select id="getReservList"
 		parameterType="com.bitcamp.cob.cafe.domain.CafeReservation"
 		resultType="com.bitcamp.cob.cafe.domain.CafeReservation">
-	select cr.reservDate, cr.reservTime,
+	select cr.reservIdx, cr.reservDate, cr.reservTime, m.memName,
  	<if test='requestTable == "four"'>
-		cr.reservFourTable as reservTable, bgc.FourTable as fixedTable
+		<!-- (select count(c.reservFourTable) from cafereservation c where c.reservIdx = cr.reservIdx group by reservTime) as reservTable, bgc.FourTable as fixedTable -->
+		(select count(cr2.reservFourTable) from cafereservation cr2 where cr2.reservTime = cr.reservTime and cr2.reservDate = cr.reservDate and cr2.cafeIdx = cr.cafeIdx) as reservTable, bgc.fourTable as fixedTable
 	</if>	
 	<if test='requestTable == "grp"'>
-		cr.reservGrpTable as reservTable, bgc.GrpTable as fixedTable 
+		<!-- (select count(c.reservGrpTable) from cafereservation c where c.reservIdx = cr.reservIdx group by reservTime) as reservTable, bgc.Table as fixedTable -->
+		(select count(cr2.reservGrpTable) from cafereservation cr2 where cr2.reservTime = cr.reservTime and cr2.reservDate = cr.reservDate and cr2.cafeIdx = cr.cafeIdx) as reservTable, bgc.grpTable as fixedTable
 	</if>
-	from cafereservation cr, boardgamecafe bgc 
-	where cr.cafeIdx = bgc.cafeIdx and cr.cafeIdx= #{cafeIdx} and cr.reservDate=#{reservDate} 
+	from cafereservation cr, boardgamecafe bgc, member1 m
+	where cr.cafeIdx = bgc.cafeIdx and cr.memIdx = m.memIdx and cr.cafeIdx= #{cafeIdx} and cr.reservDate=#{reservDate}
+	order by reservTime
 </select>
+
+<!-- 카페 예약 취소 -->
+<delete id="delReserv">
+	delete from cafereservation where reservIdx = #{reservIdx}
+</delete>
 
 
 

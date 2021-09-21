@@ -56,6 +56,8 @@ public interface CafeDao {
 	int regReserv(CafeReservation cafeReservation);
 	// 카페 예약 확인 리스트
 	List<CafeReservation> getReservList(CafeReservation cafeReservation);
+	// 예약 취소
+	int delReserv(int reservIdx);
 	
 
 

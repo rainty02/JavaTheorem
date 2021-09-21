@@ -1,18 +1,7 @@
- <%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
-<c:if test="${empty loginInfo}">
-	<script>
-	let loginmemidx = null;
-	</script>
-</c:if>   
-<c:if test="${!empty loginInfo}">
-	<script>
-	let loginmemidx = ${loginInfo.memIdx};
-	</script>
-</c:if>   
 
 <!DOCTYPE html>  <!-- 문서의 첫행 표시, 웹 브라우저에 HTML5 임을 알림 -->
 <html lang="ko"> <!-- 시작, lang 속성 입력(생략가능)-->
@@ -37,6 +26,21 @@
 	<link rel="icon" href="/cob/images/simple_logo.png">
 	<%-- <%@ include file="/WEB-INF/views/frame/metaheader.jsp" %> --%>
 
+<c:if test="${empty loginInfo}">
+	<script>
+	let loginmemidx = null;
+	let cafememidx = ${cafeInfo.memIdx};
+	let loginauth = null;
+	</script>
+</c:if>   
+<c:if test="${!empty loginInfo}">
+	<script>
+	let loginmemidx = ${loginInfo.memIdx};
+	let cafememidx = ${cafeInfo.memIdx};	
+	let loginauth = '${loginInfo.memAuth}';
+	</script>
+</c:if>   
+
 <script>
 
 $(document).ready(function(){
@@ -45,22 +49,24 @@ $(document).ready(function(){
 	let grp = 'grp';
 	let page = 1;
 	review(page);
+
 	
 	// 날짜 선택시 예약버튼 리셋
 	$('#date').datepicker({
 	    minDate: new Date(), // Now can select only dates, which goes after today
 	    onSelect: function() {
-	    	reservation_button(four);	
+	    	login_check(four);
 	     }
 	})
 
 	// 4인석 버튼 클릭시 
 	$('#btn_reservation_4').click(function(){
-		reservation_button(four);
+		login_check(four);
 	})
+	
 	// 8인석 버튼 클릭시
 	$('#btn_reservation_8').click(function(){
-		reservation_button(grp);
+		login_check(grp);
 	})
 	
 	
@@ -73,7 +79,7 @@ $(document).ready(function(){
 		if(!$('#rev_form :input:radio:checked').val()) {   
 			alert('점수를 선택해 주세요.');
 			return;
-			}
+		}
 		// 내용 입력 확인
 		if(!content.trim().length){
 			alert('내용을 입력해주세요.');
@@ -87,11 +93,27 @@ $(document).ready(function(){
 
 });
 
+// 접속 정보 확인 - 예약버튼 or 예약 리스트
+function login_check(table){
+	if(cafememidx == loginmemidx){
+		reservation_list(table);
+	} else if (cafememidx != loginmemidx && loginauth != 'ban'){
+		reservation_button(table);
+	}
+}
+
+
 // 예약 버튼 동적 생성
 function reservation_button(table){
 
     // 날짜값
     var date = $('#date').val();
+    
+    if(!date.trim().length){
+		alert('날짜를 선택해주세요.');
+		$('#date').focus();
+		return;
+	}
 
     // DB 조회 : date(날짜), table_num(4인석,8인석) 활용
 	$.ajax({
@@ -104,12 +126,12 @@ function reservation_button(table){
 		},
 		dataType: 'json',
 		success: function(list){
-			console.log(list);
+			//console.log(list);
 			// 중복 생성 방지를 위한 자손 삭제
 		    $('#person *').remove();
 		    // 버튼 색상
 	  		var color = table == 'four' ? 'btn-outline-danger' : 'btn-outline-primary';
-		    var html = '<table>'+'\n'+'<tr>'+'\n';
+		    var html = '<table class="reserv_table">'+'\n'+'<tr>'+'\n';
 		    loop:
 		    for(var i=10; i<20; i++) {
 		    	if(i==15){
@@ -117,7 +139,7 @@ function reservation_button(table){
 		        }
 				if(list.length){
 					for(var j=0; j<list.length; j++){
-						if(i==list[j].reservTime && list[j].reservTable==list[j].fixedTable) {
+						if(i==list[j].reservTime && list[j].reservTable>=list[j].fixedTable) {
 							html += '<td><button type="button" class="btn btn-secondary rotate-hor-center" value='+i+' onclick="reservation('+i+', \''+table+'\');" disabled="disabled">'+i+'시</button></td>'+'\n';
 							continue loop;
 						}
@@ -140,6 +162,12 @@ function reservation_list(table){
     // 날짜값
     var date = $('#date').val();
 
+    if(!date.trim().length){
+		alert('날짜를 선택해주세요.');
+		$('#date').focus();
+		return;
+	}
+        
     // DB 조회 : date(날짜), table_num(4인석,8인석) 활용
 	$.ajax({
 		url: '<c:url value="/cafe/cafe_reserv_list"/>',
@@ -157,30 +185,42 @@ function reservation_list(table){
 		    // 버튼 색상
 	  		var color = table == 'four' ? 'btn-outline-danger' : 'btn-outline-primary';
 
-            var html = '<table class="table table-striped fade-in" style="text-align: center; vertical-align: none;">'+'\n'+
-            '<tr>'+'\n'+
-            '<th>등록순서</th>'+'\n'+
-            '<th>예약일</th>'+'\n'+
-            '<th>시간</th>'+'\n'+
-            '<th>예약자명</th>'+'\n'+
-            '<th>잔여 테이블</th>'+'\n'+
-            '<th>확정여부</th>'+'\n'+
-            '</tr>';
-    
-		    for(var i=0; i<10; i++) {
-		        html += '<tr>'+'\n'+
-		            '<td>'+i+'</td>'+'\n'+
-		            '<td>'+reservation_regdate+'</td>'+'\n'+
-		            '<td>'+reservation_regtime+'</td>'+'\n'+
-		            '<td>'+member_name+'</td>'+'\n'+
-		            '<td><span style="color: blue;">'+reservation_current+'</span> / <span style="color: red;">'+reservation_max+'</span></td>'+'\n'+
-		            '<td><button class="btn '+color+' rotate-hor-center my-2 my-sm-0" value="'+i+'">확정</button></td>'+'\n'+      
-		            '</tr>';
-		    }
-		    
-    		html += '\n' + '</table>';
-
-		    $('#person').append(html);	
+	  		var html = '<table class="table table-striped fade-in" style="text-align: center; vertical-align: none;">'+'\n'+
+			            '<tr>'+'\n'+
+			            '<th>No</th>'+'\n'+
+			            '<th>예약일</th>'+'\n'+
+			            '<th>시간</th>'+'\n'+
+			            '<th>예약자명</th>'+'\n'+
+			            '<th>해당 시간 잔여 테이블</th>'+'\n'+
+			            '<th>취소여부</th>'+'\n'+
+			            '</tr>';
+	  		
+	  		console.log('리스트 길이 : '+list.length);
+			if(list.length){
+			    $.each(list, function(idx, reserv) {
+			    	if(reserv.reservTable != 0){
+			        html += '<tr>'+'\n'+
+				            '<td>'+(idx+1)+'</td>'+'\n'+
+				            '<td>'+reserv.reservDate+'</td>'+'\n'+
+				            '<td>'+reserv.reservTime+'시</td>'+'\n'+
+				            '<td>'+reserv.memName+'</td>'+'\n';
+				            if(reserv.reservTable >= reserv.fixedTable){
+				            	html += '<td><span style="color: red;">'+reserv.reservTable+'</span> / <span style="color: red;">'+reserv.fixedTable+'</span></td>'+'\n';
+				            } else {
+				            	html += '<td><span style="color: blue;">'+reserv.reservTable+'</span> / <span style="color: red;">'+reserv.fixedTable+'</span></td>'+'\n';
+				            }
+				    html += '<td><button class="btn '+color+' rotate-hor-center my-2 my-sm-0" onclick="del_reserv('+reserv.reservIdx+');">취소</button></td>'+'\n'+      
+				            '</tr>';
+			    	}// else {
+			    	//	html += '<tr></tr><tr></tr><td colspan="6"><h3>'+date+' 예약이 없습니다.</h3></td>';
+			    	//	return true;
+			    	//}
+			    });
+			} else if(!list.length){
+				html += '<tr></tr><tr></tr><td colspan="6"><h3>'+date+' 예약이 없습니다.<h3></td>';
+			}
+			html += '\n' + '</table>';
+			$('#person').append(html);
 		}
 	});
 }
@@ -190,41 +230,110 @@ function reservation_list(table){
 // 예약
 function reservation(time, table){
 	
-	// 날짜 입력 확인
-	if(!$('#date').val().trim().length) { 
-		alert('날짜를 선택하세요.');
-		$('#date').click();
+	if(!loginmemidx){
+		alert('로그인 후 사용이 가능합니다.');
+		return;
+	}
+	
+    // 날짜값
+    var date = $('#date').val();
+    if(!date.trim().length){
+		alert('날짜를 선택해주세요.');
+		$('#date').focus();
 		return;
 	}
 	 
 	// 전달값 : 카페번호, 날짜, 시간, 인원, 멤버넘버
-	if(confirm('예약하시겠습니까?')){
+	if(confirm('예약정보 : '+date+' - '+time+':00\n예약하시겠습니까?')){
+		// 결제
+		$.ajax({
+			url: '<c:url value="/cafe/cafe_payReserv"/>',
+			type: 'post',
+			data: {
+				cafeIdx: ${cafeInfo.cafeIdx},
+				memIdx: loginmemidx,
+				reservDate: date,
+				reservTime: time,
+				requestTable: table
+			},
+			dataType: 'json',
+			success: function(data){
+				console.log('반환값: '+data);
+				var url = data.next_redirect_pc_url;
+				console.log(url);
+				window.open(url);
+			},
+			error: function(e){
+				console.log('reservation_pay_erorr');
+			}
+		})
+	} else {
+		alert('취소하였습니다.');
+	}
+ }	
+		
+		
+		
+		
+		
+		
+		
+		
+/* 		
 		$.ajax({
 			url: '<c:url value="/cafe/cafe_reserv"/>',
 			type: 'post',
 			data: {
 				cafeIdx: ${cafeInfo.cafeIdx},
-				memIdx: 9,
-				reservDate: $('#date').val(),
+				memIdx: loginmemidx,
+				reservDate: date,
 				reservTime: time,
 				requestTable: table
 			},
-			success: function(Data){
+			success: function(data){
 				if(data = 1){
 					alert('예약되었습니다.');
 				} else {
 					alert('오류가 발생하여 예약되지 않았습니다.\n잠시후 다시 시도해주세요.');
 				}
-				reservation_list(table);
+				reservation_button(table);
+			},
+			error: function(e){
+				console.log('reservation_erorr');
 			}
 		})
 	} else {
 		alert('취소하였습니다.');
 	}
  }
- 
-
-     
+  */
+// 예약 취소
+function del_reserv(idx){
+	if(confirm('취소하실 경우 복구할 수 없습니다.\n취소하시겠습니까?')){
+		$.ajax({
+			url: '<c:url value="/cafe/cafe_reserv"/>',
+			type: 'delete',
+			data: { 
+				reservIdx: idx
+			},
+			success: function(result){
+				if(result = 1){
+					reservation_list('four');
+					alert('예약이 취소되었습니다.');
+				} else {
+					reservation_list('four');
+					alert('오류가 발생하여 실패했습니다.\n잠시 후 다시 시도해주세요.');
+				}
+			},
+			error: function(e){
+				console.log('del_reserv_erorr');
+			}
+		})
+	} else {
+		alert('취소되었습니다.');
+	}
+}
+  
 // 리뷰
 function review(page){
 	$.ajax({
@@ -236,7 +345,7 @@ function review(page){
 		},
 		dataType: 'json',
 		success: function(returnData){
-			console.log(returnData);
+			//console.log(returnData);
 			var paging = returnData;
 			var data = returnData.cafeReview;
 			var html = '';
@@ -470,11 +579,9 @@ function file(){
         <div class="reservation" id="reservation">
             <h5 class="info_menu">예약</h5>
             <hr class="first_hr">
-            <table>
+            <table class="reserv_table">
                 <tr>
                     <td><input class="btn btn-outline-success datepicker-here" data-language="kr" type="text" id="date" placeholder="날짜 선택"></td>
-                </tr>
-                <tr>
                     <td><button type="button" id="btn_reservation_4" class="btn btn-outline-danger">4인석</button></td>
                     <td><button type="button" id="btn_reservation_8" class="btn btn-outline-primary">8인석</button></td>                    
                 </tr>
@@ -759,7 +866,6 @@ function delimg(cafeImgIdx, cafeIdx, cafeName, cafeImg){
 
 
 </script>
-
 
 </body>
 

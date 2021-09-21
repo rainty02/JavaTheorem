@@ -1,5 +1,7 @@
 package com.bitcamp.cob.cafe.domain;
 
+import java.sql.Timestamp;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class CafeReservation {
@@ -11,13 +13,10 @@ public class CafeReservation {
 	private String reservDate;
 	private int reservTime;
 	private int reservTable;
-	private int reservFourTable;
-	private int reservGrpTable;
+	private int fixedTable;
 	private String requestTable;
-	private int fixedFourTable;
-	private int fixedGrpTable;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-	private int regDate;
+	private Timestamp regDate;
 
 	public CafeReservation() {
 	}
@@ -78,20 +77,12 @@ public class CafeReservation {
 		this.reservTable = reservTable;
 	}
 
-	public int getReservFourTable() {
-		return reservFourTable;
+	public int getFixedTable() {
+		return fixedTable;
 	}
 
-	public void setReservFourTable(int reservFourTable) {
-		this.reservFourTable = reservFourTable;
-	}
-
-	public int getReservGrpTable() {
-		return reservGrpTable;
-	}
-
-	public void setReservGrpTable(int reservGrpTable) {
-		this.reservGrpTable = reservGrpTable;
+	public void setFixedTable(int fixedTable) {
+		this.fixedTable = fixedTable;
 	}
 
 	public String getRequestTable() {
@@ -102,27 +93,11 @@ public class CafeReservation {
 		this.requestTable = requestTable;
 	}
 
-	public int getFixedFourTable() {
-		return fixedFourTable;
-	}
-
-	public void setFixedFourTable(int fixedFourTable) {
-		this.fixedFourTable = fixedFourTable;
-	}
-
-	public int getFixedGrpTable() {
-		return fixedGrpTable;
-	}
-
-	public void setFixedGrpTable(int fixedGrpTable) {
-		this.fixedGrpTable = fixedGrpTable;
-	}
-
-	public int getRegDate() {
+	public Timestamp getRegDate() {
 		return regDate;
 	}
 
-	public void setRegDate(int regDate) {
+	public void setRegDate(Timestamp regDate) {
 		this.regDate = regDate;
 	}
 
@@ -130,10 +105,9 @@ public class CafeReservation {
 	public String toString() {
 		return "CafeReservation [reservIdx=" + reservIdx + ", cafeIdx=" + cafeIdx + ", memIdx=" + memIdx + ", memName="
 				+ memName + ", reservDate=" + reservDate + ", reservTime=" + reservTime + ", reservTable=" + reservTable
-				+ ", reservFourTable=" + reservFourTable + ", reservGrpTable=" + reservGrpTable + ", requestTable="
-				+ requestTable + ", fixedFourTable=" + fixedFourTable + ", fixedGrpTable=" + fixedGrpTable
-				+ ", regDate=" + regDate + "]";
+				+ ", fixedTable=" + fixedTable + ", requestTable=" + requestTable + ", regDate=" + regDate + "]";
 	}
+
 
 	
 }

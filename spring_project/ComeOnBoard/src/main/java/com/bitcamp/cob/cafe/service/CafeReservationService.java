@@ -29,5 +29,10 @@ public class CafeReservationService {
 	public List<CafeReservation> getReservList(CafeReservation cafeReservation) {
 		return template.getMapper(CafeDao.class).getReservList(cafeReservation);
 	}
+	
+	// 예약 취소
+	public int delReserv(int reservIdx) {
+		return template.getMapper(CafeDao.class).delReserv(reservIdx);
+	}
 
 }

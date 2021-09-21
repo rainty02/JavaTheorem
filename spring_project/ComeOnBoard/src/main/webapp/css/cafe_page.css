@@ -190,6 +190,14 @@ td>.btn{
 	color: #28a745;
 }
 
+.table td{
+	vertical-align: middle;
+} 
+
+.reserv_table{
+	margin-left: auto;
+	margin-right: auto;
+}
 
 
 
