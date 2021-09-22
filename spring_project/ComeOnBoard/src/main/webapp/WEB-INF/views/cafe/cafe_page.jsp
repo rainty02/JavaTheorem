@@ -258,13 +258,15 @@ function reservation(time, table){
 			},
 			dataType: 'json',
 			success: function(data){
-				console.log('반환값: '+data);
+				//console.log('반환값: '+data);
 				var url = data.next_redirect_pc_url;
-				console.log(url);
-				window.open(url);
+				var options = 'top=260, left=700, width=480, height=480, status=no, menubar=no, toolbar=no, resizable=no';
+				window.open(url, '카카오페이 결제', options);
 			},
-			error: function(e){
+			error: function(request,status,error){
 				console.log('reservation_pay_erorr');
+				console.log("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+
 			}
 		})
 	} else {
@@ -272,14 +274,8 @@ function reservation(time, table){
 	}
  }	
 		
-		
-		
-		
-		
-		
-		
-		
-/* 		
+	
+/* 		예약값 DB 저장
 		$.ajax({
 			url: '<c:url value="/cafe/cafe_reserv"/>',
 			type: 'post',
@@ -307,6 +303,8 @@ function reservation(time, table){
 	}
  }
   */
+  
+  
 // 예약 취소
 function del_reserv(idx){
 	if(confirm('취소하실 경우 복구할 수 없습니다.\n취소하시겠습니까?')){
@@ -489,15 +487,15 @@ function file(){
 					var path = cafe.cafeIdx+'.'+cafe.cafeName+'/'+cafe.cafeImg;
 					
 					html += '<li file='+cafe.cafeImg+'>'+'\n'+
-							'<img class=img-thumb src="<c:url value="/uploadfile/cafe/"/>'+path+'"/>'+'\n'+
+							'<img class="img-thumb" src="<c:url value="/uploadfile/cafe/"/>'+path+'"/>'+'\n'+
 							'<button class="delete-btn btn btn-danger" onclick="delimg('+cafeImgIdx+', '+cafeIdx+', \''+cafeName+'\', \''+cafeImg+'\');">X</button>'+'\n'+
 							'</li>';
 				})
-				$('.uploaded_files').empty();
-				$('.uploaded_files').append(html);
+				$('.cvf_uploaded_files').empty();
+				$('.cvf_uploaded_files').append(html);
 			}
 			if(list.length == 0){
-				$('.uploaded_files').empty();
+				$('.cvf_uploaded_files').empty();
 			}
 		},
 		error: function(e){
@@ -711,7 +709,7 @@ function file(){
 	                <br>
 	                <label for="exampleFormControlInput10 text-muted">이미지 삭제</label>
 	                <div class="thumnail form-control mb-2">
-	                	<ul class="uploaded_files"></ul>
+	                	<ul class="cvf_uploaded_files"></ul>
                 	</div>
             	</div>
             	<!-- <button class="btn btn-secondary col text-center" value="취소" /></button> -->
