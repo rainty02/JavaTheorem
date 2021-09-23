@@ -199,6 +199,7 @@ function reservation_list(table){
 			if(list.length){
 			    $.each(list, function(idx, reserv) {
 			    	if(reserv.reservTable != 0){
+			    	console.log('reserv.reservTable : ' +reserv.reservTable);
 			        html += '<tr>'+'\n'+
 				            '<td>'+(idx+1)+'</td>'+'\n'+
 				            '<td>'+reserv.reservDate+'</td>'+'\n'+
@@ -256,17 +257,16 @@ function reservation(time, table){
 				reservTime: time,
 				requestTable: table
 			},
-			dataType: 'json',
+			//dataType: 'json',
 			success: function(data){
-				//console.log('반환값: '+data);
-				var url = data.next_redirect_pc_url;
+				console.log('반환값: '+data);
 				var options = 'top=260, left=700, width=480, height=480, status=no, menubar=no, toolbar=no, resizable=no';
-				window.open(url, '카카오페이 결제', options);
+				window.open(data, '카카오페이 결제', options);
+				set_reservation(date, time, table);
 			},
 			error: function(request,status,error){
 				console.log('reservation_pay_erorr');
-				console.log("code = "+ request.status + " message = " + request.responseText + " error = " + error);
-
+				//console.log("code = "+ request.status + " message = " + request.responseText + " error = " + error);
 			}
 		})
 	} else {
@@ -275,34 +275,32 @@ function reservation(time, table){
  }	
 		
 	
-/* 		예약값 DB 저장
-		$.ajax({
-			url: '<c:url value="/cafe/cafe_reserv"/>',
-			type: 'post',
-			data: {
-				cafeIdx: ${cafeInfo.cafeIdx},
-				memIdx: loginmemidx,
-				reservDate: date,
-				reservTime: time,
-				requestTable: table
-			},
-			success: function(data){
-				if(data = 1){
-					alert('예약되었습니다.');
-				} else {
-					alert('오류가 발생하여 예약되지 않았습니다.\n잠시후 다시 시도해주세요.');
-				}
-				reservation_button(table);
-			},
-			error: function(e){
-				console.log('reservation_erorr');
+//예약값 DB 저장
+function set_reservation(date, time, table){
+	$.ajax({
+		url: '<c:url value="/cafe/cafe_reserv"/>',
+		type: 'post',
+		data: {
+			cafeIdx: ${cafeInfo.cafeIdx},
+			memIdx: loginmemidx,
+			reservDate: date,
+			reservTime: time,
+			requestTable: table
+		},
+		success: function(data){
+			if(data = 1){
+				alert('예약되었습니다.');
+			} else {
+				alert('오류가 발생하여 예약되지 않았습니다.\n잠시후 다시 시도해주세요.');
 			}
-		})
-	} else {
-		alert('취소하였습니다.');
-	}
- }
-  */
+			reservation_button(table);
+		},
+		error: function(e){
+			console.log('reservation_erorr');
+		}
+	})
+}
+
   
   
 // 예약 취소
@@ -348,13 +346,12 @@ function review(page){
 			var data = returnData.cafeReview;
 			var html = '';
 			var pagehtml = '';
-			
 			// 리뷰 출력
 			if(data.length){
 				$.each(data, function(idx, review) {	
 					html += '<div class="media" id="rev_'+review.revIdx+'">'+'\n'+
 							'<div class="media-left">'+'\n'+
-							'<img src="https://www.w3schools.com/bootstrap4/img_avatar1.png" class="media-object mr-3" style="width:45px">'+'\n'+
+							'<img src="<c:url value="/uploadfile/member/'+review.memPhoto+'"/>" class="media-object mr-3" style="width:45px; height:45px;">'+'\n'+
 							'</div>'+'\n'+
 							'<div class="media-body">'+'\n'+
 							'<h4 class="media-heading">'+'\n'+review.nickName+'\n'+
@@ -561,13 +558,16 @@ function file(){
                 <h5>${cafeInfo.cafeAddress}</h5>
                 <div class="li_warp">
                     <ul>
-                        <li>요금 : 시간당 ${cafeInfo.stdFeeComma}</li>
+                        <li>요금</li>
+                        <li>1시간당 ${cafeInfo.stdFeeComma}</li>
                         <li>10분당 ${cafeInfo.tenPerFeeComma}</li>
-                        <li>테이블 정보 : 4인석 - ${cafeInfo.fourTable}, 8인석 - ${cafeInfo.grpTable}</li>
+                        <li>테이블 정보</li>
+                        <li>4인석 : ${cafeInfo.fourTable}</li>
+                        <li>8인석 : ${cafeInfo.grpTable}</li>
                         <li>영업시간 : ${cafeInfo.cafeTime}</li>
                         <li>연락처 : ${cafeInfo.cafeTel}</li>
                     </ul>
-                    <button class="btn btn-outline-primary my-2 my-sm-0" data-toggle="modal" data-target="#gamelist">보유게임 리스트</button>
+                    <!-- <button class="btn btn-outline-primary my-2 my-sm-0" data-toggle="modal" data-target="#gamelist">보유게임 리스트</button> -->
                 </div>
             </div>  
         </div>
@@ -601,7 +601,7 @@ function file(){
             <!-- 페이징 -->
             <div class="paging">
             </div>
-			<c:if test="${(empty loginInfo) && (loginInfo.memIdx != cafeInfo.memIdx) && (loginInfo.memAuth != 'ban')}">
+			<c:if test="${(!empty loginInfo) && (loginInfo.memIdx != cafeInfo.memIdx) && (loginInfo.memAuth != 'ban')}">
             <form method="post" id="rev_form">              
                 <div id="star-rev" class="star-rating-rev space-x-4 mx-auto">                   
                     <input type="radio" id="5-stars-rev" name="revRating" value="5"/>
@@ -707,8 +707,8 @@ function file(){
             	</form>
             	<div class ="form-group">
 	                <br>
-	                <label for="exampleFormControlInput10 text-muted">이미지 삭제</label>
-	                <div class="thumnail form-control mb-2">
+	                <label for="img_del text-muted">이미지 삭제</label>
+	                <div class="thumnail form-control mb-2" id="img_del"> 
 	                	<ul class="cvf_uploaded_files"></ul>
                 	</div>
             	</div>

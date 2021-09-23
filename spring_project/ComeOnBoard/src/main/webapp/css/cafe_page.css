@@ -324,7 +324,7 @@ ul.cvf_uploaded_files .delete-btn {
     padding: 7px;
 }
 .thumnail {
-    height: 150px;
+    height: 300px;
     overflow: hidden;
     overflow-y: scroll;
 }
